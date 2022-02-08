@@ -1,5 +1,5 @@
 class GoogleProviderModel{
   bool isLinked = false;
-
-  String username = "teste";
+  String? email;
+  String? token;
 }

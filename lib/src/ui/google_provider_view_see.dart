@@ -17,18 +17,18 @@ class GoogleProviderViewSee extends StatelessWidget {
     return Container(
         color: Colors.white,
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 1.75.h),
+          margin: EdgeInsets.symmetric(vertical: service.style.size(8)),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text("What data does Google hold",
                 style: TextStyle(
-                    fontSize: 11.5.sp,
+                    fontSize: service.style.text(11.5),
                     fontWeight: FontWeight.bold,
-                    color: ConfigColor.tikiBlue)),
+                    color: service.style.infoLinkColor)),
             Container(
-                margin: EdgeInsets.only(left: 2.5.w),
+                margin: EdgeInsets.only(left: service.style.size(8)),
                 child: Image(
-                  image: AssetImage('res/images/right-arrow.png'),
-                  height: 14.sp,
+                  image: const AssetImage('res/images/right-arrow.png', package: 'google_provider'),
+                  height: service.style.text(14),
                   fit: BoxFit.fitHeight,
                 ))
           ]),

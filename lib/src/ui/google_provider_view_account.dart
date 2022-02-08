@@ -17,7 +17,7 @@ class GoogleProviderViewAccount extends StatelessWidget {
     GoogleProviderService service = Provider.of<GoogleProviderService>(context);
     return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
       Image(
-        image: const AssetImage('res/images/gogle.png'),
+        image: const AssetImage('res/images/gogle.png', package: 'google_provider'),
         height: service.style.size(3.5),
         fit: BoxFit.fitHeight,
       ),
@@ -34,7 +34,7 @@ class GoogleProviderViewAccount extends StatelessWidget {
                           color: service.style.grey,
                           height: 1,
                           fontSize: service.style.text(12)))),
-              Text(service.model.username,
+              Text(service.model.email!,
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: service.style.blue,

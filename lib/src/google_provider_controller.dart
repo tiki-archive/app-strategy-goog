@@ -1,6 +1,6 @@
 class GoogleProviderController{
-  void onUnlink(){
 
+  void onUnlink(){
   }
 
   void onLink() {

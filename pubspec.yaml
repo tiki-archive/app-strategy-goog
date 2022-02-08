@@ -25,3 +25,5 @@ flutter:
         pluginClass: GoogleProviderPlugin
       ios:
         pluginClass: GoogleProviderPlugin
+  assets:
+    - res/images/

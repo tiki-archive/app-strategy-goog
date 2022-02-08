@@ -8,4 +8,8 @@ class GoogleProviderStyle extends GoogleProviderUtilsStyle{
   get blue => null;
 
   get greyThree => null;
+
+  get unLinkColor => null;
+
+  get infoLinkColor => null;
 }

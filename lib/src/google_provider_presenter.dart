@@ -9,11 +9,11 @@ class GoogleProviderPresenter{
 
   GoogleProviderPresenter(this.service);
 
-  ChangeNotifierProvider<GoogleProviderService> accountButton() {
+  ChangeNotifierProvider<GoogleProviderService> accountButton({onLink, onUnlink, onSee}) {
     return ChangeNotifierProvider.value(
         value: service,
-        child: service.model.isLinked ?
-          const GoogleProviderViewLink() :
-          const GoogleProviderViewLinked());
+        child: !service.model.isLinked ?
+          const GoogleProviderViewLink(onLink) :
+          const GoogleProviderViewLinked(onUnlink, onSee));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_provider/google_provider.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         ),
         body: TextButton(
             onPressed: () {  },
-            child: const Text('test')),
+            child: GoogleProvider().accountButton()),
       ),
     );
   }

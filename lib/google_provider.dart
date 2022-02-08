@@ -1,13 +1,17 @@
-
-import 'dart:async';
-
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+import 'package:google_provider/src/google_provider_service.dart';
+import 'package:google_provider/src/google_provider_style.dart';
 
 class GoogleProvider {
-  static const MethodChannel _channel = MethodChannel('google_provider');
+  late final GoogleProviderService _service;
 
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  GoogleProvider({GoogleProviderStyle? style}) :
+    _service = GoogleProviderService(style: style ?? GoogleProviderStyle());
+
+  Widget accountButton({onLink, onUnlink, onSee}) =>
+      _service.presenter.accountButton(
+          onLink: onLink ?? _service.controller.onLink,
+          onUnlink: onUnlink ?? _service.controller.onUnlink,
+          onSee: onSee ?? _service.controller.onSee
+      );
 }

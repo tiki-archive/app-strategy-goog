@@ -8,7 +8,9 @@ class GoogleProviderViewLink extends StatelessWidget {
 
   final String _text = "Sign in with Google";
 
-  const GoogleProviderViewLink({Key? key}) : super(key: key);
+  final onLink;
+
+  const GoogleProviderViewLink({Key? key, this.onLink}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class GoogleProviderViewLink extends StatelessWidget {
           ),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Image(
-              image: const AssetImage('res/images/google.png'),
+              image: const AssetImage('res/images/google-icon.png', package: 'google_provider'),
               height: service.style.size(18) * _scale,
               fit: BoxFit.fitHeight,
             ),

@@ -10,7 +10,6 @@ import '../google_provider_service.dart';
 
 class GoogleProviderViewUnlink extends StatelessWidget {
   static const String _text = "Unlink";
-  static const num _fontSize = 9.5;
 
   const GoogleProviderViewUnlink({Key? key}) : super(key: key);
 
@@ -22,7 +21,10 @@ class GoogleProviderViewUnlink extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         child: Container(
             padding: EdgeInsets.only(
-                top: 1.5.h, bottom: 1.5.h, left: 6.w, right: 3.w),
+                top: service.style.size(15),
+                bottom: service.style.size(15),
+                left: service.style.size(18),
+                right: service.style.size(18)),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -30,14 +32,14 @@ class GoogleProviderViewUnlink extends StatelessWidget {
                   _text,
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      fontSize: _fontSize.sp,
-                      color: ConfigColor.tikiRed),
+                      fontSize: service.style.text(9.5),
+                      color: service.style.unLinkColor),
                 ),
                 Container(
-                    margin: EdgeInsets.only(left: 1.w),
+                    margin: EdgeInsets.only(left: service.style.size(3)),
                     child: Image(
-                      image: AssetImage('res/images/icon-circle-x.png'),
-                      height: (_fontSize * 1.4).sp,
+                      image: const AssetImage('res/images/icon-circle-x.png', package: 'google_provider'),
+                      height: service.style.text(9.5) * 1.4,
                       fit: BoxFit.fitHeight,
                     )),
               ],
