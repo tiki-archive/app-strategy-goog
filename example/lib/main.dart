@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         ),
         body: TextButton(
             onPressed: () {  },
-            child: GoogleProvider().accountButton()),
+            child: Center(child: GoogleProvider().accountButton())),
       ),
     );
   }
