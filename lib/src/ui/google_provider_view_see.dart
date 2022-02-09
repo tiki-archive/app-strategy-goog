@@ -11,24 +11,26 @@ import '../google_provider_service.dart';
 
 class GoogleProviderViewSee extends StatelessWidget {
 
+  const GoogleProviderViewSee({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     GoogleProviderService service = Provider.of<GoogleProviderService>(context);
     return Container(
         color: Colors.white,
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: service.style.size(8)),
+          margin: EdgeInsets.symmetric(vertical: service.style.size(12)),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text("What data does Google hold",
                 style: TextStyle(
-                    fontSize: service.style.text(11.5),
+                    fontSize: service.style.text(14),
                     fontWeight: FontWeight.bold,
                     color: service.style.infoLinkColor)),
             Container(
                 margin: EdgeInsets.only(left: service.style.size(8)),
                 child: Image(
                   image: const AssetImage('res/images/right-arrow.png', package: 'google_provider'),
-                  height: service.style.text(14),
+                  height: service.style.text(16),
                   fit: BoxFit.fitHeight,
                 ))
           ]),

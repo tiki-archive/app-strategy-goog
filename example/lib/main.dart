@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: TextButton(
-            onPressed: () {  },
-            child: GoogleProvider().accountButton()),
-      ),
-    );
+        body: Container(
+            color: Colors.grey,
+            child: Center(
+                child: GoogleProvider().accountButton()))),
+      );
   }
 }

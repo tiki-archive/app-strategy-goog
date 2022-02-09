@@ -22,7 +22,6 @@ class GoogleProviderViewUnlink extends StatelessWidget {
         child: Container(
             padding: EdgeInsets.only(
                 top: service.style.size(15),
-                bottom: service.style.size(15),
                 left: service.style.size(18),
                 right: service.style.size(18)),
             child: Row(

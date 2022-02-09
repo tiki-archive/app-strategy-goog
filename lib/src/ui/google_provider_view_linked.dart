@@ -22,13 +22,14 @@ class GoogleProviderViewLinked extends StatelessWidget {
         onTap: service.controller.onSee,
         behavior: HitTestBehavior.opaque,
         child: Container(
+            margin: EdgeInsets.all(service.style.size(8)),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(service.style.size(8)),
               boxShadow: [
                 BoxShadow(
                   color: const Color(0x0D000000),
-                  blurRadius: service.style.size(6),
+                  blurRadius: service.style.size(8),
                   offset: Offset(service.style.size(3), service.style.size(3)), // Shadow position
                 ),
               ],
@@ -36,21 +37,17 @@ class GoogleProviderViewLinked extends StatelessWidget {
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(service.style.size(12)),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const Align(
                         alignment: Alignment.centerRight,
                         child: GoogleProviderViewUnlink()),
                     Container(
-                        padding: EdgeInsets.only(left: service.style.size(10), top: service.style.size(1)),
+                        padding: EdgeInsets.only(left: service.style.size(5), top: service.style.size(5)),
                         child: const GoogleProviderViewAccount(),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: service.style.size(20)),
-                      width: double.infinity,
-                      color: service.style.greyThree,
-                      height: service.style.size(8),
-                    ),
-                    GoogleProviderViewSee()
+                    const Divider(color: Colors.grey),
+                    const GoogleProviderViewSee()
                   ],
                 ))));
   }

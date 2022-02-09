@@ -1,5 +1,5 @@
 class GoogleProviderModel{
   bool isLinked = false;
-  String? email;
-  String? token;
+  String? email = "tetete@gmail.com";
+  String? token = "feuifenwurfew";
 }

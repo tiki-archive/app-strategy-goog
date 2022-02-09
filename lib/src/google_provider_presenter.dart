@@ -13,7 +13,7 @@ class GoogleProviderPresenter{
     return ChangeNotifierProvider.value(
         value: service,
         child: !service.model.isLinked ?
-          const GoogleProviderViewLink(onLink) :
-          const GoogleProviderViewLinked(onUnlink, onSee));
+          const GoogleProviderViewLink() :
+          const GoogleProviderViewLinked()); 
   }
 }
