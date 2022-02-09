@@ -1,11 +1,18 @@
+import 'package:google_provider/src/google_provider_service.dart';
+
 class GoogleProviderController{
 
-  void onUnlink(){
+  final GoogleProviderService service;
+
+  GoogleProviderController(this.service);
+
+  Future<void> signIn() async {
+    await service.signIn();
   }
 
-  void onLink() {
+  void signOut() {
   }
 
-  void onSee() {
+  void seeInfo() {
   }
 }

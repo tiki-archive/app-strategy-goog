@@ -1,5 +1,12 @@
 class GoogleProviderModel{
   bool isLinked = false;
-  String? email = "tetete@gmail.com";
-  String? token = "feuifenwurfew";
+  int? accountId;
+  String? username;
+  String? displayName;
+  String? email;
+  String? provider;
+  String? token;
+  int? accessTokenExpiration;
+  String? refreshToken;
+  int? refreshTokenExpiration;
 }

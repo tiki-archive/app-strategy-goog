@@ -14,6 +14,6 @@ class GoogleProviderPresenter{
         value: service,
         child: !service.model.isLinked ?
           const GoogleProviderViewLink() :
-          const GoogleProviderViewLinked()); 
+          const GoogleProviderViewLinked());
   }
 }

@@ -13,7 +13,7 @@ class GoogleProviderViewLink extends StatelessWidget {
   Widget build(BuildContext context) {
     GoogleProviderService service = Provider.of<GoogleProviderService>(context);
     return GestureDetector(
-        onTap: service.controller.onLink,
+        onTap: service.controller.signIn,
         behavior: HitTestBehavior.opaque,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: service.style.size(8)),
