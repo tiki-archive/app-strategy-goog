@@ -14,11 +14,13 @@ class GoogleProviderService extends ChangeNotifier {
   late final GoogleProviderController controller;
   late final GoogleProviderStyle style;
   final FlutterAppAuth _appAuth;
+  final Httpp _httpp;
 
   GoogleProviderService({
-    required this.style, onLink, onUnlink, onSee
+    required this.style, required httpp, onLink, onUnlink, onSee
   }) :
-    _appAuth = FlutterAppAuth() {
+    _appAuth = FlutterAppAuth(),
+    _httpp = httpp ?? Httpp() {
       model = GoogleProviderModel();
       presenter = GoogleProviderPresenter(this);
       controller = GoogleProviderController(this);
@@ -32,7 +34,7 @@ class GoogleProviderService extends ChangeNotifier {
       model.accessTokenExpiration =
           tokenResponse.accessTokenExpirationDateTime?.millisecondsSinceEpoch;
       model.refreshToken = tokenResponse.refreshToken;
-      HttppRequest(
+      HttppRequest req = HttppRequest(
         uri: Uri.parse(GoogleProviderConfig.userinfoEndpoint),
         verb: HttppVerb.POST,
         headers: HttppHeaders.typical(bearerToken: model.token),
@@ -41,11 +43,14 @@ class GoogleProviderService extends ChangeNotifier {
           model.displayName = response.body?.jsonBody['name'];
           model.username = response.body?.jsonBody['id'] ?? response.body?.jsonBody['email'];
           model.email = response.body?.jsonBody['email'];
+          model.isLinked = true;
+          notifyListeners();
         },
+        onError: (e) => print,
+        onResult: (res) => print(res.body?.jsonBody ?? "null body)
       );
-      model.isLinked = true;
+      _httpp.client().request(req);
     }
-    notifyListeners();
   }
 
   // Future<void> signOut() async {

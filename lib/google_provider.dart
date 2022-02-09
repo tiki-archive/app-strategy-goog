@@ -10,8 +10,10 @@ class GoogleProvider {
     onLink,
     onUnlink,
     onSee,
+    httpp
   }) :
     _service = GoogleProviderService(
+        httpp: httpp,
         onLink: onLink,
         onUnlink: onUnlink,
         onSee: onSee,
