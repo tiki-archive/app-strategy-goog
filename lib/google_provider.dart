@@ -10,7 +10,7 @@ class GoogleProvider {
   GoogleProvider({
     GoogleProviderStyle? style,
     Function(GoogleProviderModel)? onLink,
-    Function? onUnlink,
+    Function(String)? onUnlink,
     Function? onSee,
     httpp
   }) :

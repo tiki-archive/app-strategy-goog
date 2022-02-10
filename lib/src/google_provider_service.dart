@@ -14,7 +14,7 @@ class GoogleProviderService extends ChangeNotifier {
 
   final Logger _log = Logger('GoogleProviderService');
 
-  late final GoogleProviderModel model;
+  GoogleProviderModel model;
   late final GoogleProviderPresenter presenter;
   late final GoogleProviderController controller;
   late final GoogleProviderRepository repository;
@@ -30,9 +30,9 @@ class GoogleProviderService extends ChangeNotifier {
     required Httpp? httpp,
     this.onLink, this.onUnlink, this.onSee
   }) :
-    _appAuth = FlutterAppAuth(),
-        client = httpp == null ? Httpp().client() : httpp.client() {
-      model = GoogleProviderModel();
+      model = GoogleProviderModel(),
+      _appAuth = FlutterAppAuth(),
+      client = httpp == null ? Httpp().client() : httpp.client() {
       presenter = GoogleProviderPresenter(this);
       controller = GoogleProviderController(this);
       repository = GoogleProviderRepository();
@@ -44,11 +44,10 @@ class GoogleProviderService extends ChangeNotifier {
     if (tokenResponse != null) {
       _log.finest("authorizeAndExchangeCode success - ${tokenResponse.tokenType}");
       model.token = tokenResponse.accessToken;
-      model.accessTokenExpiration =
-          tokenResponse.accessTokenExpirationDateTime?.millisecondsSinceEpoch;
+      model.accessTokenExp = tokenResponse.accessTokenExpirationDateTime;
       model.refreshToken = tokenResponse.refreshToken;
       await repository.userInfo(
-        accessToken: model.token,
+        accessToken: model.token!,
         client: client,
         onSuccess: saveUserInfo,
         onError: (e) => print,
@@ -60,15 +59,16 @@ class GoogleProviderService extends ChangeNotifier {
     }
   }
 
-  // Future<void> signOut() async {
-  //   ApiOAuthInterfaceProvider? provider =
-  //   _model.interfaceProviders[account.provider];
-  //   if (provider != null) {
-  //     await provider.revokeToken(account);
-  //   }
-  //   await _apiAuthRepositoryAccount.delete(account);
-  // }
-  //
+  Future<void> signOut() async {
+    await repository.revokeToken(
+      accessToken: model.token!,
+      client: client);
+    if(onUnlink != null){
+      onUnlink!(model.email);
+    }
+    model = GoogleProviderModel();
+    notifyListeners();
+  }
 
   Future<AuthorizationTokenResponse?> _authorizeAndExchangeCode() async {
     AuthorizationServiceConfiguration authConfig = const AuthorizationServiceConfiguration(
@@ -88,7 +88,6 @@ class GoogleProviderService extends ChangeNotifier {
 
   void saveUserInfo(response) {
       model.displayName = response?.body?.jsonBody['name'];
-      model.username = response?.body?.jsonBody['id'] ?? response?.body?.jsonBody['email'];
       model.email = response?.body?.jsonBody['email'];
       model.isLinked = true;
   }

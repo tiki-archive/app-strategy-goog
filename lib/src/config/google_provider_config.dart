@@ -8,6 +8,7 @@ class GoogleProviderConfig{
   static const String tokenEndpoint = "https://www.googleapis.com/oauth2/v4/token";
   static const String discoveryUrl = "https://accounts.google.com/.well-known/openid-configuration";
   static const String userinfoEndpoint = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json";
+  static const String revoveTokenEndpoint = "https://oauth2.googleapis.com/revoke?token=";
   static const List<String> scopes = [
     "openid",
     "https://www.googleapis.com/auth/userinfo.profile",
@@ -15,5 +16,6 @@ class GoogleProviderConfig{
     "https://www.googleapis.com/auth/gmail.readonly",
     "https://www.googleapis.com/auth/gmail.send"
   ];
+
   static get clientId =>  Platform.isIOS ? iosClientId : androidClientId;
 }
