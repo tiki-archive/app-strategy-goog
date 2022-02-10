@@ -19,13 +19,16 @@ class GoogleProviderService extends ChangeNotifier {
   late final GoogleProviderController controller;
   late final GoogleProviderRepository repository;
   late final GoogleProviderStyle style;
+  final Function? onLink;
+  final Function? onUnlink;
+  final Function? onSee;
   final FlutterAppAuth _appAuth;
   final HttppClient client;
 
   GoogleProviderService({
     required this.style,
     required Httpp? httpp,
-    onLink, onUnlink, onSee
+    this.onLink, this.onUnlink, this.onSee
   }) :
     _appAuth = FlutterAppAuth(),
         client = httpp == null ? Httpp().client() : httpp.client() {
@@ -50,6 +53,9 @@ class GoogleProviderService extends ChangeNotifier {
         onSuccess: saveUserInfo,
         onError: (e) => print,
       );
+      if (onLink != null) {
+        onLink!(model);
+      }
       notifyListeners();
     }
   }
