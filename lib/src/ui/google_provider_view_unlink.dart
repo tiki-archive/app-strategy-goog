@@ -17,12 +17,11 @@ class GoogleProviderViewUnlink extends StatelessWidget {
   Widget build(BuildContext context) {
     GoogleProviderService service = Provider.of<GoogleProviderService>(context);
     return GestureDetector(
-        onTap: service.controller.onUnlink,
+        onTap: service.controller.signOut,
         behavior: HitTestBehavior.opaque,
         child: Container(
             padding: EdgeInsets.only(
                 top: service.style.size(15),
-                bottom: service.style.size(15),
                 left: service.style.size(18),
                 right: service.style.size(18)),
             child: Row(

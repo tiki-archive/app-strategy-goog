@@ -15,33 +15,39 @@ class GoogleProviderViewAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GoogleProviderService service = Provider.of<GoogleProviderService>(context);
-    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Image(
-        image: const AssetImage('res/images/gogle.png', package: 'google_provider'),
-        height: service.style.size(3.5),
-        fit: BoxFit.fitHeight,
-      ),
-      Container(
-          margin: EdgeInsets.only(left: service.style.size(2)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(bottom: service.style.size(0.25)),
-                  child: Text("Google",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          color: service.style.grey,
-                          height: 1,
-                          fontSize: service.style.text(12)))),
-              Text(service.model.email!,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: service.style.blue,
-                      height: 1,
-                      fontSize: service.style.text(14)))
-            ],
-          ))
-    ]);
+    return Container(
+        padding: EdgeInsets.all(service.style.size(16)),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(service.style.size(5)),
+        ),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Image(
+            image: const AssetImage('res/images/gmail-circle-icon.png', package: 'google_provider'),
+            height: service.style.size(40),
+            fit: BoxFit.fitHeight,
+          ),
+          Container(
+            padding: EdgeInsets.only(left: service.style.size(15)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(bottom: service.style.size(8)),
+                    child: Text("Gmail",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: service.style.providerColor,
+                            height: 1,
+                            fontSize: service.style.text(14)))),
+                Text(service.model.email!,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: service.style.textColor,
+                        height: 1,
+                        fontSize: service.style.text(18)))
+              ],
+            ))
+    ]));
   }
 }
