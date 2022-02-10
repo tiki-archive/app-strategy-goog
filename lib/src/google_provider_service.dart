@@ -1,55 +1,56 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:httpp/httpp.dart';
+import 'package:logging/logging.dart';
 
 import 'config/google_provider_config.dart';
 import 'google_provider_controller.dart';
 import 'google_provider_presenter.dart';
+import 'google_provider_repository.dart';
 import 'google_provider_style.dart';
 import 'model/google_provider_model.dart';
 
 class GoogleProviderService extends ChangeNotifier {
+
+  final Logger _log = Logger('GoogleProviderService');
+
   late final GoogleProviderModel model;
   late final GoogleProviderPresenter presenter;
   late final GoogleProviderController controller;
+  late final GoogleProviderRepository repository;
   late final GoogleProviderStyle style;
   final FlutterAppAuth _appAuth;
-  final Httpp _httpp;
+  final HttppClient client;
 
   GoogleProviderService({
-    required this.style, required httpp, onLink, onUnlink, onSee
+    required this.style,
+    required Httpp? httpp,
+    onLink, onUnlink, onSee
   }) :
     _appAuth = FlutterAppAuth(),
-    _httpp = httpp ?? Httpp() {
+        client = httpp == null ? Httpp().client() : httpp.client() {
       model = GoogleProviderModel();
       presenter = GoogleProviderPresenter(this);
       controller = GoogleProviderController(this);
+      repository = GoogleProviderRepository();
   }
 
 
   Future<void> signIn() async {
     AuthorizationTokenResponse? tokenResponse = await _authorizeAndExchangeCode();
     if (tokenResponse != null) {
+      _log.finest("authorizeAndExchangeCode success - ${tokenResponse.tokenType}");
       model.token = tokenResponse.accessToken;
       model.accessTokenExpiration =
           tokenResponse.accessTokenExpirationDateTime?.millisecondsSinceEpoch;
       model.refreshToken = tokenResponse.refreshToken;
-      HttppRequest req = HttppRequest(
-        uri: Uri.parse(GoogleProviderConfig.userinfoEndpoint),
-        verb: HttppVerb.POST,
-        headers: HttppHeaders.typical(bearerToken: model.token),
-        timeout: const Duration(seconds: 30),
-        onSuccess: (response) {
-          model.displayName = response.body?.jsonBody['name'];
-          model.username = response.body?.jsonBody['id'] ?? response.body?.jsonBody['email'];
-          model.email = response.body?.jsonBody['email'];
-          model.isLinked = true;
-          notifyListeners();
-        },
+      await repository.userInfo(
+        accessToken: model.token,
+        client: client,
+        onSuccess: saveUserInfo,
         onError: (e) => print,
-        onResult: (res) => print(res.body?.jsonBody ?? "null body)
       );
-      _httpp.client().request(req);
+      notifyListeners();
     }
   }
 
@@ -78,4 +79,11 @@ class GoogleProviderService extends ChangeNotifier {
     );
   }
 
+
+  void saveUserInfo(response) {
+      model.displayName = response?.body?.jsonBody['name'];
+      model.username = response?.body?.jsonBody['id'] ?? response?.body?.jsonBody['email'];
+      model.email = response?.body?.jsonBody['email'];
+      model.isLinked = true;
+  }
 }
