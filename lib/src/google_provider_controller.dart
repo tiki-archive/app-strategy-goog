@@ -7,10 +7,11 @@ class GoogleProviderController{
   GoogleProviderController(this.service);
 
   Future<void> signIn() async {
-    await service.signIn();
+    service.signIn();
   }
 
   void signOut() {
+    service.signOut();
   }
 
   void seeInfo() {

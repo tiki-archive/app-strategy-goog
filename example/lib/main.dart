@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
         body: Container(
             color: Colors.grey,
             child: Center(
-                child: GoogleProvider(onLink: (model) => print(model)).accountButton()))),
+                child: GoogleProvider(
+                    onLink: (model) => print(model),
+                    onUnlink: (email) => print(email)).accountButton()),
+            )),
       );
   }
 }
