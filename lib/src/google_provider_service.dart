@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:google_provider/src/model/info/google_provider_info_model.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
 import 'config/google_provider_config.dart';
 import 'google_provider_controller.dart';
 import 'google_provider_presenter.dart';
-import 'google_provider_repository.dart';
+import 'repository/google_provider_repository.dart';
 import 'google_provider_style.dart';
 import 'model/google_provider_model.dart';
 
@@ -19,9 +20,9 @@ class GoogleProviderService extends ChangeNotifier {
   late final GoogleProviderController controller;
   late final GoogleProviderRepository repository;
   late final GoogleProviderStyle style;
-  final Function? onLink;
-  final Function? onUnlink;
-  final Function? onSee;
+  final Function(GoogleProviderModel)? onLink;
+  final Function(String?)? onUnlink;
+  final Function(List<GoogleProviderInfoModel>)? onSee;
   final FlutterAppAuth _appAuth;
   final HttppClient client;
 
@@ -90,5 +91,12 @@ class GoogleProviderService extends ChangeNotifier {
       model.displayName = response?.body?.jsonBody['name'];
       model.email = response?.body?.jsonBody['email'];
       model.isLinked = true;
+  }
+
+  void seeInfo() {
+    List<GoogleProviderInfoModel> data = repository.getTheyKnowInfo();
+    if(onSee != null) {
+      onSee!(data);
+    }
   }
 }

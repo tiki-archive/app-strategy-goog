@@ -1,9 +1,11 @@
+import 'package:google_provider/src/model/info/google_provider_info_model.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
-import 'config/google_provider_config.dart';
-import 'model/google_provider_model_error_http.dart';
-import 'model/google_provider_model_rsp.dart';
+import '../config/google_provider_config.dart';
+import '../model/google_provider_model_error_http.dart';
+import '../model/google_provider_model_rsp.dart';
+import 'google_provider_repository_info.dart';
 
 class GoogleProviderRepository{
 
@@ -57,4 +59,6 @@ class GoogleProviderRepository{
     _log.finest('${req.verb.value} — ${req.uri}');
     return client.request(req);
   }
+
+  List<GoogleProviderInfoModel> getTheyKnowInfo() => GoogleProviderRepositoryInfo.theyKnowInfo;
 }
