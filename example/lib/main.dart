@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
             color: Colors.grey,
             child: Center(
                 child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       googleProvider.accountWidget(),
                       const Padding(padding: EdgeInsets.all(20)),
