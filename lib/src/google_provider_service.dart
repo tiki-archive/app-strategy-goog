@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:google_provider/src/google_provider_service_email.dart';
-import 'package:google_provider/src/model/email/google_provider_model_email_msg.dart';
 import 'package:google_provider/src/model/info/google_provider_info_model.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
@@ -15,7 +12,6 @@ import 'model/email/google_provider_model_email.dart';
 import 'repository/google_provider_repository.dart';
 import 'google_provider_style.dart';
 import 'model/google_provider_model.dart';
-import 'repository/google_provider_repository_email.dart';
 
 class GoogleProviderService extends ChangeNotifier {
 
@@ -114,6 +110,7 @@ class GoogleProviderService extends ChangeNotifier {
     required Function() onFinish
   }){
     _serviceEmail.fetchMessages(messageIds: messageIds, onResult: onResult, onFinish: onFinish);
+
   }
 
   // TODO handle if token cannot be refreshed

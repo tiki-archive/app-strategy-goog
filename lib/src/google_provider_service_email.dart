@@ -32,6 +32,7 @@ class GoogleProviderServiceEmail{
         onResult: onResult,
         since: since);
   }
+  
   Future<void> fetchMessages({
         required List<String> messageIds,
         required Function(GoogleProviderModelEmail message) onResult,
@@ -128,7 +129,6 @@ revolution today.<br />
         });
   }
 
-
   Map<String, String>? _from(List<GoogleProviderModelEmailMsgHeader>? headers) {
     if (headers != null) {
       for (GoogleProviderModelEmailMsgHeader header in headers) {
@@ -202,7 +202,6 @@ revolution today.<br />
       onSuccess: (response) {
         GoogleProviderModelEmailMsgs messages =
           GoogleProviderModelEmailMsgs.fromJson(response.body?.jsonBody);
-
         List<String> messagesIds = messages.messages?.map(
                 (m) => m.id ?? "").toList() ?? List.empty();
         messagesIds.removeWhere((element) => element.isEmpty);
