@@ -1,7 +1,6 @@
 import 'package:google_provider/src/google_provider_service.dart';
 
-class GoogleProviderController{
-
+class GoogleProviderController {
   final GoogleProviderService service;
 
   GoogleProviderController(this.service);

@@ -6,14 +6,14 @@
 import 'package:google_provider/src/utils/json/json_object.dart';
 import 'package:google_provider/src/utils/json/json_utils.dart';
 
-import 'google_provider_model_email_header.dart';
+import 'google_provider_model_email_msg_header.dart';
 import 'google_provider_model_email_msg_part_body.dart';
 
 class GoogleProviderModelEmailMsgPart extends JsonObject {
   String? partId;
   String? mimeType;
   String? filename;
-  List<GoogleProviderModelEmailHeader>? headers;
+  List<GoogleProviderModelEmailMsgHeader>? headers;
   GoogleProviderModelEmailMsgPartBody? body;
   List<GoogleProviderModelEmailMsgPart>? parts;
 
@@ -31,7 +31,7 @@ class GoogleProviderModelEmailMsgPart extends JsonObject {
       mimeType = json['mimeType'];
       filename = json['filename'];
       headers = JsonUtils.listFromJson(
-          json['headers'], (json) => GoogleProviderModelEmailHeader.fromJson(json));
+          json['headers'], (json) => GoogleProviderModelEmailMsgHeader.fromJson(json));
       body = GoogleProviderModelEmailMsgPartBody.fromJson(json['body']);
       parts = JsonUtils.listFromJson(
           json['parts'], (json) => GoogleProviderModelEmailMsgPart.fromJson(json));

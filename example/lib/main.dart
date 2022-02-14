@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_provider/google_provider.dart';
 import 'package:logging/logging.dart';
 
+import 'config_log.dart';
+
 Future<void> main() async {
+  ConfigLog();
   runApp(MyApp());
 }
 
@@ -18,6 +21,7 @@ class MyApp extends StatelessWidget {
       onUnlink: (email) => _log.finest(email),
       onSee: (data) => _log.finest(data),
     );
+    List<String> msgIds = [];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -30,8 +34,8 @@ class MyApp extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       googleProvider.accountWidget(),
-                      const Padding(padding: EdgeInsets.all(20)),
-                      TextButton(
+                      const Padding(padding: EdgeInsets.all(10)),
+                      ElevatedButton(
                           onPressed: () => googleProvider.sendEmail(
                               body : "test email from google provider",
                               to : "ricardolgrj@yahoo.com.br",
@@ -42,18 +46,30 @@ class MyApp extends StatelessWidget {
                           ),
                           child: const Text('Send test email')
                       ),
-                      const Padding(padding: EdgeInsets.all(20)),
-                      TextButton(
+                      const Padding(padding: EdgeInsets.all(10)),
+                      ElevatedButton(
                         onPressed: () => googleProvider.fetchInbox(
                             onResult: (messages) async {
+                              msgIds.addAll(messages);
                               _log.fine('fetched ${messages.length} messages');
                             },
                             onFinish: () async {
-                              _log.fine('finished fetching.');
+                              _log.fine('finished fetching inbox.');
                           }),
                           child: const Text('Fetch Inbox')
-                      )])
-
+                      ),
+                      const Padding(padding: EdgeInsets.all(10)),
+                      ElevatedButton(
+                        onPressed: () => googleProvider.fetchMessages(
+                            messageIds: msgIds,
+                            onResult: (message) async {
+                              _log.fine('fetched message id ${message.extMessageId} - $message');
+                            },
+                            onFinish: () async {
+                              _log.fine('finished fetching messages.');
+                            }),
+                        child: const Text('Fetch Messages')
+                    )])
             )),
       ));
   }
