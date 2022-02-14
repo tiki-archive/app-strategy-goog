@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:google_provider/src/google_provider_service_email.dart';
+import 'package:google_provider/src/model/email/google_provider_model_email_msg.dart';
 import 'package:google_provider/src/model/info/google_provider_info_model.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
@@ -10,6 +14,7 @@ import 'google_provider_presenter.dart';
 import 'repository/google_provider_repository.dart';
 import 'google_provider_style.dart';
 import 'model/google_provider_model.dart';
+import 'repository/google_provider_repository_email.dart';
 
 class GoogleProviderService extends ChangeNotifier {
 
@@ -18,14 +23,17 @@ class GoogleProviderService extends ChangeNotifier {
   GoogleProviderModel model;
   late final GoogleProviderPresenter presenter;
   late final GoogleProviderController controller;
-  late final GoogleProviderRepository repository;
+  late final GoogleProviderRepository _repository;
   late final GoogleProviderStyle style;
+  late final GoogleProviderServiceEmail _serviceEmail;
   final Function(GoogleProviderModel)? onLink;
   final Function(String?)? onUnlink;
   final Function(List<GoogleProviderInfoModel>)? onSee;
   final FlutterAppAuth _appAuth;
   final HttppClient client;
 
+
+  
   GoogleProviderService({
     required this.style,
     required Httpp? httpp,
@@ -36,7 +44,8 @@ class GoogleProviderService extends ChangeNotifier {
       client = httpp == null ? Httpp().client() : httpp.client() {
       presenter = GoogleProviderPresenter(this);
       controller = GoogleProviderController(this);
-      repository = GoogleProviderRepository();
+      _repository = GoogleProviderRepository();
+      _serviceEmail = GoogleProviderServiceEmail(this);
   }
 
 
@@ -47,7 +56,7 @@ class GoogleProviderService extends ChangeNotifier {
       model.token = tokenResponse.accessToken;
       model.accessTokenExp = tokenResponse.accessTokenExpirationDateTime;
       model.refreshToken = tokenResponse.refreshToken;
-      await repository.userInfo(
+      await _repository.userInfo(
         accessToken: model.token!,
         client: client,
         onSuccess: saveUserInfo,
@@ -61,7 +70,7 @@ class GoogleProviderService extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    await repository.revokeToken(
+    await _repository.revokeToken(
       accessToken: model.token!,
       client: client);
     if(onUnlink != null){
@@ -69,6 +78,50 @@ class GoogleProviderService extends ChangeNotifier {
     }
     model = GoogleProviderModel();
     notifyListeners();
+  }
+
+  void saveUserInfo(response) {
+      model.displayName = response?.body?.jsonBody['name'];
+      model.email = response?.body?.jsonBody['email'];
+      model.isLinked = true;
+  }
+
+  void seeInfo() {
+    List<GoogleProviderInfoModel> data = _repository.getTheyKnowInfo();
+    if(onSee != null) {
+      onSee!(data);
+    }
+  }
+
+  void sendEmail({
+    String? body,
+    required String to,
+    String? subject,
+    Function(bool)? onResult
+  }){
+    _serviceEmail.sendEmail(
+        body : body,
+        to : to,
+        subject : subject,
+        onResult : onResult,
+    );
+  }
+
+  // TODO handle if token cannot be refreshed
+  Future<void> refreshToken() async {
+    try {
+      TokenResponse tokenResponse = (await _appAuth.token(TokenRequest(
+          GoogleProviderConfig.clientId, GoogleProviderConfig.redirectUri,
+          serviceConfiguration: const AuthorizationServiceConfiguration(
+              authorizationEndpoint: GoogleProviderConfig.authorizationEndpoint,
+              tokenEndpoint: GoogleProviderConfig.tokenEndpoint),
+          refreshToken: model.refreshToken,
+          scopes: GoogleProviderConfig.scopes)))!;
+      model.token = tokenResponse.accessToken;
+      model.refreshToken = tokenResponse.refreshToken;
+    } catch (e) {
+      _log.severe(e.toString());
+    }
   }
 
   Future<AuthorizationTokenResponse?> _authorizeAndExchangeCode() async {
@@ -87,16 +140,4 @@ class GoogleProviderService extends ChangeNotifier {
   }
 
 
-  void saveUserInfo(response) {
-      model.displayName = response?.body?.jsonBody['name'];
-      model.email = response?.body?.jsonBody['email'];
-      model.isLinked = true;
-  }
-
-  void seeInfo() {
-    List<GoogleProviderInfoModel> data = repository.getTheyKnowInfo();
-    if(onSee != null) {
-      onSee!(data);
-    }
-  }
 }
