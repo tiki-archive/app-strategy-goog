@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:google_provider/src/google_provider_service.dart';
+import 'package:google_provider/src/model/email/google_provider_model_email_msgs.dart';
 import 'package:google_provider/src/repository/google_provider_repository_email.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
@@ -17,6 +18,15 @@ class GoogleProviderServiceEmail{
   GoogleProviderServiceEmail(this._service) :
     _repositoryEmail = GoogleProviderRepositoryEmail();
 
+  Future<void> fetchInbox({
+    DateTime? since,
+    required Function(List<String> messagesIds) onResult,
+    required Function() onFinish}) {
+    return _fetchInbox(
+        onFinish: onFinish,
+        onResult: onResult,
+        since: since);
+  }
 
   Future<void> sendEmail({
     String? body,
@@ -60,8 +70,8 @@ revolution today.<br />
         },
         onResult: (response) async {
           _log.warning('email to $to failed.');
-          _handleUnauthorized(_service.client, response);
-          _handleTooManyRequests(_service.client, response);
+          _handleUnauthorized(response);
+          _handleTooManyRequests(response);
           if (onResult != null) onResult(false);
         },
         onError: (error) {
@@ -70,28 +80,86 @@ revolution today.<br />
         });
   }
 
-  void _handleUnauthorized(HttppClient client, HttppResponse response) {
+  Future<void> _fetchInbox({
+    Function? onFinish,
+    String? pageToken,
+    DateTime? since,
+    required Function(List<String> messagesIds) onResult}) {
+    return _repositoryEmail.messageId(
+      client: _service.client,
+      accessToken: _service.model.token,
+      filter: _buildFiler(after: since, maxResults: 500, pageToken: pageToken),
+      onSuccess: (response) {
+        GoogleProviderModelEmailMsgs messages =
+          GoogleProviderModelEmailMsgs.fromJson(response.body?.jsonBody);
+
+        if (messages.nextPageToken != null) {
+          _fetchInbox(
+              onResult: onResult,
+              pageToken: messages.nextPageToken,
+              since: since);
+        }
+        List<String> messagesIds = messages.messages?.map(
+                (m) => m.id ?? "").toList() ?? List.empty();
+        messagesIds.removeWhere((element) => element.isEmpty);
+        onResult(messagesIds);
+      },
+      onResult: (response) {
+        _log.warning(
+            'Fetch inbox ${_service.model.email} failed with statusCode ${response.statusCode}');
+        _handleUnauthorized(response);
+        _handleTooManyRequests(response);
+      },
+      onError: (error) => _log.warning(
+          'Fetch inbox ${_service.model.email} failed with error $error'),
+    );
+  }
+
+  void _handleUnauthorized(HttppResponse response) {
     if (HttppUtils.isUnauthorized(response.statusCode)) {
       _log.warning('Unauthorized. Trying refresh');
-      client.denyUntil(response.request!, () async {
+      _service.client.denyUntil(response.request!, () async {
         await _service.refreshToken();
         response.request?.headers?.auth(_service.model.token);
       });
     }
   }
 
-  void _handleTooManyRequests(HttppClient client, HttppResponse response) {
+  void _handleTooManyRequests(HttppResponse response) {
     if (HttppUtils.isForbidden(response.statusCode)) {
       GoogleProviderModelError error =
         GoogleProviderModelError.fromJson(response.body?.jsonBody['error']);
       error.errors?.forEach((error) {
         if (error.reason == 'rateLimitExceeded') {
           _log.warning('Too many requests. Retry after');
-          client.denyFor(response.request!, const Duration(seconds: 1));
+          _service.client.denyFor(response.request!, const Duration(seconds: 1));
           return;
         }
       });
     }
+  }
+
+  String _buildFiler(
+      {DateTime? after, int maxResults = 500, String? pageToken}) {
+    StringBuffer queryBuffer = StringBuffer();
+
+    _appendQuery(queryBuffer, 'maxResults=$maxResults');
+
+    if (pageToken != null) _appendQuery(queryBuffer, 'pageToken=$pageToken');
+
+    if (after != null) {
+      int secondsSinceEpoch = (after.millisecondsSinceEpoch / 1000).floor();
+      _appendQuery(queryBuffer, 'q=after:' + secondsSinceEpoch.toString());
+    }
+    return queryBuffer.toString();
+  }
+
+  StringBuffer _appendQuery(StringBuffer queryBuffer, String append) {
+    if (queryBuffer.isNotEmpty) {
+      queryBuffer.write('&');
+    }
+    queryBuffer.write(append);
+    return queryBuffer;
   }
 
 }
