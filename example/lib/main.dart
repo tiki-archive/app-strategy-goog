@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_provider/google_provider.dart';
 import 'package:logging/logging.dart';
 
+import 'config_log.dart';
+
 Future<void> main() async {
+  ConfigLog();
   runApp(MyApp());
 }
 

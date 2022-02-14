@@ -2,17 +2,15 @@ import 'package:provider/provider.dart';
 
 import '../src/google_provider_service.dart';
 import 'ui/google_provider_account_widget.dart';
-import 'ui/google_provider_view_link.dart';
-import 'ui/google_provider_view_linked.dart';
 
-class GoogleProviderPresenter{
+class GoogleProviderPresenter {
   final GoogleProviderService service;
 
   GoogleProviderPresenter(this.service);
 
-  ChangeNotifierProvider<GoogleProviderService> accountButton({onLink, onUnlink, onSee}) {
+  ChangeNotifierProvider<GoogleProviderService> accountButton(
+      {onLink, onUnlink, onSee}) {
     return ChangeNotifierProvider.value(
-        value: service,
-        child: const GoogleProviderAccountWidget());
+        value: service, child: const GoogleProviderAccountWidget());
   }
 }

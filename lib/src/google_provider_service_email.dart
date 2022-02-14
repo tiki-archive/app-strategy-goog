@@ -14,75 +14,71 @@ import 'model/email/google_provider_model_sender.dart';
 import 'model/google_provider_model_error.dart';
 import 'package:collection/collection.dart';
 
-class GoogleProviderServiceEmail{
-
+class GoogleProviderServiceEmail {
   final Logger _log = Logger('GoogleProviderServiceEmail');
   final GoogleProviderRepositoryEmail _repositoryEmail;
   final GoogleProviderService _service;
 
-  GoogleProviderServiceEmail(this._service) :
-    _repositoryEmail = GoogleProviderRepositoryEmail();
+  GoogleProviderServiceEmail(this._service)
+      : _repositoryEmail = GoogleProviderRepositoryEmail();
 
-  Future<void> fetchInbox({
-    DateTime? since,
-    required Function(List<String> messagesIds) onResult,
-    required Function() onFinish}) {
-    return _fetchInbox(
-        onFinish: onFinish,
-        onResult: onResult,
-        since: since);
+  Future<void> fetchInbox(
+      {DateTime? since,
+      required Function(List<String> messagesIds) onResult,
+      required Function() onFinish}) {
+    return _fetchInbox(onFinish: onFinish, onResult: onResult, since: since);
   }
-  
-  Future<void> fetchMessages({
-        required List<String> messageIds,
-        required Function(GoogleProviderModelEmail message) onResult,
-        required Function() onFinish}) async {
+
+  Future<void> fetchMessages(
+      {required List<String> messageIds,
+      required Function(GoogleProviderModelEmail message) onResult,
+      required Function() onFinish}) async {
     List<Future> futures = [];
     for (var messageId in messageIds) {
       futures.add(_repositoryEmail.message(
-        client: _service.client,
-        accessToken: _service.model.token,
-        messageId: messageId,
-        onSuccess: (response) {
-          GoogleProviderModelEmailMsg message =
-            GoogleProviderModelEmailMsg.fromJson(response.body?.jsonBody);
-          Map<String, String>? from = _from(message.payload?.headers);
-          onResult(GoogleProviderModelEmail(
-              extMessageId: message.id,
-              receivedDate: message.internalDate,
-              openedDate: null, //TODO implement open date detection
-              toEmail: _toEmail(message.payload?.headers, _service.model.email!),
-              sender: GoogleProviderModelSender(
-                  email: from?['email'],
-                  name: from?['name'],
-                  category: _category(message.labelIds),
-                  unsubscribeMailTo:
-                  _unsubscribeMailTo(message.payload?.headers),
-                  unsubscribed: false,
-                  company: GoogleProviderModelCompany(
-                      domain:
-                      GoogleProviderModelCompany.domainFromEmail(from?['email'])))));
-        },
-        onResult: (response) {
-          _log.warning(
-              'Fetch message $messageId failed with statusCode ${response.statusCode}');
-          _handleUnauthorized(response);
-          _handleTooManyRequests(response);
-        },
-        onError: (error) {
-          _log.warning('Fetch message $messageId failed with error $error');
-        }));
+          client: _service.client,
+          accessToken: _service.model.token,
+          messageId: messageId,
+          onSuccess: (response) {
+            GoogleProviderModelEmailMsg message =
+                GoogleProviderModelEmailMsg.fromJson(response.body?.jsonBody);
+            Map<String, String>? from = _from(message.payload?.headers);
+            onResult(GoogleProviderModelEmail(
+                extMessageId: message.id,
+                receivedDate: message.internalDate,
+                openedDate: null, //TODO implement open date detection
+                toEmail:
+                    _toEmail(message.payload?.headers, _service.model.email!),
+                sender: GoogleProviderModelSender(
+                    email: from?['email'],
+                    name: from?['name'],
+                    category: _category(message.labelIds),
+                    unsubscribeMailTo:
+                        _unsubscribeMailTo(message.payload?.headers),
+                    unsubscribed: false,
+                    company: GoogleProviderModelCompany(
+                        domain: GoogleProviderModelCompany.domainFromEmail(
+                            from?['email'])))));
+          },
+          onResult: (response) {
+            _log.warning(
+                'Fetch message $messageId failed with statusCode ${response.statusCode}');
+            _handleUnauthorized(response);
+            _handleTooManyRequests(response);
+          },
+          onError: (error) {
+            _log.warning('Fetch message $messageId failed with error $error');
+          }));
     }
     await Future.wait(futures);
     onFinish();
   }
 
-  Future<void> sendEmail({
-    String? body,
-    required String to,
-    String? subject,
-    Function(bool success)? onResult
-  }) async {
+  Future<void> sendEmail(
+      {String? body,
+      required String to,
+      String? subject,
+      Function(bool success)? onResult}) async {
     String message = '''
 Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: 7bit
@@ -154,7 +150,7 @@ revolution today.<br />
       for (GoogleProviderModelEmailMsgHeader header in headers) {
         if (header.name?.trim() == 'List-Unsubscribe' && header.value != null) {
           String removeCaret =
-          header.value!.replaceAll('<', '').replaceAll(">", '');
+              header.value!.replaceAll('<', '').replaceAll(">", '');
           List<String> splitMailTo = removeCaret.split('mailto:');
           if (splitMailTo.length > 1) return splitMailTo[1].split(',')[0];
         }
@@ -165,23 +161,24 @@ revolution today.<br />
   String? _category(List<String>? labelIds) {
     if (labelIds != null) {
       String? categoryLabel =
-      labelIds.firstWhereOrNull((label) => label.contains("CATEGORY_"));
+          labelIds.firstWhereOrNull((label) => label.contains("CATEGORY_"));
       if (categoryLabel != null) {
         return categoryLabel.replaceFirst('CATEGORY_', '');
       }
     }
   }
 
-  String? _toEmail(List<GoogleProviderModelEmailMsgHeader>? headers, String expected) {
+  String? _toEmail(
+      List<GoogleProviderModelEmailMsgHeader>? headers, String expected) {
     if (headers != null) {
       for (GoogleProviderModelEmailMsgHeader header in headers) {
         if (header.name?.trim() == 'To' && header.value != null) {
           String headerEmail = header.value!.contains("<")
               ? header.value!
-              .split("<")
-              .toList()[1]
-              .replaceFirst(">", "")
-              .trim()
+                  .split("<")
+                  .toList()[1]
+                  .replaceFirst(">", "")
+                  .trim()
               : header.value!;
           return headerEmail.trim().toLowerCase();
         }
@@ -190,20 +187,20 @@ revolution today.<br />
     return expected;
   }
 
-  Future<void> _fetchInbox({
-    Function? onFinish,
-    String? pageToken,
-    DateTime? since,
-    required Function(List<String> messagesIds) onResult}) {
+  Future<void> _fetchInbox(
+      {Function? onFinish,
+      String? pageToken,
+      DateTime? since,
+      required Function(List<String> messagesIds) onResult}) {
     return _repositoryEmail.messageId(
       client: _service.client,
       accessToken: _service.model.token,
       filter: _buildFiler(after: since, maxResults: 500, pageToken: pageToken),
       onSuccess: (response) {
         GoogleProviderModelEmailMsgs messages =
-          GoogleProviderModelEmailMsgs.fromJson(response.body?.jsonBody);
-        List<String> messagesIds = messages.messages?.map(
-                (m) => m.id ?? "").toList() ?? List.empty();
+            GoogleProviderModelEmailMsgs.fromJson(response.body?.jsonBody);
+        List<String> messagesIds =
+            messages.messages?.map((m) => m.id ?? "").toList() ?? List.empty();
         messagesIds.removeWhere((element) => element.isEmpty);
         onResult(messagesIds);
         if (messages.nextPageToken != null) {
@@ -211,8 +208,8 @@ revolution today.<br />
               onResult: onResult,
               pageToken: messages.nextPageToken,
               since: since);
-        }else {
-          if(onFinish != null) {
+        } else {
+          if (onFinish != null) {
             onFinish();
           }
         }
@@ -241,11 +238,12 @@ revolution today.<br />
   void _handleTooManyRequests(HttppResponse response) {
     if (HttppUtils.isForbidden(response.statusCode)) {
       GoogleProviderModelError error =
-        GoogleProviderModelError.fromJson(response.body?.jsonBody['error']);
+          GoogleProviderModelError.fromJson(response.body?.jsonBody['error']);
       error.errors?.forEach((error) {
         if (error.reason == 'rateLimitExceeded') {
           _log.warning('Too many requests. Retry after');
-          _service.client.denyFor(response.request!, const Duration(seconds: 1));
+          _service.client
+              .denyFor(response.request!, const Duration(seconds: 1));
           return;
         }
       });
@@ -274,5 +272,4 @@ revolution today.<br />
     queryBuffer.write(append);
     return queryBuffer;
   }
-
 }
