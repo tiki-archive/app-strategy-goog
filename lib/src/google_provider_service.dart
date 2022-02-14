@@ -30,11 +30,12 @@ class GoogleProviderService extends ChangeNotifier {
 
   GoogleProviderService(
       {required this.style,
-      required Httpp? httpp,
+      Httpp? httpp,
+      model,
       this.onLink,
       this.onUnlink,
       this.onSee})
-      : model = GoogleProviderModel(),
+      : model = model ?? GoogleProviderModel(),
         _appAuth = FlutterAppAuth(),
         client = httpp == null ? Httpp().client() : httpp.client() {
     presenter = GoogleProviderPresenter(this);

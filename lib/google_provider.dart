@@ -23,6 +23,21 @@ class GoogleProvider {
             onSee: onSee,
             style: style ?? GoogleProviderStyle());
 
+  GoogleProvider.fromModel(
+      GoogleProviderModel model,
+      {GoogleProviderStyle? style,
+        Function(GoogleProviderModel)? onLink,
+        Function(String?)? onUnlink,
+        Function(List<GoogleProviderInfoModel>)? onSee,
+        Httpp? httpp})
+      : _service = GoogleProviderService(
+      model: model,
+      httpp: httpp,
+      onLink: onLink,
+      onUnlink: onUnlink,
+      onSee: onSee,
+      style: style ?? GoogleProviderStyle());
+
   Widget accountWidget() => _service.presenter.accountButton();
 
   void sendEmail(
