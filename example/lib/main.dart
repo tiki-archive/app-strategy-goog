@@ -41,7 +41,19 @@ class MyApp extends StatelessWidget {
                                   _log.warning('email not sent')
                           ),
                           child: const Text('Send test email')
+                      ),
+                      const Padding(padding: EdgeInsets.all(20)),
+                      TextButton(
+                        onPressed: () => googleProvider.fetchInbox(
+                            onResult: (messages) async {
+                              _log.fine('fetched ${messages.length} messages');
+                            },
+                            onFinish: () async {
+                              _log.fine('finished fetching.');
+                          }),
+                          child: const Text('Fetch Inbox')
                       )])
+
             )),
       ));
   }
