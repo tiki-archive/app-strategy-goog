@@ -27,4 +27,17 @@ class GoogleProvider {
   Widget accountWidget() =>
       _service.presenter.accountButton();
 
+  void sendEmail({
+    String? body,
+    required String to,
+    String? subject,
+    Function(bool)? onResult
+  }){
+    _service.sendEmail(
+      body : body,
+      to : to,
+      subject : subject,
+      onResult : onResult
+    );
+  }
 }
