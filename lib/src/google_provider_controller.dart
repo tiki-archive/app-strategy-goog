@@ -15,5 +15,6 @@ class GoogleProviderController{
   }
 
   void seeInfo() {
+    service.seeInfo();
   }
 }

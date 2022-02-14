@@ -19,9 +19,11 @@ class MyApp extends StatelessWidget {
             color: Colors.grey,
             child: Center(
                 child: GoogleProvider(
-                    onLink: (model) => print(model),
-                    onUnlink: (email) => print(email)).accountButton()),
+                        onLink: (model) => print(model),
+                        onUnlink: (email) => print(email),
+                        onSee: (data) => print(data),
+                       ).accountWidget(),
             )),
-      );
+      ));
   }
 }
