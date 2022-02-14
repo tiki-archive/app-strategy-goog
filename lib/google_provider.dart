@@ -3,6 +3,8 @@ import 'package:google_provider/src/google_provider_service.dart';
 import 'package:google_provider/src/google_provider_style.dart';
 import 'package:httpp/httpp.dart';
 
+import 'src/config/config_log.dart';
+import 'src/model/email/google_provider_model_email.dart';
 import 'src/model/google_provider_model.dart';
 import 'src/model/info/google_provider_info_model.dart';
 
@@ -22,7 +24,9 @@ class GoogleProvider {
         onUnlink: onUnlink,
         onSee: onSee,
         style: style ?? GoogleProviderStyle()
-    );
+    ){
+    ConfigLog();
+  }
 
   Widget accountWidget() =>
       _service.presenter.accountButton();
@@ -39,5 +43,24 @@ class GoogleProvider {
       subject : subject,
       onResult : onResult
     );
+  }
+
+  void fetchInbox({
+    DateTime? since,
+    required Function(List<String> messagesIds) onResult,
+    required Function() onFinish
+  }){
+    _service.fetchInbox(
+      since: since,
+      onResult: onResult,
+      onFinish: onFinish);
+  }
+
+  void fetchMessages({
+    required List<String> messageIds,
+    required Function(GoogleProviderModelEmail message) onResult,
+    required Function() onFinish
+  }){
+    _service.fetchMessages(messageIds: messageIds, onResult: onResult, onFinish: onFinish);
   }
 }

@@ -11,6 +11,7 @@ import 'package:logging/logging.dart';
 import 'config/google_provider_config.dart';
 import 'google_provider_controller.dart';
 import 'google_provider_presenter.dart';
+import 'model/email/google_provider_model_email.dart';
 import 'repository/google_provider_repository.dart';
 import 'google_provider_style.dart';
 import 'model/google_provider_model.dart';
@@ -105,6 +106,14 @@ class GoogleProviderService extends ChangeNotifier {
         subject : subject,
         onResult : onResult,
     );
+  }
+
+  void fetchMessages({
+    required List<String> messageIds,
+    required Function(GoogleProviderModelEmail message) onResult,
+    required Function() onFinish
+  }){
+    _serviceEmail.fetchMessages(messageIds: messageIds, onResult: onResult, onFinish: onFinish);
   }
 
   // TODO handle if token cannot be refreshed
