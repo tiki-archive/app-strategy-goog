@@ -40,14 +40,18 @@ class GoogleProviderViewAccount extends StatelessWidget {
                             color: service.style.providerColor,
                             height: 1,
                             fontSize: service.style.text(14)))),
-                Text(service.model.email!,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: service.style.textColor,
-                        height: 1,
-                        fontSize: service.style.text(18)))
-              ],
-            ))
-    ]));
+                SizedBox(
+                      width: service.style.size(280),
+                      child: Text(service.model.email!,
+                        maxLines : 1,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: service.style.textColor,
+                            height: 1,
+                            fontSize: service.style.text(18)))
+                    )
+              ]))]));
   }
 }
