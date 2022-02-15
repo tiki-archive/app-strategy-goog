@@ -23,6 +23,31 @@ class GoogleProvider {
             onSee: onSee,
             style: style ?? GoogleProviderStyle());
 
+  GoogleProvider.loggedIn({
+        required email,
+        required token,
+        String? displayName,
+        String? refreshToken,
+        GoogleProviderStyle? style,
+        Function(GoogleProviderModel)? onLink,
+        Function(String?)? onUnlink,
+        Function(List<GoogleProviderInfoModel>)? onSee,
+        Httpp? httpp}){
+    _service = GoogleProviderService(
+        model: GoogleProviderModel(
+          isLinked: true,
+          email : email,
+          token : token,
+          displayName : displayName,
+          refreshToken : refreshToken,
+        ),
+        httpp: httpp,
+        onLink: onLink,
+        onUnlink: onUnlink,
+        onSee: onSee,
+        style: style ?? GoogleProviderStyle());
+  }
+
   Widget accountWidget() => _service.presenter.accountButton();
 
   void sendEmail(

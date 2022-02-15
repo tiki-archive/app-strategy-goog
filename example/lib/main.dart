@@ -33,6 +33,13 @@ class MyApp extends StatelessWidget {
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      GoogleProvider.loggedIn(
+                            displayName : "Test",
+                            email : "test@test.com",
+                            token : "abc",
+                            refreshToken : "def"
+                          ).accountWidget(),
+                      const Padding(padding: EdgeInsets.all(10)),
                       googleProvider.accountWidget(),
                       const Padding(padding: EdgeInsets.all(10)),
                       ElevatedButton(
