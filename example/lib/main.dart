@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
                     children: [
                       GoogleProvider.loggedIn(
                             displayName : "Test",
-                            email : "test@test.com",
+                            email : "reallylongemailtooverflow@gmail.com",
                             token : "abc",
                             refreshToken : "def"
                           ).accountWidget(),
