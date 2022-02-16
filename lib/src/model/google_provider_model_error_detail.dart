@@ -3,18 +3,18 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../../utils/json/json_object.dart';
+import 'package:google_provider/src/utils/json/json_object.dart';
 
-class ApiGoogleModelErrorDetail extends JsonObject {
+class GoogleProviderModelErrorDetail extends JsonObject {
   String? type;
   String? reason;
   String? domain;
   Map<String, dynamic>? metadata;
 
-  ApiGoogleModelErrorDetail(
+  GoogleProviderModelErrorDetail(
       {this.type, this.reason, this.domain, this.metadata});
 
-  ApiGoogleModelErrorDetail.fromJson(Map<String, dynamic>? json) {
+  GoogleProviderModelErrorDetail.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       type = json['@type'];
       reason = json['reason'];

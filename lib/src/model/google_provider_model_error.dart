@@ -3,30 +3,31 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import '../../../utils/json/json_object.dart';
-import '../../../utils/json/json_utils.dart';
-import 'api_google_model_error_detail.dart';
-import 'api_google_model_error_error.dart';
+import 'package:google_provider/src/utils/json/json_object.dart';
+import 'package:google_provider/src/utils/json/json_utils.dart';
 
-class ApiGoogleModelError extends JsonObject {
+import 'google_provider_model_error_detail.dart';
+import 'google_provider_model_error_error.dart';
+
+class GoogleProviderModelError extends JsonObject {
   int? code;
   String? message;
   String? status;
-  List<ApiGoogleModelErrorError>? errors;
-  List<ApiGoogleModelErrorDetail>? details;
+  List<GoogleProviderModelErrorError>? errors;
+  List<GoogleProviderModelErrorDetail>? details;
 
-  ApiGoogleModelError(
+  GoogleProviderModelError(
       {this.code, this.message, this.status, this.errors, this.details});
 
-  ApiGoogleModelError.fromJson(Map<String, dynamic>? json) {
+  GoogleProviderModelError.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       code = json['code'];
       message = json['message'];
       status = json['status'];
       errors = JsonUtils.listFromJson(
-          json['errors'], (json) => ApiGoogleModelErrorError.fromJson(json));
+          json['errors'], (json) => GoogleProviderModelErrorError.fromJson(json));
       details = JsonUtils.listFromJson(
-          json['details'], (json) => ApiGoogleModelErrorDetail.fromJson(json));
+          json['details'], (json) => GoogleProviderModelErrorDetail.fromJson(json));
     }
   }
 
