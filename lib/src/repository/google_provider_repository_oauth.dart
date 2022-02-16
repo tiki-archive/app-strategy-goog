@@ -7,7 +7,7 @@ import '../model/google_provider_model_error_http.dart';
 import '../model/google_provider_model_rsp.dart';
 import 'google_provider_repository_info.dart';
 
-class GoogleProviderRepository{
+class GoogleProviderRepositoryOauth{
 
   final Logger _log = Logger('GoogleProviderRepository');
 
@@ -59,6 +59,4 @@ class GoogleProviderRepository{
     _log.finest('${req.verb.value} — ${req.uri}');
     return client.request(req);
   }
-
-  List<GoogleProviderInfoModel> getTheyKnowInfo() => GoogleProviderRepositoryInfo.theyKnowInfo;
 }

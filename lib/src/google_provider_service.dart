@@ -1,32 +1,50 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:google_provider/src/google_provider_service_email.dart';
 import 'package:google_provider/src/model/info/google_provider_info_model.dart';
+import 'package:google_provider/src/repository/google_provider_repository_info.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
-import 'config/google_provider_config.dart';
 import 'google_provider_controller.dart';
 import 'google_provider_presenter.dart';
-import 'model/email/google_provider_model_email.dart';
-import 'repository/google_provider_repository.dart';
+import 'repository/google_provider_repository_oauth.dart';
 import 'google_provider_style.dart';
 import 'model/google_provider_model.dart';
 
 class GoogleProviderService extends ChangeNotifier {
   final Logger _log = Logger('GoogleProviderService');
 
+  static const String _redirectUri = "com.mytiki.app:/oauth";
+  static const String _androidClientId = "240428403253-8bof2prkdatnsm8d2msgq2r81r12p5np.apps.googleusercontent.com";
+  static const String _iosClientId = "240428403253-v4qk9lt2l07cc8am12gggocpbbsjdvl7.apps.googleusercontent.com";
+  static const String _authorizationEndpoint = "https://accounts.google.com/o/oauth2/v2/auth";
+  static const String _tokenEndpoint = "https://www.googleapis.com/oauth2/v4/token";
+ static const List<String> _scopes = [
+    "openid",
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/gmail.readonly",
+    "https://www.googleapis.com/auth/gmail.send"
+  ];
+
+  static get _clientId =>  Platform.isIOS ? _iosClientId : _androidClientId;
+  
   GoogleProviderModel model;
   late final GoogleProviderPresenter presenter;
   late final GoogleProviderController controller;
-  late final GoogleProviderRepository _repository;
   late final GoogleProviderStyle style;
-  late final GoogleProviderServiceEmail _serviceEmail;
+
   final Function(GoogleProviderModel)? onLink;
   final Function(String?)? onUnlink;
   final Function(List<GoogleProviderInfoModel>)? onSee;
-  final FlutterAppAuth _appAuth;
   final HttppClient client;
+
+  late final GoogleProviderRepositoryOauth _repository;
+  late final GoogleProviderServiceEmail email;
+  final FlutterAppAuth _appAuth;
 
   GoogleProviderService(
       {required this.style,
@@ -40,8 +58,8 @@ class GoogleProviderService extends ChangeNotifier {
         client = httpp == null ? Httpp().client() : httpp.client() {
     presenter = GoogleProviderPresenter(this);
     controller = GoogleProviderController(this);
-    _repository = GoogleProviderRepository();
-    _serviceEmail = GoogleProviderServiceEmail(this);
+    _repository = GoogleProviderRepositoryOauth();
+    email = GoogleProviderServiceEmail(this);
   }
 
   Future<void> signIn() async {
@@ -56,12 +74,16 @@ class GoogleProviderService extends ChangeNotifier {
       await _repository.userInfo(
         accessToken: model.token!,
         client: client,
-        onSuccess: saveUserInfo,
+        onSuccess: (response) {
+          model.displayName = response?.body?.jsonBody['name'];
+          model.email = response?.body?.jsonBody['email'];
+          model.isLinked = true;
+          if (onLink != null) {
+            onLink!(model);
+          }
+        },
         onError: (e) => print,
       );
-      if (onLink != null) {
-        onLink!(model);
-      }
       notifyListeners();
     }
   }
@@ -75,58 +97,23 @@ class GoogleProviderService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void saveUserInfo(response) {
-    model.displayName = response?.body?.jsonBody['name'];
-    model.email = response?.body?.jsonBody['email'];
-    model.isLinked = true;
-  }
-
   void seeInfo() {
-    List<GoogleProviderInfoModel> data = _repository.getTheyKnowInfo();
+    List<GoogleProviderInfoModel> data = GoogleProviderRepositoryInfo.theyKnowInfo;
     if (onSee != null) {
       onSee!(data);
     }
-  }
-
-  void sendEmail(
-      {String? body,
-      required String to,
-      String? subject,
-      Function(bool)? onResult}) {
-    _serviceEmail.sendEmail(
-      body: body,
-      to: to,
-      subject: subject,
-      onResult: onResult,
-    );
-  }
-
-  void fetchInbox(
-      {DateTime? since,
-      required Function(List<String> messagesIds) onResult,
-      required Function() onFinish}) {
-    _serviceEmail.fetchInbox(
-        since: since, onResult: onResult, onFinish: onFinish);
-  }
-
-  void fetchMessages(
-      {required List<String> messageIds,
-      required Function(GoogleProviderModelEmail message) onResult,
-      required Function() onFinish}) {
-    _serviceEmail.fetchMessages(
-        messageIds: messageIds, onResult: onResult, onFinish: onFinish);
   }
 
   // TODO handle if token cannot be refreshed
   Future<void> refreshToken() async {
     try {
       TokenResponse tokenResponse = (await _appAuth.token(TokenRequest(
-          GoogleProviderConfig.clientId, GoogleProviderConfig.redirectUri,
+          _clientId, _redirectUri,
           serviceConfiguration: const AuthorizationServiceConfiguration(
-              authorizationEndpoint: GoogleProviderConfig.authorizationEndpoint,
-              tokenEndpoint: GoogleProviderConfig.tokenEndpoint),
+              authorizationEndpoint: _authorizationEndpoint,
+              tokenEndpoint: _tokenEndpoint),
           refreshToken: model.refreshToken,
-          scopes: GoogleProviderConfig.scopes)))!;
+          scopes: _scopes)))!;
       model.token = tokenResponse.accessToken;
       model.refreshToken = tokenResponse.refreshToken;
     } catch (e) {
@@ -137,12 +124,12 @@ class GoogleProviderService extends ChangeNotifier {
   Future<AuthorizationTokenResponse?> _authorizeAndExchangeCode() async {
     AuthorizationServiceConfiguration authConfig =
         const AuthorizationServiceConfiguration(
-            authorizationEndpoint: GoogleProviderConfig.authorizationEndpoint,
-            tokenEndpoint: GoogleProviderConfig.tokenEndpoint);
-    List<String> providerScopes = GoogleProviderConfig.scopes;
+            authorizationEndpoint: _authorizationEndpoint,
+            tokenEndpoint: _tokenEndpoint);
+    List<String> providerScopes = _scopes;
     return await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(
-          GoogleProviderConfig.clientId, GoogleProviderConfig.redirectUri,
+          _clientId, _redirectUri,
           promptValues: null,
           serviceConfiguration: authConfig,
           scopes: providerScopes),

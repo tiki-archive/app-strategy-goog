@@ -74,7 +74,7 @@ class GoogleProviderServiceEmail {
     onFinish();
   }
 
-  Future<void> sendEmail(
+  Future<void> send(
       {String? body,
       required String to,
       String? subject,
