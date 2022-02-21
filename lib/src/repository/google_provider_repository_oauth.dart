@@ -1,15 +1,16 @@
-import 'package:google_provider/src/model/info/google_provider_info_model.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
-import '../config/google_provider_config.dart';
 import '../model/google_provider_model_error_http.dart';
 import '../model/google_provider_model_rsp.dart';
-import 'google_provider_repository_info.dart';
 
 class GoogleProviderRepositoryOauth{
 
   final Logger _log = Logger('GoogleProviderRepository');
+
+  static const String _userinfoEndpoint = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json";
+  static const String _revoveTokenEndpoint = "https://oauth2.googleapis.com/revoke?token=";
+
 
   Future<void> userInfo(
       {required HttppClient client,
@@ -17,7 +18,7 @@ class GoogleProviderRepositoryOauth{
         void Function(dynamic)? onSuccess,
         void Function(Object)? onError}) {
     HttppRequest req = HttppRequest(
-        uri: Uri.parse(GoogleProviderConfig.userinfoEndpoint),
+        uri: Uri.parse(_userinfoEndpoint),
         verb: HttppVerb.GET,
         headers: HttppHeaders.typical(bearerToken: accessToken),
         timeout: const Duration(seconds: 30),
@@ -42,7 +43,7 @@ class GoogleProviderRepositoryOauth{
     void Function(Object)? onError
   }) {
     HttppRequest req = HttppRequest(
-        uri: Uri.parse(GoogleProviderConfig.revoveTokenEndpoint + accessToken),
+        uri: Uri.parse(_revoveTokenEndpoint + accessToken),
         verb: HttppVerb.POST,
         headers: HttppHeaders.typical(bearerToken: accessToken),
         timeout: const Duration(seconds: 30),
