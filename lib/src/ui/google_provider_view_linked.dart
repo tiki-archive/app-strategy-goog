@@ -38,16 +38,13 @@ class GoogleProviderViewLinked extends StatelessWidget {
                 borderRadius: BorderRadius.circular(service.style.size(12)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Align(
+                  children: const [
+                    Align(
                         alignment: Alignment.centerRight,
                         child: GoogleProviderViewUnlink()),
-                    Container(
-                        padding: EdgeInsets.only(left: service.style.size(5), top: service.style.size(5)),
-                        child: const GoogleProviderViewAccount(),
-                    ),
-                    const Divider(color: Colors.grey),
-                    const GoogleProviderViewSee()
+                    GoogleProviderViewAccount(),
+                    Divider(color: Colors.grey),
+                    GoogleProviderViewSee()
                   ],
                 ))));
   }
