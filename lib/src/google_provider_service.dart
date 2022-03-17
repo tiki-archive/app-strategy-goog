@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:google_provider/src/google_provider_service_email.dart';
-import 'package:google_provider/src/model/info/google_provider_info_model.dart';
 import 'package:google_provider/src/repository/google_provider_repository_info.dart';
 import 'package:httpp/httpp.dart';
+import 'package:info_carousel/info_carousel.dart';
 import 'package:logging/logging.dart';
 
 import 'google_provider_controller.dart';
@@ -95,8 +95,9 @@ class GoogleProviderService extends ChangeNotifier {
     notifyListeners();
   }
 
-  void seeInfo() {
-    List<GoogleProviderInfoModel> data = GoogleProviderRepositoryInfo.theyKnowInfo;
+  Widget seeInfo() {
+    List<InfoCarouselCardModel> data = GoogleProviderRepositoryInfo.theyKnowInfo;
+    return InfoCarousel(cards: data).carouselWidget();
   }
 
   // TODO handle if token cannot be refreshed
