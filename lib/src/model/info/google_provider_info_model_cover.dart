@@ -3,10 +3,12 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:flutter/material.dart';
+
 import 'google_provider_info_model_cover_header.dart';
 
 class GoogleProviderInfoModelCover{
-  final String? image;
+  final Image? image;
   final String? subtitle;
   final String? bigTextLight;
   final String? bigTextDark;

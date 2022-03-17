@@ -143,6 +143,7 @@ revolution today.<br />
         }
       }
     }
+    return null;
   }
 
   String? _unsubscribeMailTo(List<GoogleProviderModelEmailMsgHeader>? headers) {
@@ -156,6 +157,7 @@ revolution today.<br />
         }
       }
     }
+    return null;
   }
 
   String? _category(List<String>? labelIds) {
@@ -166,6 +168,7 @@ revolution today.<br />
         return categoryLabel.replaceFirst('CATEGORY_', '');
       }
     }
+    return null;
   }
 
   String? _toEmail(

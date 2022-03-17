@@ -69,5 +69,6 @@ class GoogleProviderModelCompany extends JsonObject {
           "." +
           periodSplit[periodSplit.length - 1];
     }
+    return null;
   }
 }

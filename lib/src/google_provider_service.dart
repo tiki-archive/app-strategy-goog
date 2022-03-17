@@ -39,7 +39,6 @@ class GoogleProviderService extends ChangeNotifier {
 
   final Function(GoogleProviderModel)? onLink;
   final Function(String?)? onUnlink;
-  final Function(List<GoogleProviderInfoModel>)? onSee;
   final HttppClient client;
 
   late final GoogleProviderRepositoryOauth _repository;
@@ -51,8 +50,7 @@ class GoogleProviderService extends ChangeNotifier {
       Httpp? httpp,
       model,
       this.onLink,
-      this.onUnlink,
-      this.onSee})
+      this.onUnlink})
       : model = model ?? GoogleProviderModel(),
         _appAuth = FlutterAppAuth(),
         client = httpp == null ? Httpp().client() : httpp.client() {
@@ -99,9 +97,6 @@ class GoogleProviderService extends ChangeNotifier {
 
   void seeInfo() {
     List<GoogleProviderInfoModel> data = GoogleProviderRepositoryInfo.theyKnowInfo;
-    if (onSee != null) {
-      onSee!(data);
-    }
   }
 
   // TODO handle if token cannot be refreshed
