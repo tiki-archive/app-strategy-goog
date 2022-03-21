@@ -3,12 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_provider/src/utils/json/json_object.dart';
-
+import '../../utils/json/json_object.dart';
 import 'google_provider_model_email_msg_part.dart';
 
-
-class GoogleProviderModelEmailMsg extends JsonObject{
+class GoogleProviderModelEmailMsg extends JsonObject {
   String? id;
   String? threadId;
   List<String>? labelIds;
@@ -21,14 +19,14 @@ class GoogleProviderModelEmailMsg extends JsonObject{
 
   GoogleProviderModelEmailMsg(
       {this.id,
-        this.threadId,
-        this.labelIds,
-        this.snippet,
-        this.historyId,
-        this.internalDate,
-        this.sizeEstimate,
-        this.raw,
-        this.payload});
+      this.threadId,
+      this.labelIds,
+      this.snippet,
+      this.historyId,
+      this.internalDate,
+      this.sizeEstimate,
+      this.raw,
+      this.payload});
 
   GoogleProviderModelEmailMsg.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
@@ -53,14 +51,14 @@ class GoogleProviderModelEmailMsg extends JsonObject{
 
   @override
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'threadId': threadId,
-    'labelIds': labelIds,
-    'snippet': snippet,
-    'historyId': historyId,
-    'internalDate': internalDate?.millisecondsSinceEpoch,
-    'sizeEstimate': sizeEstimate,
-    'raw': raw,
-    'payload': payload?.toJson()
-  };
+        'id': id,
+        'threadId': threadId,
+        'labelIds': labelIds,
+        'snippet': snippet,
+        'historyId': historyId,
+        'internalDate': internalDate?.millisecondsSinceEpoch,
+        'sizeEstimate': sizeEstimate,
+        'raw': raw,
+        'payload': payload?.toJson()
+      };
 }

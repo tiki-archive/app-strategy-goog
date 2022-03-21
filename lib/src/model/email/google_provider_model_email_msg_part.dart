@@ -3,9 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_provider/src/utils/json/json_object.dart';
-import 'package:google_provider/src/utils/json/json_utils.dart';
-
+import '../../utils/json/json_object.dart';
+import '../../utils/json/json_utils.dart';
 import 'google_provider_model_email_msg_header.dart';
 import 'google_provider_model_email_msg_part_body.dart';
 
@@ -30,11 +29,11 @@ class GoogleProviderModelEmailMsgPart extends JsonObject {
       partId = json['partId'];
       mimeType = json['mimeType'];
       filename = json['filename'];
-      headers = JsonUtils.listFromJson(
-          json['headers'], (json) => GoogleProviderModelEmailMsgHeader.fromJson(json));
+      headers = JsonUtils.listFromJson(json['headers'],
+          (json) => GoogleProviderModelEmailMsgHeader.fromJson(json));
       body = GoogleProviderModelEmailMsgPartBody.fromJson(json['body']);
-      parts = JsonUtils.listFromJson(
-          json['parts'], (json) => GoogleProviderModelEmailMsgPart.fromJson(json));
+      parts = JsonUtils.listFromJson(json['parts'],
+          (json) => GoogleProviderModelEmailMsgPart.fromJson(json));
     }
   }
 

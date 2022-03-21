@@ -11,5 +11,4 @@ class GoogleProviderInfoModelContent {
   final GoogleProviderInfoModelContentCta? cta;
 
   const GoogleProviderInfoModelContent({this.body, this.cta});
-
 }

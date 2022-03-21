@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_provider/src/google_provider_service.dart';
+
+import 'google_provider_service.dart';
 
 class GoogleProviderController {
   final GoogleProviderService service;
@@ -15,6 +16,7 @@ class GoogleProviderController {
   }
 
   void seeInfo(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => service.seeInfo()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => service.seeInfo()));
   }
 }

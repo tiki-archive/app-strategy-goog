@@ -3,10 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_provider/src/utils/json/json_object.dart';
-
+import '../../utils/json/json_object.dart';
 import 'google_provider_model_company.dart';
-
 
 class GoogleProviderModelSender extends JsonObject {
   int? senderId;
@@ -33,8 +31,7 @@ class GoogleProviderModelSender extends JsonObject {
       this.unsubscribed = false,
       this.modified,
       this.created})
-      : ignoreUntil =
-            ignoreUntil ?? DateTime.fromMillisecondsSinceEpoch(0);
+      : ignoreUntil = ignoreUntil ?? DateTime.fromMillisecondsSinceEpoch(0);
 
   GoogleProviderModelSender.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
@@ -54,12 +51,10 @@ class GoogleProviderModelSender extends JsonObject {
             DateTime.fromMillisecondsSinceEpoch(json['email_since_epoch']);
       }
       if (json['modified_epoch'] != null) {
-        modified =
-            DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
+        modified = DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
       }
       if (json['created_epoch'] != null) {
-        created =
-            DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+        created = DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
       }
     }
   }

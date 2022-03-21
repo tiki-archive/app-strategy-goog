@@ -6,14 +6,16 @@ class GoogleProviderRepositoryInfo {
     InfoCarouselCardModel(
         cover: InfoCarouselCardModelCover(
             header: InfoCarouselCardModelCoverHeader(
-                image: Image.asset("res/images/gmail-circle-icon.png", package: "google_provider"),
+                image: Image.asset("res/images/gmail-circle-icon.png",
+                    package: "google_provider"),
                 title: "Your Gmail account",
                 share: InfoCarouselCardModelCoverHeaderShare(
-                    message:
-                        "Gmail knows where you are when you read your emails. It's your data, start taking it back on https://www.mytiki.com",
-                    //image: const AssetImage("res/images/socialmedia1.png", package: "google_provider")
+                  message:
+                      "Gmail knows where you are when you read your emails. It's your data, start taking it back on https://www.mytiki.com",
+                  //image: const AssetImage("res/images/socialmedia1.png", package: "google_provider")
                 )),
-            image: Image.asset("res/images/where-you-are.png", package: "google_provider"),
+            image: Image.asset("res/images/where-you-are.png",
+                package: "google_provider"),
             subtitle: "Gmail knows...",
             bigTextLight: "Where you are ",
             bigTextDark: "when you read your emails.",
@@ -34,22 +36,28 @@ class GoogleProviderRepositoryInfo {
                 ],
                 theySay: <InfoCarouselCardModelContentIcon>[
                   InfoCarouselCardModelContentIcon(
-                      image: Image.asset("res/images/info-badge.png", package: "google_provider"),
+                      image: Image.asset("res/images/info-badge.png",
+                          package: "google_provider"),
                       text: "Security monitoring to suspicious access"),
                   InfoCarouselCardModelContentIcon(
-                      image: Image.asset("res/images/search-graph.png", package: "google_provider"),
+                      image: Image.asset("res/images/search-graph.png",
+                          package: "google_provider"),
                       text:
                           "Analyzing patterns to develop new features and products")
                 ],
                 shouldKnow: [
                   InfoCarouselCardModelContentIcon(
-                      image: Image.asset("res/images/np-tap.png", package: "google_provider"),
+                      image: Image.asset("res/images/np-tap.png",
+                          package: "google_provider"),
                       text:
                           "Used advertisers for location-based targeting and surveillance"),
                   InfoCarouselCardModelContentIcon(
-                      image: Image.asset("res/images/badge.png", package: "google_provider"), text: "Used by law enforcement"),
+                      image: Image.asset("res/images/badge.png",
+                          package: "google_provider"),
+                      text: "Used by law enforcement"),
                   InfoCarouselCardModelContentIcon(
-                      image: Image.asset("res/images/worldwide.png", package: "google_provider"),
+                      image: Image.asset("res/images/worldwide.png",
+                          package: "google_provider"),
                       text:
                           "Saved for 9 months, then obscured and kept permanently")
                 ]),
@@ -76,14 +84,16 @@ class GoogleProviderRepositoryInfo {
     InfoCarouselCardModel(
         cover: InfoCarouselCardModelCover(
             header: InfoCarouselCardModelCoverHeader(
-                image: Image.asset("res/images/gmail-circle-icon.png", package: "google_provider"),
+                image: Image.asset("res/images/gmail-circle-icon.png",
+                    package: "google_provider"),
                 title: "Your Gmail account",
                 share: InfoCarouselCardModelCoverHeaderShare(
-                    message:
-                        "Gmail knows what you've written to your friends. Find out more on https://www.mytiki.com",
-                    //image: const AssetImage("socialmedia2.png", package: "google_provider")
-            )),
-            image: Image.asset("res/images/what-written.png", package: "google_provider"),
+                  message:
+                      "Gmail knows what you've written to your friends. Find out more on https://www.mytiki.com",
+                  //image: const AssetImage("socialmedia2.png", package: "google_provider")
+                )),
+            image: Image.asset("res/images/what-written.png",
+                package: "google_provider"),
             subtitle: "Gmail knows...",
             bigTextLight: "What you’ve written to ",
             bigTextDark: "your friends",
@@ -97,25 +107,33 @@ class GoogleProviderRepositoryInfo {
                   url: null)
             ], theySay: [
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/airplane.png", package: "google_provider"),
+                  image: Image.asset("res/images/airplane.png",
+                      package: "google_provider"),
                   text:
                       "Travel assistance like itineraries, updates, and maps."),
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/email.png", package: "google_provider"),
+                  image: Image.asset("res/images/email.png",
+                      package: "google_provider"),
                   text:
                       "Smart email with suggestions, nudges, prioritization, and filtering"),
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/package.png", package: "google_provider"),
+                  image: Image.asset("res/images/package.png",
+                      package: "google_provider"),
                   text:
                       "Track packages, reservations, loyalty cards, and bills")
             ], shouldKnow: [
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/np-tap.png", package: "google_provider"),
+                  image: Image.asset("res/images/np-tap.png",
+                      package: "google_provider"),
                   text: "Used by advertisers for key word targetting"),
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/hammer.png", package: "google_provider"), text: "Used by law enforcement"),
+                  image: Image.asset("res/images/hammer.png",
+                      package: "google_provider"),
+                  text: "Used by law enforcement"),
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/worldwide.png", package: "google_provider"), text: "Disabled by default in Europe")
+                  image: Image.asset("res/images/worldwide.png",
+                      package: "google_provider"),
+                  text: "Disabled by default in Europe")
             ]),
             cta: InfoCarouselCardModelContentCta(
                 explain: [
@@ -134,14 +152,16 @@ class GoogleProviderRepositoryInfo {
     InfoCarouselCardModel(
         cover: InfoCarouselCardModelCover(
             header: InfoCarouselCardModelCoverHeader(
-                image: Image.asset("res/images/gmail-circle-icon.png", package: "google_provider"),
+                image: Image.asset("res/images/gmail-circle-icon.png",
+                    package: "google_provider"),
                 title: "Your Gmail account",
                 share: InfoCarouselCardModelCoverHeaderShare(
-                    message:
-                        "Gmail knows what you've written to your friends. Find out more on https://www.mytiki.com",
-                    //image: AssetImage("res/images/socialmedia2.png", package: "google_provider").createStream(configuration)
-            )),
-            image: Image.asset("res/images/everything-you-do.png", package: "google_provider"),
+                  message:
+                      "Gmail knows what you've written to your friends. Find out more on https://www.mytiki.com",
+                  //image: AssetImage("res/images/socialmedia2.png", package: "google_provider").createStream(configuration)
+                )),
+            image: Image.asset("res/images/everything-you-do.png",
+                package: "google_provider"),
             subtitle: "Gmail knows...",
             bigTextLight: "Everything\n",
             bigTextDark: "you do in your Gmail app",
@@ -155,20 +175,29 @@ class GoogleProviderRepositoryInfo {
                       "Gmail’s app is designed to track most of the things you do with it. It tracks each action you take, on which device, OS, and time of day.\n\nFor example, when you opened the app, what you searched for and if you saw an ad were all tracked.\n\nYour audio is recorded if you use voice search or assistant with Gmail.")
             ], theySay: [
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/person-4.png", package: "google_provider"), text: "Personalized experiences"),
+                  image: Image.asset("res/images/person-4.png",
+                      package: "google_provider"),
+                  text: "Personalized experiences"),
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/circle-badge.png", package: "google_provider"),
+                  image: Image.asset("res/images/circle-badge.png",
+                      package: "google_provider"),
                   text: "App and content recommendations"),
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/search.png", package: "google_provider"), text: "Faster Search")
+                  image: Image.asset("res/images/search.png",
+                      package: "google_provider"),
+                  text: "Faster Search")
             ], shouldKnow: [
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/hat-n-glasses.png", package: "google_provider"),
+                  image: Image.asset("res/images/hat-n-glasses.png",
+                      package: "google_provider"),
                   text: "Your activity is tracked even when logged out"),
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/badge.png", package: "google_provider"), text: "Used by law enforcement"),
+                  image: Image.asset("res/images/badge.png",
+                      package: "google_provider"),
+                  text: "Used by law enforcement"),
               InfoCarouselCardModelContentIcon(
-                  image: Image.asset("res/images/bomb.png", package: "google_provider"),
+                  image: Image.asset("res/images/bomb.png",
+                      package: "google_provider"),
                   text:
                       "You can set your history to auto delete after 3, 18, or 36 months")
             ]),

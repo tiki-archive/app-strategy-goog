@@ -1,4 +1,4 @@
-class GoogleProviderModelPage{
+class GoogleProviderModelPage {
   int? size;
   int? totalElements;
   int? totalPages;
@@ -18,9 +18,9 @@ class GoogleProviderModelPage{
   }
 
   Map<String, dynamic> toJson() => {
-    'size': size,
-    'totalElements': totalElements,
-    'totalPages': totalPages,
-    'page': page
-  };
+        'size': size,
+        'totalElements': totalElements,
+        'totalPages': totalPages,
+        'page': page
+      };
 }
