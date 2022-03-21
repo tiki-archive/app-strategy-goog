@@ -1,4 +1,4 @@
-class GoogleProviderModel{
+class GoogleProviderModel {
   bool isLinked = false;
   String? displayName;
   String? email;
@@ -6,12 +6,11 @@ class GoogleProviderModel{
   DateTime? accessTokenExp;
   String? refreshToken;
 
-  GoogleProviderModel({
-    this.isLinked = false,
-    this.displayName,
-    this.email,
-    this.token,
-    this.accessTokenExp,
-    this.refreshToken
-  });
+  GoogleProviderModel(
+      {this.isLinked = false,
+      this.displayName,
+      this.email,
+      this.token,
+      this.accessTokenExp,
+      this.refreshToken});
 }

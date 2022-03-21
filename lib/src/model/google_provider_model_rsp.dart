@@ -1,7 +1,7 @@
 import 'google_provider_model_message.dart';
 import 'google_provider_model_page.dart';
 
-class GoogleProviderModelRsp<T>{
+class GoogleProviderModelRsp<T> {
   String? status;
   int? code;
   dynamic data;
@@ -11,8 +11,8 @@ class GoogleProviderModelRsp<T>{
   GoogleProviderModelRsp(
       {this.status, this.code, this.data, this.page, this.messages});
 
-  GoogleProviderModelRsp.fromJson(
-      Map<String, dynamic>? json, T Function(Map<String, dynamic>? json) fromJson) {
+  GoogleProviderModelRsp.fromJson(Map<String, dynamic>? json,
+      T Function(Map<String, dynamic>? json) fromJson) {
     if (json != null) {
       status = json['status'];
       code = json['code'];
@@ -36,10 +36,10 @@ class GoogleProviderModelRsp<T>{
   }
 
   Map<String, dynamic> toJson() => {
-    'status': status,
-    'code': code,
-    'data': data?.toJson(),
-    'page': page?.toJson(),
-    'messages': messages?.map((e) => e.toJson()).toList()
-  };
+        'status': status,
+        'code': code,
+        'data': data?.toJson(),
+        'page': page?.toJson(),
+        'messages': messages?.map((e) => e.toJson()).toList()
+      };
 }

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../google_provider_service.dart';
 
 class GoogleProviderViewLink extends StatelessWidget {
-
   final String _text = "Sign in with Google";
 
   const GoogleProviderViewLink({Key? key}) : super(key: key);
@@ -25,13 +24,15 @@ class GoogleProviderViewLink extends StatelessWidget {
               BoxShadow(
                 color: const Color(0x0D000000),
                 blurRadius: service.style.size(2),
-                offset: Offset(service.style.size(0.75), service.style.size(0.75)), // Shadow position
+                offset: Offset(service.style.size(0.75),
+                    service.style.size(0.75)), // Shadow position
               ),
             ],
           ),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Image(
-              image: const AssetImage('res/images/google-icon.png', package: 'google_provider'),
+              image: const AssetImage('res/images/google-icon.png',
+                  package: 'google_provider'),
               height: service.style.size(18),
               fit: BoxFit.fitHeight,
             ),

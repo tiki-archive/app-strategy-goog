@@ -5,9 +5,9 @@
 
 import 'package:flutter/material.dart';
 
-class GoogleProviderInfoModelCoverHeaderShare{
+class GoogleProviderInfoModelCoverHeaderShare {
   final String? message;
   final Image? image;
 
- const  GoogleProviderInfoModelCoverHeaderShare({this.message, this.image});
+  const GoogleProviderInfoModelCoverHeaderShare({this.message, this.image});
 }

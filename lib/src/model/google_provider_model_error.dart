@@ -3,9 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_provider/src/utils/json/json_object.dart';
-import 'package:google_provider/src/utils/json/json_utils.dart';
-
+import '../utils/json/json_object.dart';
+import '../utils/json/json_utils.dart';
 import 'google_provider_model_error_detail.dart';
 import 'google_provider_model_error_error.dart';
 
@@ -24,10 +23,10 @@ class GoogleProviderModelError extends JsonObject {
       code = json['code'];
       message = json['message'];
       status = json['status'];
-      errors = JsonUtils.listFromJson(
-          json['errors'], (json) => GoogleProviderModelErrorError.fromJson(json));
-      details = JsonUtils.listFromJson(
-          json['details'], (json) => GoogleProviderModelErrorDetail.fromJson(json));
+      errors = JsonUtils.listFromJson(json['errors'],
+          (json) => GoogleProviderModelErrorError.fromJson(json));
+      details = JsonUtils.listFromJson(json['details'],
+          (json) => GoogleProviderModelErrorDetail.fromJson(json));
     }
   }
 

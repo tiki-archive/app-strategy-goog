@@ -1,6 +1,8 @@
 name: google_provider
 description: Google Provider
-version: 0.0.3
+version: 0.0.4
+repository: https://github.com/tiki/google_provider
+publish_to: none # package in active development
 
 environment:
   sdk: ">=2.15.1 <3.0.0"
@@ -13,11 +15,11 @@ dependencies:
   httpp:
     git:
       url: https://github.com/tiki/httpp
-      ref: 0.0.3
+  info_carousel:
+    git:
+      url: https://github.com/tiki/info_carousel
   logging: ^1.0.2
   provider: ^6.0.2
-  info_carousel:
-    path: ../info_carousel
 
 dev_dependencies:
   flutter_test:

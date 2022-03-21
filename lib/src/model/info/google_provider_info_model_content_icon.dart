@@ -10,5 +10,4 @@ class GoogleProviderInfoModelContentIcon {
   final String? text;
 
   const GoogleProviderInfoModelContentIcon({this.image, this.text});
-
 }

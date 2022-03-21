@@ -12,7 +12,6 @@ import 'google_provider_view_see.dart';
 import 'google_provider_view_unlink.dart';
 
 class GoogleProviderViewLinked extends StatelessWidget {
-
   const GoogleProviderViewLinked({Key? key}) : super(key: key);
 
   @override
@@ -30,7 +29,8 @@ class GoogleProviderViewLinked extends StatelessWidget {
                 BoxShadow(
                   color: const Color(0x0D000000),
                   blurRadius: service.style.size(8),
-                  offset: Offset(service.style.size(3), service.style.size(3)), // Shadow position
+                  offset: Offset(service.style.size(3),
+                      service.style.size(3)), // Shadow position
                 ),
               ],
             ),

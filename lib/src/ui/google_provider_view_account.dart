@@ -39,8 +39,8 @@ class GoogleProviderViewAccount extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                          padding: EdgeInsets.only(
-                              bottom: service.style.size(8)),
+                          padding:
+                              EdgeInsets.only(bottom: service.style.size(8)),
                           child: Text("Gmail",
                               style: TextStyle(
                                   fontWeight: FontWeight.w800,
@@ -48,9 +48,10 @@ class GoogleProviderViewAccount extends StatelessWidget {
                                   height: 1,
                                   fontSize: service.style.text(14)))),
                       SizedBox(
-                          width: service.style.size(
-                              cardWidth - _logoSize - (2*_rowPadding) - _rowGap
-                          ),
+                          width: service.style.size(cardWidth -
+                              _logoSize -
+                              (2 * _rowPadding) -
+                              _rowGap),
                           child: Text(service.model.email!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -59,8 +60,7 @@ class GoogleProviderViewAccount extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                   color: service.style.textColor,
                                   height: 1,
-                                  fontSize: service.style.text(18)))
-                      )
+                                  fontSize: service.style.text(18))))
                     ]))
           ]));
     });

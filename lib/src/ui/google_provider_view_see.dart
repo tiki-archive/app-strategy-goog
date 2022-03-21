@@ -8,9 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../google_provider_service.dart';
 
-
 class GoogleProviderViewSee extends StatelessWidget {
-
   const GoogleProviderViewSee({Key? key}) : super(key: key);
 
   @override
@@ -29,7 +27,8 @@ class GoogleProviderViewSee extends StatelessWidget {
             Container(
                 margin: EdgeInsets.only(left: service.style.size(8)),
                 child: Image(
-                  image: const AssetImage('res/images/right-arrow.png', package: 'google_provider'),
+                  image: const AssetImage('res/images/right-arrow.png',
+                      package: 'google_provider'),
                   height: service.style.text(16),
                   fit: BoxFit.fitHeight,
                 ))
