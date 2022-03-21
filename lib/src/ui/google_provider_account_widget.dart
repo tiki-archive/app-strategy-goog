@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'google_provider_view_link.dart';
-
 import '../google_provider_service.dart';
+import 'google_provider_view_link.dart';
 import 'google_provider_view_linked.dart';
 
 class GoogleProviderAccountWidget extends StatelessWidget {
