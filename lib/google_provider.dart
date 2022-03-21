@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_provider/src/google_provider_service.dart';
-import 'package:google_provider/src/google_provider_style.dart';
+import 'src/google_provider_service.dart';
+import 'src/google_provider_style.dart';
 import 'package:httpp/httpp.dart';
 
 import 'src/model/email/google_provider_model_email.dart';
