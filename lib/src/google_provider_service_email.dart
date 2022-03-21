@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-import 'package:google_provider/src/google_provider_service.dart';
-import 'package:google_provider/src/model/email/google_provider_model_email_msg_header.dart';
-import 'package:google_provider/src/model/email/google_provider_model_email_msgs.dart';
-import 'package:google_provider/src/repository/google_provider_repository_email.dart';
+import 'package:collection/collection.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
+import 'google_provider_service.dart';
 import 'model/email/google_provider_model_company.dart';
 import 'model/email/google_provider_model_email.dart';
 import 'model/email/google_provider_model_email_msg.dart';
+import 'model/email/google_provider_model_email_msg_header.dart';
+import 'model/email/google_provider_model_email_msgs.dart';
 import 'model/email/google_provider_model_sender.dart';
 import 'model/google_provider_model_error.dart';
-import 'package:collection/collection.dart';
+import 'repository/google_provider_repository_email.dart';
 
 class GoogleProviderServiceEmail {
   final Logger _log = Logger('GoogleProviderServiceEmail');
@@ -143,6 +143,7 @@ revolution today.<br />
         }
       }
     }
+    return null;
   }
 
   String? _unsubscribeMailTo(List<GoogleProviderModelEmailMsgHeader>? headers) {
@@ -156,6 +157,7 @@ revolution today.<br />
         }
       }
     }
+    return null;
   }
 
   String? _category(List<String>? labelIds) {
@@ -166,6 +168,7 @@ revolution today.<br />
         return categoryLabel.replaceFirst('CATEGORY_', '');
       }
     }
+    return null;
   }
 
   String? _toEmail(

@@ -1,4 +1,4 @@
-class GoogleProviderModelMessage{
+class GoogleProviderModelMessage {
   int? code;
   String? status;
   String? message;
@@ -14,9 +14,9 @@ class GoogleProviderModelMessage{
   }
 
   Map<String, dynamic> toJson() => {
-    'size': code,
-    'status': status,
-    'message': message,
-    'properties': properties
-  };
+        'size': code,
+        'status': status,
+        'message': message,
+        'properties': properties
+      };
 }

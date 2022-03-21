@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
     GoogleProvider googleProvider = GoogleProvider(
       onLink: (model) => _log.finest(model),
       onUnlink: (email) => _log.finest(email),
-      onSee: (data) => _log.finest(data),
     );
     List<String> msgIds = [];
     return MaterialApp(

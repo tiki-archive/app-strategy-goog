@@ -3,15 +3,15 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-
-import 'package:google_provider/src/utils/json/json_object.dart';
+import '../../utils/json/json_object.dart';
 
 class GoogleProviderModelEmailMsgPartBody extends JsonObject {
   String? attachmentId;
   int? size;
   String? data;
 
-  GoogleProviderModelEmailMsgPartBody({this.attachmentId, this.size, this.data});
+  GoogleProviderModelEmailMsgPartBody(
+      {this.attachmentId, this.size, this.data});
 
   GoogleProviderModelEmailMsgPartBody.fromJson(Map<String, dynamic>? json) {
     if (json != null) {

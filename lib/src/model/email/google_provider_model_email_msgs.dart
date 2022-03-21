@@ -3,9 +3,8 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_provider/src/utils/json/json_object.dart';
-import 'package:google_provider/src/utils/json/json_utils.dart';
-
+import '../../utils/json/json_object.dart';
+import '../../utils/json/json_utils.dart';
 import 'google_provider_model_email_msg.dart';
 
 class GoogleProviderModelEmailMsgs extends JsonObject {
@@ -18,8 +17,8 @@ class GoogleProviderModelEmailMsgs extends JsonObject {
 
   GoogleProviderModelEmailMsgs.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      messages = JsonUtils.listFromJson(
-          json['messages'], (json) => GoogleProviderModelEmailMsg.fromJson(json));
+      messages = JsonUtils.listFromJson(json['messages'],
+          (json) => GoogleProviderModelEmailMsg.fromJson(json));
       resultSizeEstimate = json['resultSizeEstimate'];
       nextPageToken = json['nextPageToken'];
     }

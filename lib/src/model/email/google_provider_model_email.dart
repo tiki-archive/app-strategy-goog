@@ -6,7 +6,6 @@
 import 'google_provider_model_sender.dart';
 
 class GoogleProviderModelEmail {
-
   int? messageId;
   String? extMessageId;
   GoogleProviderModelSender? sender;
@@ -16,16 +15,15 @@ class GoogleProviderModelEmail {
   DateTime? created;
   DateTime? modified;
 
-  GoogleProviderModelEmail({
-    this.messageId,
-    this.extMessageId,
-    this.sender,
-    this.receivedDate,
-    this.openedDate,
-    this.toEmail,
-    this.modified,
-    this.created
-  });
+  GoogleProviderModelEmail(
+      {this.messageId,
+      this.extMessageId,
+      this.sender,
+      this.receivedDate,
+      this.openedDate,
+      this.toEmail,
+      this.modified,
+      this.created});
 
   GoogleProviderModelEmail.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
@@ -42,12 +40,10 @@ class GoogleProviderModelEmail {
             DateTime.fromMillisecondsSinceEpoch(json['opened_date_epoch']);
       }
       if (json['modified_epoch'] != null) {
-        modified =
-            DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
+        modified = DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
       }
       if (json['created_epoch'] != null) {
-        created =
-            DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+        created = DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
       }
     }
   }

@@ -3,7 +3,7 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-import 'package:google_provider/src/utils/json/json_object.dart';
+import '../../utils/json/json_object.dart';
 
 class GoogleProviderModelCompany extends JsonObject {
   int? companyId;
@@ -34,12 +34,10 @@ class GoogleProviderModelCompany extends JsonObject {
       sensitivityScore = json['sensitivity_score'];
       domain = json['domain'];
       if (json['modified_epoch'] != null) {
-        modified =
-            DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
+        modified = DateTime.fromMillisecondsSinceEpoch(json['modified_epoch']);
       }
       if (json['created_epoch'] != null) {
-        created =
-            DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
+        created = DateTime.fromMillisecondsSinceEpoch(json['created_epoch']);
       }
     }
   }
@@ -69,5 +67,6 @@ class GoogleProviderModelCompany extends JsonObject {
           "." +
           periodSplit[periodSplit.length - 1];
     }
+    return null;
   }
 }

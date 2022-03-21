@@ -18,11 +18,11 @@ class GoogleProviderRepositoryEmail {
 
   Future<void> messageId(
       {required HttppClient client,
-        String? accessToken,
-        String? filter,
-        void Function(HttppResponse)? onSuccess,
-        required void Function(HttppResponse) onResult,
-        void Function(Object)? onError}) {
+      String? accessToken,
+      String? filter,
+      void Function(HttppResponse)? onSuccess,
+      required void Function(HttppResponse) onResult,
+      void Function(Object)? onError}) {
     String queryParams = '';
     if (filter != null) queryParams += "?$filter";
     HttppRequest request = HttppRequest(
@@ -39,11 +39,11 @@ class GoogleProviderRepositoryEmail {
 
   Future<void> send(
       {required HttppClient client,
-        String? accessToken,
-        required HttppBody message,
-        void Function(HttppResponse)? onSuccess,
-        required void Function(HttppResponse) onResult,
-        void Function(Object)? onError}) async {
+      String? accessToken,
+      required HttppBody message,
+      void Function(HttppResponse)? onSuccess,
+      required void Function(HttppResponse) onResult,
+      void Function(Object)? onError}) async {
     HttppRequest request = HttppRequest(
         uri: Uri.parse(_pathSend),
         verb: HttppVerb.POST,
@@ -59,11 +59,11 @@ class GoogleProviderRepositoryEmail {
 
   Future<void> message(
       {required HttppClient client,
-        String? accessToken,
-        required String messageId,
-        void Function(HttppResponse)? onSuccess,
-        required void Function(HttppResponse) onResult,
-        void Function(Object)? onError}) async {
+      String? accessToken,
+      required String messageId,
+      void Function(HttppResponse)? onSuccess,
+      required void Function(HttppResponse) onResult,
+      void Function(Object)? onError}) async {
     HttppRequest request = HttppRequest(
         uri: Uri.parse(_pathMessages + messageId),
         verb: HttppVerb.GET,

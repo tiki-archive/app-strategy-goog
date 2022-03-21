@@ -3,9 +3,11 @@
  * MIT license. See LICENSE file in root directory.
  */
 
-class GoogleProviderInfoModelCoverHeaderShare{
-  final String? message;
-  final String? image;
+import 'package:flutter/material.dart';
 
- const  GoogleProviderInfoModelCoverHeaderShare({this.message, this.image});
+class GoogleProviderInfoModelCoverHeaderShare {
+  final String? message;
+  final Image? image;
+
+  const GoogleProviderInfoModelCoverHeaderShare({this.message, this.image});
 }
