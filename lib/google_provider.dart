@@ -14,13 +14,11 @@ class GoogleProvider {
       {GoogleProviderStyle? style,
       Function(GoogleProviderModel)? onLink,
       Function(String?)? onUnlink,
-      Function(List<GoogleProviderInfoModel>)? onSee,
       Httpp? httpp})
       : _service = GoogleProviderService(
             httpp: httpp,
             onLink: onLink,
             onUnlink: onUnlink,
-            onSee: onSee,
             style: style ?? GoogleProviderStyle());
 
   GoogleProvider.loggedIn({
@@ -44,7 +42,6 @@ class GoogleProvider {
         httpp: httpp,
         onLink: onLink,
         onUnlink: onUnlink,
-        onSee: onSee,
         style: style ?? GoogleProviderStyle());
   }
 

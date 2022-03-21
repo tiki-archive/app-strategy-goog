@@ -3,8 +3,10 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'package:flutter/material.dart';
+
 class GoogleProviderInfoModelContentIcon {
-  final String? image;
+  final Image? image;
   final String? text;
 
   const GoogleProviderInfoModelContentIcon({this.image, this.text});
