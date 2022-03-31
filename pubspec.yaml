@@ -1,6 +1,6 @@
 name: google_provider
 description: Google Provider
-version: 0.0.4
+version: 0.0.5
 repository: https://github.com/tiki/google_provider
 publish_to: none # package in active development
 
