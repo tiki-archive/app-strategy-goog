@@ -1,6 +1,6 @@
 name: google_provider
 description: Google Provider
-version: 0.0.4
+version: 0.0.5
 repository: https://github.com/tiki/google_provider
 publish_to: none # package in active development
 
@@ -15,6 +15,7 @@ dependencies:
   httpp:
     git:
       url: https://github.com/tiki/httpp
+      ref: 0.0.3
   info_carousel:
     git:
       url: https://github.com/tiki/info_carousel

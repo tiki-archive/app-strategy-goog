@@ -22,8 +22,8 @@ class GoogleProvider {
             style: style ?? GoogleProviderStyle());
 
   GoogleProvider.loggedIn(
-      {required email,
-      required token,
+      {required token,
+      email,
       String? displayName,
       String? refreshToken,
       GoogleProviderStyle? style,
@@ -56,6 +56,8 @@ class GoogleProvider {
         .send(body: body, to: to, subject: subject, onResult: onResult);
   }
 
+  Future<void> update() async => await _service.updateUserInfo();
+
   Future<void> fetchInbox(
           {DateTime? since,
           required Function(List<String> messagesIds) onResult,
@@ -69,4 +71,6 @@ class GoogleProvider {
           required Function() onFinish}) =>
       _service.email.fetchMessages(
           messageIds: messageIds, onResult: onResult, onFinish: onFinish);
+
+  get displayName => _service.model.displayName;
 }

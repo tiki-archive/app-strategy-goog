@@ -69,21 +69,25 @@ class GoogleProviderService extends ChangeNotifier {
       model.token = tokenResponse.accessToken;
       model.accessTokenExp = tokenResponse.accessTokenExpirationDateTime;
       model.refreshToken = tokenResponse.refreshToken;
-      await _repository.userInfo(
-        accessToken: model.token!,
-        client: client,
-        onSuccess: (response) {
-          model.displayName = response?.body?.jsonBody['name'];
-          model.email = response?.body?.jsonBody['email'];
-          model.isLinked = true;
-          if (onLink != null) {
-            onLink!(model);
-          }
-        },
-        onError: (e) => print,
-      );
+      await updateUserInfo();
       notifyListeners();
     }
+  }
+
+  Future<void> updateUserInfo() async {
+    await _repository.userInfo(
+      accessToken: model.token!,
+      client: client,
+      onSuccess: (response) {
+        model.displayName = response?.body?.jsonBody['name'];
+        model.email = response?.body?.jsonBody['email'];
+        model.isLinked = true;
+        if (onLink != null) {
+          onLink!(model);
+        }
+      },
+      onError: (e) => print,
+    );
   }
 
   Future<void> signOut() async {
