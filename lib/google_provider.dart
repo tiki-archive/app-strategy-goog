@@ -7,6 +7,8 @@ import 'src/model/email/google_provider_model_email.dart';
 import 'src/model/google_provider_model.dart';
 import 'src/model/info/google_provider_info_model.dart';
 
+export 'src/model/google_provider_model.dart';
+
 class GoogleProvider {
   late final GoogleProviderService _service;
 
@@ -56,7 +58,8 @@ class GoogleProvider {
         .send(body: body, to: to, subject: subject, onResult: onResult);
   }
 
-  Future<void> update() async => await _service.updateUserInfo();
+  Future<void> update({Function(GoogleProviderModel)? onUpdate}) async =>
+      await _service.updateUserInfo(onSuccess: onUpdate);
 
   Future<void> fetchInbox(
           {DateTime? since,
@@ -72,5 +75,5 @@ class GoogleProvider {
       _service.email.fetchMessages(
           messageIds: messageIds, onResult: onResult, onFinish: onFinish);
 
-  get displayName => _service.model.displayName;
+  String? get displayName => _service.model.displayName;
 }

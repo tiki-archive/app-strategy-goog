@@ -134,7 +134,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.5"
+    version: "0.0.6"
   http:
     dependency: transitive
     description:
@@ -152,12 +152,10 @@ packages:
   httpp:
     dependency: transitive
     description:
-      path: "."
-      ref: "0.0.3"
-      resolved-ref: "1f6a31faaf0d333a1221df9bbb4ef53b870b24b9"
-      url: "https://github.com/tiki/httpp"
-    source: git
-    version: "0.0.3"
+      name: httpp
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   info_carousel:
     dependency: transitive
     description:
