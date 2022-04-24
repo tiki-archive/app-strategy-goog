@@ -24,8 +24,8 @@ class GoogleProvider {
             style: style ?? GoogleProviderStyle());
 
   GoogleProvider.loggedIn(
-      {required token,
-      email,
+      {required String? token,
+      String? email,
       String? displayName,
       String? refreshToken,
       GoogleProviderStyle? style,
