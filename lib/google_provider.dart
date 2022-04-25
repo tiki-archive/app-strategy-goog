@@ -49,14 +49,13 @@ class GoogleProvider {
 
   Widget accountWidget() => _service.presenter.accountButton();
 
-  void sendEmail(
-      {String? body,
-      required String to,
-      String? subject,
-      Function(bool)? onResult}) {
-    _service.email
-        .send(body: body, to: to, subject: subject, onResult: onResult);
-  }
+  Future<void> sendEmail(
+          {String? body,
+          required String to,
+          String? subject,
+          Function(bool)? onResult}) =>
+      _service.email
+          .send(body: body, to: to, subject: subject, onResult: onResult);
 
   Future<void> update({Function(GoogleProviderModel)? onUpdate}) async =>
       await _service.updateUserInfo(onSuccess: onUpdate);
