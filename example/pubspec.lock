@@ -155,14 +155,7 @@ packages:
       name: httpp
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.4"
-  info_carousel:
-    dependency: transitive
-    description:
-      path: "../../info_carousel"
-      relative: true
-    source: path
-    version: "0.0.4"
+    version: "0.0.4
   js:
     dependency: transitive
     description:
@@ -420,6 +413,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  style:
+    dependency: transitive
+    description:
+      path: "."
+      ref: "0.0.3"
+      resolved-ref: f437703285dea89c2bbbb8c9c6e092c112321960
+      url: "https://github.com/tiki/style"
+    source: git
+    version: "0.0.3"
   term_glyph:
     dependency: transitive
     description:

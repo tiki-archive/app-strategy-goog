@@ -67,12 +67,13 @@ class GoogleProviderService extends ChangeNotifier {
       model.token = tokenResponse.accessToken;
       model.accessTokenExp = tokenResponse.accessTokenExpirationDateTime;
       model.refreshToken = tokenResponse.refreshToken;
-      await updateUserInfo();
+      await updateUserInfo(onSuccess: onLink);
       notifyListeners();
     }
   }
 
-  Future<void> updateUserInfo() async {
+  Future<void> updateUserInfo(
+      {Function(GoogleProviderModel)? onSuccess}) async {
     await _repository.userInfo(
       accessToken: model.token!,
       client: client,
@@ -80,11 +81,11 @@ class GoogleProviderService extends ChangeNotifier {
         model.displayName = response?.body?.jsonBody['name'];
         model.email = response?.body?.jsonBody['email'];
         model.isLinked = true;
-        if (onLink != null) {
-          onLink!(model);
+        if (onSuccess != null) {
+          onSuccess(model);
         }
       },
-      onError: (e) => print,
+      onError: (e) => _log.severe(e),
     );
   }
 
