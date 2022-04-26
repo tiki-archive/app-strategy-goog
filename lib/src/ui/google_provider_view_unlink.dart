@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../google_provider_service.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 class GoogleProviderViewUnlink extends StatelessWidget {
   static const String _text = "Unlink";
@@ -21,9 +22,9 @@ class GoogleProviderViewUnlink extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         child: Container(
             padding: EdgeInsets.only(
-                top: service.style.size(15),
-                left: service.style.size(18),
-                right: service.style.size(18)),
+                top: SizeProvider.instance.size(15),
+                left: SizeProvider.instance.size(18),
+                right: SizeProvider.instance.size(18)),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -31,15 +32,15 @@ class GoogleProviderViewUnlink extends StatelessWidget {
                   _text,
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      fontSize: service.style.text(9.5),
-                      color: service.style.unLinkColor),
+                      fontSize: SizeProvider.instance.text(9.5),
+                      color: ColorProvider.tikiRed),
                 ),
                 Container(
-                    margin: EdgeInsets.only(left: service.style.size(3)),
+                    margin: EdgeInsets.only(left: SizeProvider.instance.size(3)),
                     child: Image(
                       image: const AssetImage('res/images/icon-circle-x.png',
                           package: 'google_provider'),
-                      height: service.style.text(9.5) * 1.4,
+                      height: SizeProvider.instance.text(9.5) * 1.4,
                       fit: BoxFit.fitHeight,
                     )),
               ],
