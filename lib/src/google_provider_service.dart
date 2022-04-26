@@ -9,7 +9,6 @@ import 'package:logging/logging.dart';
 import 'google_provider_controller.dart';
 import 'google_provider_presenter.dart';
 import 'google_provider_service_email.dart';
-import 'google_provider_style.dart';
 import 'model/google_provider_model.dart';
 import 'repository/google_provider_repository_info.dart';
 import 'repository/google_provider_repository_oauth.dart';
@@ -39,7 +38,6 @@ class GoogleProviderService extends ChangeNotifier {
   GoogleProviderModel model;
   late final GoogleProviderPresenter presenter;
   late final GoogleProviderController controller;
-  late final GoogleProviderStyle style;
 
   final Function(GoogleProviderModel)? onLink;
   final Function(String?)? onUnlink;
@@ -50,7 +48,7 @@ class GoogleProviderService extends ChangeNotifier {
   final FlutterAppAuth _appAuth;
 
   GoogleProviderService(
-      {required this.style, Httpp? httpp, model, this.onLink, this.onUnlink})
+      {Httpp? httpp, model, this.onLink, this.onUnlink})
       : model = model ?? GoogleProviderModel(),
         _appAuth = FlutterAppAuth(),
         client = httpp == null ? Httpp().client() : httpp.client() {

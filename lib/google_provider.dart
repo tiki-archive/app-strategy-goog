@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:httpp/httpp.dart';
 
 import 'src/google_provider_service.dart';
-import 'src/google_provider_style.dart';
 import 'src/model/email/google_provider_model_email.dart';
 import 'src/model/google_provider_model.dart';
 import 'src/model/info/google_provider_info_model.dart';
@@ -10,23 +9,20 @@ import 'src/model/info/google_provider_info_model.dart';
 class GoogleProvider {
   late final GoogleProviderService _service;
 
-  GoogleProvider(
-      {GoogleProviderStyle? style,
+  GoogleProvider({
       Function(GoogleProviderModel)? onLink,
       Function(String?)? onUnlink,
       Httpp? httpp})
       : _service = GoogleProviderService(
             httpp: httpp,
             onLink: onLink,
-            onUnlink: onUnlink,
-            style: style ?? GoogleProviderStyle());
+            onUnlink: onUnlink,);
 
   GoogleProvider.loggedIn(
       {required token,
       email,
       String? displayName,
       String? refreshToken,
-      GoogleProviderStyle? style,
       Function(GoogleProviderModel)? onLink,
       Function(String?)? onUnlink,
       Function(List<GoogleProviderInfoModel>)? onSee,
@@ -41,8 +37,7 @@ class GoogleProvider {
         ),
         httpp: httpp,
         onLink: onLink,
-        onUnlink: onUnlink,
-        style: style ?? GoogleProviderStyle());
+        onUnlink: onUnlink,);
   }
 
   Widget accountWidget() => _service.presenter.accountButton();
