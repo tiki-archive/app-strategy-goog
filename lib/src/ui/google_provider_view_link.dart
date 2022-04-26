@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tiki_style/tiki_style.dart';
 
 import '../google_provider_service.dart';
 
@@ -15,17 +16,17 @@ class GoogleProviderViewLink extends StatelessWidget {
         onTap: service.controller.signIn,
         behavior: HitTestBehavior.opaque,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: service.style.size(8)),
-          height: service.style.size(40),
+          padding: EdgeInsets.symmetric(horizontal: SizeProvider.instance.size(8)),
+          height: SizeProvider.instance.size(40),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(service.style.size(5)),
+            borderRadius: BorderRadius.circular(SizeProvider.instance.size(5)),
             boxShadow: [
               BoxShadow(
                 color: const Color(0x0D000000),
-                blurRadius: service.style.size(2),
-                offset: Offset(service.style.size(0.75),
-                    service.style.size(0.75)), // Shadow position
+                blurRadius: SizeProvider.instance.size(2),
+                offset: Offset(SizeProvider.instance.size(0.75),
+                    SizeProvider.instance.size(0.75)), // Shadow position
               ),
             ],
           ),
@@ -33,15 +34,15 @@ class GoogleProviderViewLink extends StatelessWidget {
             Image(
               image: const AssetImage('res/images/google-icon.png',
                   package: 'google_provider'),
-              height: service.style.size(18),
+              height: SizeProvider.instance.size(18),
               fit: BoxFit.fitHeight,
             ),
             Container(
-                margin: EdgeInsets.only(left: service.style.size(24)),
+                margin: EdgeInsets.only(left: SizeProvider.instance.size(24)),
                 child: Text(_text,
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                        fontSize: service.style.size(14),
+                        fontSize: SizeProvider.instance.size(14),
                         fontFamily: "Roboto",
                         fontWeight: FontWeight.w500,
                         color: Colors.black54))),

@@ -2,31 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:httpp/httpp.dart';
 
 import 'src/google_provider_service.dart';
-import 'src/google_provider_style.dart';
 import 'src/model/email/google_provider_model_email.dart';
 import 'src/model/google_provider_model.dart';
 import 'src/model/info/google_provider_info_model.dart';
 
+export 'src/model/google_provider_model.dart';
+
 class GoogleProvider {
   late final GoogleProviderService _service;
 
-  GoogleProvider(
-      {GoogleProviderStyle? style,
+  GoogleProvider({
       Function(GoogleProviderModel)? onLink,
       Function(String?)? onUnlink,
       Httpp? httpp})
       : _service = GoogleProviderService(
             httpp: httpp,
             onLink: onLink,
-            onUnlink: onUnlink,
-            style: style ?? GoogleProviderStyle());
+            onUnlink: onUnlink,);
 
   GoogleProvider.loggedIn(
-      {required token,
-      email,
+      {required String? token,
+      String? email,
       String? displayName,
       String? refreshToken,
-      GoogleProviderStyle? style,
       Function(GoogleProviderModel)? onLink,
       Function(String?)? onUnlink,
       Function(List<GoogleProviderInfoModel>)? onSee,
@@ -41,22 +39,21 @@ class GoogleProvider {
         ),
         httpp: httpp,
         onLink: onLink,
-        onUnlink: onUnlink,
-        style: style ?? GoogleProviderStyle());
+        onUnlink: onUnlink,);
   }
 
   Widget accountWidget() => _service.presenter.accountButton();
 
-  void sendEmail(
-      {String? body,
-      required String to,
-      String? subject,
-      Function(bool)? onResult}) {
-    _service.email
-        .send(body: body, to: to, subject: subject, onResult: onResult);
-  }
+  Future<void> sendEmail(
+          {String? body,
+          required String to,
+          String? subject,
+          Function(bool)? onResult}) =>
+      _service.email
+          .send(body: body, to: to, subject: subject, onResult: onResult);
 
-  Future<void> update() async => await _service.updateUserInfo();
+  Future<void> update({Function(GoogleProviderModel)? onUpdate}) async =>
+      await _service.updateUserInfo(onSuccess: onUpdate);
 
   Future<void> fetchInbox(
           {DateTime? since,
@@ -72,5 +69,5 @@ class GoogleProvider {
       _service.email.fetchMessages(
           messageIds: messageIds, onResult: onResult, onFinish: onFinish);
 
-  get displayName => _service.model.displayName;
+  String? get displayName => _service.model.displayName;
 }
