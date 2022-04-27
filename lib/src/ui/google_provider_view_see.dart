@@ -24,11 +24,7 @@ class GoogleProviderViewSee extends StatelessWidget {
                     color: ColorProvider.tikiBlue)),
             Container(
                 margin: EdgeInsets.only(left: SizeProvider.instance.size(8)),
-                child: Image(
-                  image: const AssetImage('res/images/right-arrow.png',
-                      package: 'google_provider'),
-                  height: SizeProvider.instance.text(16),
-                  fit: BoxFit.fitHeight,
+                child: Icon(IconProvider.arrow_tail_right, size: SizeProvider.instance.text(16),
                 ))
           ]),
         ));

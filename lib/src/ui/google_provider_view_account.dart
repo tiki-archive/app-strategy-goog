@@ -28,11 +28,9 @@ class GoogleProviderViewAccount extends StatelessWidget {
             borderRadius: BorderRadius.circular(SizeProvider.instance.size(5)),
           ),
           child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Image(
-              image: const AssetImage('res/images/gmail-circle-icon.png',
-                  package: 'google_provider'),
+            SizedBox(
+              child: ImgProvider.gmailCircleIcon,
               height: SizeProvider.instance.size(_logoSize),
-              fit: BoxFit.fitHeight,
             ),
             Container(
                 padding: EdgeInsets.only(left: SizeProvider.instance.size(_rowGap)),
