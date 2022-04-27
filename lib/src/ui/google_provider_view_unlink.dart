@@ -37,12 +37,9 @@ class GoogleProviderViewUnlink extends StatelessWidget {
                 ),
                 Container(
                     margin: EdgeInsets.only(left: SizeProvider.instance.size(3)),
-                    child: Image(
-                      image: const AssetImage('res/images/icon-circle-x.png',
-                          package: 'google_provider'),
-                      height: SizeProvider.instance.text(9.5) * 1.4,
-                      fit: BoxFit.fitHeight,
-                    )),
+                    child: Icon(IconProvider.x_mark, color: ColorProvider.tikiRed,
+                        size: SizeProvider.instance.text(9.5) * 1.4),
+                )
               ],
             )));
   }
