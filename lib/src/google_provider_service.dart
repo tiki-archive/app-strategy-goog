@@ -41,6 +41,11 @@ class GoogleProviderService extends ChangeNotifier {
 
   final Function(GoogleProviderModel)? onLink;
   final Function(String?)? onUnlink;
+  final Function(
+      {String? accessToken,
+      DateTime? accessExp,
+      String? refreshToken,
+      DateTime? refreshExp})? onRefresh;
   final HttppClient client;
 
   late final GoogleProviderRepositoryOauth _repository;
@@ -48,7 +53,7 @@ class GoogleProviderService extends ChangeNotifier {
   final FlutterAppAuth _appAuth;
 
   GoogleProviderService(
-      {Httpp? httpp, model, this.onLink, this.onUnlink})
+      {Httpp? httpp, model, this.onLink, this.onUnlink, this.onRefresh})
       : model = model ?? GoogleProviderModel(),
         _appAuth = FlutterAppAuth(),
         client = httpp == null ? Httpp().client() : httpp.client() {
@@ -116,6 +121,12 @@ class GoogleProviderService extends ChangeNotifier {
           scopes: _scopes)))!;
       model.token = tokenResponse.accessToken;
       model.refreshToken = tokenResponse.refreshToken;
+      if (onRefresh != null) {
+        onRefresh!(
+            accessToken: tokenResponse.accessToken,
+            accessExp: tokenResponse.accessTokenExpirationDateTime,
+            refreshToken: tokenResponse.refreshToken);
+      }
     } catch (e) {
       _log.severe(e.toString());
     }
