@@ -31,11 +31,12 @@ class GoogleProviderViewLink extends StatelessWidget {
             ],
           ),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
-            Image(
-              image: const AssetImage('res/images/google-icon.png',
-                  package: 'google_provider'),
+            SizedBox(
               height: SizeProvider.instance.size(18),
-              fit: BoxFit.fitHeight,
+              width: SizeProvider.instance.size(18),
+              child: FittedBox(
+                fit:BoxFit.fill,
+                child: ImgProvider.googleIcon)
             ),
             Container(
                 margin: EdgeInsets.only(left: SizeProvider.instance.size(24)),

@@ -1,3 +1,8 @@
+## 0.0.8
+
+* update collection dependency to 1.15 for flutter_test compatibility
+* fix styles
+
 ## 0.0.7
 
 * publish to pub
