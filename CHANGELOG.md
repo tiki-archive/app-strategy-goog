@@ -1,3 +1,7 @@
+## 0.0.9
+
+* adds onRefresh callback for token cycling
+
 ## 0.0.8
 
 * update collection dependency to 1.15 for flutter_test compatibility
