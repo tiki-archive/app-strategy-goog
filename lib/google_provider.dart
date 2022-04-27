@@ -11,14 +11,21 @@ export 'src/model/google_provider_model.dart';
 class GoogleProvider {
   late final GoogleProviderService _service;
 
-  GoogleProvider({
-      Function(GoogleProviderModel)? onLink,
+  GoogleProvider(
+      {Function(GoogleProviderModel)? onLink,
       Function(String?)? onUnlink,
+      Function(
+              {String? accessToken,
+              DateTime? accessExp,
+              String? refreshToken,
+              DateTime? refreshExp})?
+          onRefresh,
       Httpp? httpp})
       : _service = GoogleProviderService(
             httpp: httpp,
             onLink: onLink,
-            onUnlink: onUnlink,);
+            onUnlink: onUnlink,
+            onRefresh: onRefresh);
 
   GoogleProvider.loggedIn(
       {required String? token,
@@ -28,6 +35,12 @@ class GoogleProvider {
       Function(GoogleProviderModel)? onLink,
       Function(String?)? onUnlink,
       Function(List<GoogleProviderInfoModel>)? onSee,
+      Function(
+              {String? accessToken,
+              DateTime? accessExp,
+              String? refreshToken,
+              DateTime? refreshExp})?
+          onRefresh,
       Httpp? httpp}) {
     _service = GoogleProviderService(
         model: GoogleProviderModel(
@@ -39,7 +52,8 @@ class GoogleProvider {
         ),
         httpp: httpp,
         onLink: onLink,
-        onUnlink: onUnlink,);
+        onUnlink: onUnlink,
+        onRefresh: onRefresh);
   }
 
   Widget accountWidget() => _service.presenter.accountButton();
