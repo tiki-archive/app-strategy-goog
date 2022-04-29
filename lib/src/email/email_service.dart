@@ -204,7 +204,8 @@ revolution today.<br />
           _fetchInbox(
               onResult: onResult,
               pageToken: messages.nextPageToken,
-              since: since);
+              since: since,
+              onFinish: onFinish);
         } else {
           if (onFinish != null) {
             onFinish();
