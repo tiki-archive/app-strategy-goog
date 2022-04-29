@@ -1,4 +1,4 @@
-name: google_provider_example
+name: tiki_strategy_google_example
 description: Demonstrates how to use the google_provider plugin.
 
 # The following line prevents the package from being accidentally published to
@@ -19,7 +19,7 @@ dependencies:
     sdk: flutter
 
   logging: ^1.0.2
-  google_provider:
+  tiki_strategy_google:
     # When depending on this package from a real application you should use:
     #   google_provider: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints

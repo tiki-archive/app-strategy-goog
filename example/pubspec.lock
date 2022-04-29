@@ -128,13 +128,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  google_provider:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.0.7"
   http:
     dependency: transitive
     description:
@@ -434,6 +427,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.8"
+  tiki_strategy_google:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.0.9"
   tiki_style:
     dependency: transitive
     description:
