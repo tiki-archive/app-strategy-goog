@@ -22,12 +22,12 @@ class ErrorModelRsp {
       message = json['message'];
       status = json['status'];
       if (json['errors'] != null) {
-        errors = (json['errors'] as List<Map<String, dynamic>>)
+        errors = (json['errors'] as List)
             .map((json) => ErrorModelRspError.fromJson(json))
             .toList();
       }
       if (json['details'] != null) {
-        details = (json['details'] as List<Map<String, dynamic>>)
+        details = (json['details'] as List)
             .map((json) => ErrorModelRspDetail.fromJson(json))
             .toList();
       }

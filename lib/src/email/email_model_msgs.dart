@@ -15,7 +15,7 @@ class EmailModelMsgs {
   EmailModelMsgs.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       if (json['messages'] != null) {
-        messages = (json['messages'] as List<Map<String, dynamic>>)
+        messages = (json['messages'] as List)
             .map((json) => EmailModelMsg.fromJson(json))
             .toList();
       }

@@ -29,12 +29,12 @@ class EmailModelMsgPart {
       filename = json['filename'];
       body = EmailModelMsgPartBody.fromJson(json['body']);
       if (json['headers'] != null) {
-        headers = (json['headers'] as List<Map<String, dynamic>>)
+        headers = (json['headers'] as List)
             .map((json) => EmailModelMsgHeader.fromJson(json))
             .toList();
       }
       if (json['parts'] != null) {
-        parts = (json['parts'] as List<Map<String, dynamic>>)
+        parts = (json['parts'] as List)
             .map((json) => EmailModelMsgPart.fromJson(json))
             .toList();
       }
