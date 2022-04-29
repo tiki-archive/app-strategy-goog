@@ -1,6 +1,6 @@
-# google_provider
+# strategy_google
 
-Google Provider
+Google Strategy
 
 ## Getting Started
 
