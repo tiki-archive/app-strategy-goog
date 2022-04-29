@@ -5,6 +5,8 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:httpp/httpp.dart';
 import 'package:logging/logging.dart';
 
+import '../error/error_http.dart';
+import '../error/error_model_rsp.dart';
 import 'auth_controller.dart';
 import 'auth_model.dart';
 import 'auth_presenter.dart';
@@ -73,18 +75,33 @@ class AuthService extends ChangeNotifier {
 
   Future<void> updateUserInfo({Function(AuthModel)? onSuccess}) async {
     await _repository.userInfo(
-      accessToken: model.token!,
-      client: client,
-      onSuccess: (response) {
-        model.displayName = response?.body?.jsonBody['name'];
-        model.email = response?.body?.jsonBody['email'];
-        model.isLinked = true;
-        if (onSuccess != null) {
-          onSuccess(model);
-        }
-      },
-      onError: (e) => _log.severe(e),
-    );
+        accessToken: model.token!,
+        client: client,
+        onSuccess: (response) {
+          model.displayName = response?.body?.jsonBody['name'];
+          model.email = response?.body?.jsonBody['email'];
+          model.isLinked = true;
+          if (onSuccess != null) {
+            onSuccess(model);
+          }
+        },
+        onError: (err) {
+          if (err is HttppResponse) {
+            if (HttppUtils.isUnauthorized(err.statusCode)) {
+              _log.warning('Unauthorized. Trying refresh');
+              client.denyUntil(err.request!, () async {
+                await refreshToken();
+                err.request?.headers?.auth(model.token);
+              });
+            } else {
+              ErrorModelRsp body = ErrorModelRsp.fromJson(err.body?.jsonBody);
+              throw ErrorHttp(body);
+            }
+          } else {
+            _log.severe(err);
+            throw err;
+          }
+        });
   }
 
   Future<void> signOut() async {
@@ -96,7 +113,6 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO handle if token cannot be refreshed
   Future<void> refreshToken() async {
     try {
       TokenResponse tokenResponse = (await _appAuth.token(TokenRequest(
@@ -114,8 +130,9 @@ class AuthService extends ChangeNotifier {
             accessExp: tokenResponse.accessTokenExpirationDateTime,
             refreshToken: tokenResponse.refreshToken);
       }
-    } catch (e) {
-      _log.severe(e.toString());
+    } catch (err) {
+      _log.severe(err.toString());
+      rethrow;
     }
   }
 

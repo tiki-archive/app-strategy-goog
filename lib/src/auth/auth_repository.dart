@@ -30,11 +30,7 @@ class AuthRepository {
         onSuccess: (rsp) {
           if (onSuccess != null) onSuccess(rsp);
         },
-        onResult: (rsp) {
-          ErrorModelRsp body = ErrorModelRsp.fromJson(rsp.body?.jsonBody);
-          ErrorHttp error = ErrorHttp(body);
-          onError == null ? throw error : onError(error);
-        },
+        onResult: onError,
         onError: onError);
     _log.finest('${req.verb.value} — ${req.uri}');
     return client.request(req);

@@ -31,7 +31,7 @@ class TikiStrategyGoogleModelSender {
   }
 
   Map<String, dynamic> toJson() => {
-        'company_domain': company?.domain,
+        'company': company?.toJson(),
         'name': name,
         'email': email,
         'category': category,

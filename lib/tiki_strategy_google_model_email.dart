@@ -38,7 +38,7 @@ class TikiStrategyGoogleModelEmail {
   Map<String, dynamic> toJson() {
     return {
       'ext_message_id': extMessageId,
-      'sender_email': sender?.email,
+      'sender': sender?.toJson(),
       'received_date_epoch': receivedDate?.millisecondsSinceEpoch,
       'opened_date_epoch': openedDate?.millisecondsSinceEpoch,
       'to_email': toEmail
