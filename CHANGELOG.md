@@ -1,3 +1,9 @@
+## 0.1.0
+
+* renamed from google_provider to tiki_strategy_google
+* restructured code base to be tiki slice arch.
+* fixed bugs with refresh tokens & email indexing
+
 ## 0.0.9
 
 * adds onRefresh callback for token cycling
