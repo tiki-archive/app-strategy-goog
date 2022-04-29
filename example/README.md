@@ -1,6 +1,6 @@
-# google_provider_example
+# tiki_strategy_google_example
 
-Demonstrates how to use the google_provider plugin.
+Demonstrates how to use the tiki_strategy_google plugin.
 
 ## Getting Started
 

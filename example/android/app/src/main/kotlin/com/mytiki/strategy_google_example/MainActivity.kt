@@ -1,4 +1,4 @@
-package com.mytiki.google_provider_example
+package com.mytiki.strategy_google_example
 
 import io.flutter.embedding.android.FlutterActivity
 

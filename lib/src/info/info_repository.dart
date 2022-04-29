@@ -12,15 +12,15 @@ class InfoRepository {
         cover: InfoCarouselCardModelCover(
             header: InfoCarouselCardModelCoverHeader(
                 image: Image.asset("res/images/gmail-circle-icon.png",
-                    package: "google_provider"),
+                    package: "tiki_strategy_google"),
                 title: "Your Gmail account",
                 share: InfoCarouselCardModelCoverHeaderShare(
                   message:
                       "Gmail knows where you are when you read your emails. It's your data, start taking it back on https://www.mytiki.com",
-                  //image: const AssetImage("res/images/socialmedia1.png", package: "google_provider")
+                  //image: const AssetImage("res/images/socialmedia1.png", package: "tiki_strategy_google")
                 )),
             image: Image.asset("res/images/where-you-are.png",
-                package: "google_provider"),
+                package: "tiki_strategy_google"),
             subtitle: "Gmail knows...",
             bigTextLight: "Where you are ",
             bigTextDark: "when you read your emails.",
@@ -42,27 +42,27 @@ class InfoRepository {
                 theySay: <InfoCarouselCardModelContentIcon>[
                   InfoCarouselCardModelContentIcon(
                       image: Image.asset("res/images/info-badge.png",
-                          package: "google_provider"),
+                          package: "tiki_strategy_google"),
                       text: "Security monitoring to suspicious access"),
                   InfoCarouselCardModelContentIcon(
                       image: Image.asset("res/images/search-graph.png",
-                          package: "google_provider"),
+                          package: "tiki_strategy_google"),
                       text:
                           "Analyzing patterns to develop new features and products")
                 ],
                 shouldKnow: [
                   InfoCarouselCardModelContentIcon(
                       image: Image.asset("res/images/np-tap.png",
-                          package: "google_provider"),
+                          package: "tiki_strategy_google"),
                       text:
                           "Used advertisers for location-based targeting and surveillance"),
                   InfoCarouselCardModelContentIcon(
                       image: Image.asset("res/images/badge.png",
-                          package: "google_provider"),
+                          package: "tiki_strategy_google"),
                       text: "Used by law enforcement"),
                   InfoCarouselCardModelContentIcon(
                       image: Image.asset("res/images/worldwide.png",
-                          package: "google_provider"),
+                          package: "tiki_strategy_google"),
                       text:
                           "Saved for 9 months, then obscured and kept permanently")
                 ]),
@@ -90,15 +90,15 @@ class InfoRepository {
         cover: InfoCarouselCardModelCover(
             header: InfoCarouselCardModelCoverHeader(
                 image: Image.asset("res/images/gmail-circle-icon.png",
-                    package: "google_provider"),
+                    package: "tiki_strategy_google"),
                 title: "Your Gmail account",
                 share: InfoCarouselCardModelCoverHeaderShare(
                   message:
                       "Gmail knows what you've written to your friends. Find out more on https://www.mytiki.com",
-                  //image: const AssetImage("socialmedia2.png", package: "google_provider")
+                  //image: const AssetImage("socialmedia2.png", package: "tiki_strategy_google")
                 )),
             image: Image.asset("res/images/what-written.png",
-                package: "google_provider"),
+                package: "tiki_strategy_google"),
             subtitle: "Gmail knows...",
             bigTextLight: "What you’ve written to ",
             bigTextDark: "your friends",
@@ -113,31 +113,31 @@ class InfoRepository {
             ], theySay: [
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/airplane.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text:
                       "Travel assistance like itineraries, updates, and maps."),
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/email.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text:
                       "Smart email with suggestions, nudges, prioritization, and filtering"),
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/package.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text:
                       "Track packages, reservations, loyalty cards, and bills")
             ], shouldKnow: [
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/np-tap.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text: "Used by advertisers for key word targetting"),
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/hammer.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text: "Used by law enforcement"),
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/worldwide.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text: "Disabled by default in Europe")
             ]),
             cta: InfoCarouselCardModelContentCta(
@@ -158,15 +158,15 @@ class InfoRepository {
         cover: InfoCarouselCardModelCover(
             header: InfoCarouselCardModelCoverHeader(
                 image: Image.asset("res/images/gmail-circle-icon.png",
-                    package: "google_provider"),
+                    package: "tiki_strategy_google"),
                 title: "Your Gmail account",
                 share: InfoCarouselCardModelCoverHeaderShare(
                   message:
                       "Gmail knows what you've written to your friends. Find out more on https://www.mytiki.com",
-                  //image: AssetImage("res/images/socialmedia2.png", package: "google_provider").createStream(configuration)
+                  //image: AssetImage("res/images/socialmedia2.png", package: "tiki_strategy_google").createStream(configuration)
                 )),
             image: Image.asset("res/images/everything-you-do.png",
-                package: "google_provider"),
+                package: "tiki_strategy_google"),
             subtitle: "Gmail knows...",
             bigTextLight: "Everything\n",
             bigTextDark: "you do in your Gmail app",
@@ -181,28 +181,28 @@ class InfoRepository {
             ], theySay: [
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/person-4.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text: "Personalized experiences"),
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/circle-badge.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text: "App and content recommendations"),
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/search.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text: "Faster Search")
             ], shouldKnow: [
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/hat-n-glasses.png",
-                      package: "google_provider"),
+                      package: "tiki_sZtrategy_google"),
                   text: "Your activity is tracked even when logged out"),
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/badge.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text: "Used by law enforcement"),
               InfoCarouselCardModelContentIcon(
                   image: Image.asset("res/images/bomb.png",
-                      package: "google_provider"),
+                      package: "tiki_strategy_google"),
                   text:
                       "You can set your history to auto delete after 3, 18, or 36 months")
             ]),
