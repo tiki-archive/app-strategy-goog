@@ -15,11 +15,6 @@ import 'auth_repository.dart';
 class AuthService extends ChangeNotifier {
   final Logger _log = Logger('GoogleProviderService');
 
-  static const String _redirectUri = "com.mytiki.app:/oauth";
-  static const String _androidClientId =
-      "240428403253-8bof2prkdatnsm8d2msgq2r81r12p5np.apps.googleusercontent.com";
-  static const String _iosClientId =
-      "240428403253-v4qk9lt2l07cc8am12gggocpbbsjdvl7.apps.googleusercontent.com";
   static const String _authorizationEndpoint =
       "https://accounts.google.com/o/oauth2/v2/auth";
   static const String _tokenEndpoint =
@@ -32,7 +27,9 @@ class AuthService extends ChangeNotifier {
     "https://www.googleapis.com/auth/gmail.send"
   ];
 
-  static get _clientId => Platform.isIOS ? _iosClientId : _androidClientId;
+  final String _redirectUri;
+  final String? _androidClientId;
+  final String? _iosClientId;
 
   AuthModel model;
   late final AuthPresenter presenter;
@@ -50,9 +47,20 @@ class AuthService extends ChangeNotifier {
   late final AuthRepository _repository;
   final FlutterAppAuth _appAuth;
 
-  AuthService({Httpp? httpp, model, this.onLink, this.onUnlink, this.onRefresh})
+  AuthService(
+      {Httpp? httpp,
+      model,
+      this.onLink,
+      this.onUnlink,
+      this.onRefresh,
+      String? androidClientId,
+      String? iosClientId,
+      required String redirectUri})
       : model = model ?? AuthModel(),
         _appAuth = FlutterAppAuth(),
+        _androidClientId = androidClientId,
+        _iosClientId = iosClientId,
+        _redirectUri = redirectUri,
         client = httpp == null ? Httpp().client() : httpp.client() {
     presenter = AuthPresenter(this);
     controller = AuthController(this);
@@ -149,4 +157,6 @@ class AuthService extends ChangeNotifier {
           scopes: providerScopes),
     );
   }
+
+  String get _clientId => (Platform.isIOS ? _iosClientId : _androidClientId)!;
 }

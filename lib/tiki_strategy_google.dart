@@ -14,7 +14,10 @@ class TikiStrategyGoogle {
   late final EmailService _emailService;
 
   TikiStrategyGoogle(
-      {Function(AuthModel)? onLink,
+      {required String redirectUri,
+      String? androidClientId,
+      String? iosClientId,
+      Function(AuthModel)? onLink,
       Function(String?)? onUnlink,
       Function(
               {String? accessToken,
@@ -27,12 +30,18 @@ class TikiStrategyGoogle {
             httpp: httpp,
             onLink: onLink,
             onUnlink: onUnlink,
-            onRefresh: onRefresh) {
+            onRefresh: onRefresh,
+            androidClientId: androidClientId,
+            iosClientId: iosClientId,
+            redirectUri: redirectUri) {
     _emailService = EmailService(_authService);
   }
 
   TikiStrategyGoogle.loggedIn(
-      {required String? token,
+      {required String redirectUri,
+      String? androidClientId,
+      String? iosClientId,
+      required String? token,
       String? email,
       String? displayName,
       String? refreshToken,
@@ -53,6 +62,9 @@ class TikiStrategyGoogle {
               displayName: displayName,
               refreshToken: refreshToken,
             ),
+            androidClientId: androidClientId,
+            iosClientId: iosClientId,
+            redirectUri: redirectUri,
             httpp: httpp,
             onLink: onLink,
             onUnlink: onUnlink,
