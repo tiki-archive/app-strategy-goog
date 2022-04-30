@@ -17,14 +17,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TikiStrategyGoogle notLoggedIn = TikiStrategyGoogle(
-      onLink: (model) => _log.finest(model),
-      onUnlink: (email) => _log.finest(email),
-    );
+        onLink: (model) => _log.finest(model),
+        onUnlink: (email) => _log.finest(email),
+        redirectUri: 'test',
+        iosClientId: 'test',
+        androidClientId: 'test');
     TikiStrategyGoogle loggedIn = TikiStrategyGoogle.loggedIn(
         displayName: "Test",
         email: "reallylongemailtooverflow@gmail.com",
         token: "abc",
-        refreshToken: "def");
+        refreshToken: "def",
+        redirectUri: 'test',
+        iosClientId: 'test',
+        androidClientId: 'test');
 
     List<String> msgIds = [];
     return MaterialApp(
