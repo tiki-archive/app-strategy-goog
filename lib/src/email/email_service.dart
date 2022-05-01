@@ -32,7 +32,7 @@ class EmailService {
       required Function(TikiStrategyGoogleModelEmail message) onResult,
       required Function() onFinish}) async {
     List<Future> futures = [];
-    for (var messageId in messageIds) {
+    for (String messageId in messageIds) {
       futures.add(_repositoryEmail.message(
           client: _authService.client,
           accessToken: _authService.model.token,
