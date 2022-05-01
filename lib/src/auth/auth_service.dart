@@ -49,7 +49,7 @@ class AuthService extends ChangeNotifier {
       DateTime? refreshExp})? onRefresh;
   final HttppClient client;
 
-  late final AuthRepository _repository;
+  final AuthRepository _repository;
   final FlutterAppAuth _appAuth;
 
   AuthService(
@@ -66,10 +66,10 @@ class AuthService extends ChangeNotifier {
         _androidClientId = androidClientId,
         _iosClientId = iosClientId,
         _redirectUri = redirectUri,
+        _repository = AuthRepository(),
         client = httpp == null ? Httpp().client() : httpp.client() {
     presenter = AuthPresenter(this);
     controller = AuthController(this);
-    _repository = AuthRepository();
   }
 
   Future<void> signIn() async {
