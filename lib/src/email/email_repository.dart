@@ -14,8 +14,6 @@ class EmailRepository {
   static const String _pathSend =
       "https://gmail.googleapis.com/gmail/v1/users/me/messages/send";
 
-  EmailRepository();
-
   Future<void> messageId(
       {required HttppClient client,
       String? accessToken,
