@@ -7,7 +7,6 @@ import 'src/email/email_service.dart';
 import 'tiki_strategy_google_model_email.dart';
 
 export 'src/auth/auth_model.dart';
-export 'src/info/info_model.dart';
 
 class TikiStrategyGoogle {
   final AuthService _authService;
