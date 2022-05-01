@@ -17,8 +17,7 @@ class TikiStrategyGoogleModelSender {
       this.name,
       this.email,
       this.category,
-      this.unsubscribeMailTo,
-      DateTime? ignoreUntil});
+      this.unsubscribeMailTo});
 
   TikiStrategyGoogleModelSender.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
