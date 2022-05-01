@@ -18,7 +18,7 @@ import 'auth_presenter.dart';
 import 'auth_repository.dart';
 
 class AuthService extends ChangeNotifier {
-  final Logger _log = Logger('GoogleProviderService');
+  final Logger _log = Logger('AuthService');
 
   static const String _authorizationEndpoint =
       "https://accounts.google.com/o/oauth2/v2/auth";
