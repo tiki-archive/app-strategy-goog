@@ -11,8 +11,8 @@ import 'auth_service.dart';
 
 class AuthViewWidgetAccount extends StatelessWidget {
   final double _rowPadding = 16;
-  final double _logoSize = 40;
-  final double _rowGap = 15;
+  final double _logoSize = 29;
+  final double _rowGap = 7;
 
   const AuthViewWidgetAccount({Key? key}) : super(key: key);
 
@@ -23,11 +23,7 @@ class AuthViewWidgetAccount extends StatelessWidget {
       double cardWidth = constraints.maxWidth;
       return Container(
           padding: EdgeInsets.all(SizeProvider.instance.size(_rowPadding)),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(SizeProvider.instance.size(5)),
-          ),
-          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(
               child: ImgProvider.gmailCircleIcon,
               height: SizeProvider.instance.size(_logoSize),
@@ -40,11 +36,11 @@ class AuthViewWidgetAccount extends StatelessWidget {
                     children: [
                       Padding(
                           padding: EdgeInsets.only(
-                              bottom: SizeProvider.instance.size(8)),
+                              bottom: SizeProvider.instance.size(4)),
                           child: Text("Gmail",
                               style: TextStyle(
                                   fontWeight: FontWeight.w800,
-                                  color: ColorProvider.greySix,
+                                  color: ColorProvider.greyFive,
                                   height: 1,
                                   fontSize: SizeProvider.instance.text(14)))),
                       SizedBox(

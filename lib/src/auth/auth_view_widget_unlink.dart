@@ -32,14 +32,14 @@ class AuthViewWidgetUnlink extends StatelessWidget {
                   _text,
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      fontSize: SizeProvider.instance.text(9.5),
+                      fontSize: SizeProvider.instance.text(11),
                       color: ColorProvider.tikiRed),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: SizeProvider.instance.size(3)),
+                  margin: EdgeInsets.only(left: SizeProvider.instance.size(4)),
                   child: Icon(IconProvider.x_mark,
                       color: ColorProvider.tikiRed,
-                      size: SizeProvider.instance.text(9.5) * 1.4),
+                      size: SizeProvider.instance.text(16)),
                 )
               ],
             )));
