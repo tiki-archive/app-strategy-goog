@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) TIKI Inc.
+ * MIT license. See LICENSE file in root directory.
+ */
+
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
@@ -13,7 +18,7 @@ import 'auth_presenter.dart';
 import 'auth_repository.dart';
 
 class AuthService extends ChangeNotifier {
-  final Logger _log = Logger('GoogleProviderService');
+  final Logger _log = Logger('AuthService');
 
   static const String _authorizationEndpoint =
       "https://accounts.google.com/o/oauth2/v2/auth";
@@ -44,7 +49,7 @@ class AuthService extends ChangeNotifier {
       DateTime? refreshExp})? onRefresh;
   final HttppClient client;
 
-  late final AuthRepository _repository;
+  final AuthRepository _repository;
   final FlutterAppAuth _appAuth;
 
   AuthService(
@@ -61,10 +66,10 @@ class AuthService extends ChangeNotifier {
         _androidClientId = androidClientId,
         _iosClientId = iosClientId,
         _redirectUri = redirectUri,
+        _repository = AuthRepository(),
         client = httpp == null ? Httpp().client() : httpp.client() {
     presenter = AuthPresenter(this);
     controller = AuthController(this);
-    _repository = AuthRepository();
   }
 
   Future<void> signIn() async {

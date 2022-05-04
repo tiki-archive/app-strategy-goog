@@ -1,3 +1,10 @@
+## 0.1.1
+
+* fixed naming, copyrights, and hard types
+* cleaned up API
+* fixed bug in token refresh
+* fixed UI bugs in design mismatch 
+
 ## 0.1.0
 
 * renamed from google_provider to tiki_strategy_google

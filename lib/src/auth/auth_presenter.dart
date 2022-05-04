@@ -13,7 +13,7 @@ class AuthPresenter {
 
   AuthPresenter(this.service);
 
-  ChangeNotifierProvider<AuthService> authButton({onLink, onUnlink, onSee}) {
+  ChangeNotifierProvider<AuthService> authButton() {
     return ChangeNotifierProvider.value(
         value: service, child: const AuthViewLayout());
   }

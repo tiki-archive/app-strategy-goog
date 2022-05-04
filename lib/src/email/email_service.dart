@@ -32,7 +32,7 @@ class EmailService {
       required Function(TikiStrategyGoogleModelEmail message) onResult,
       required Function() onFinish}) async {
     List<Future> futures = [];
-    for (var messageId in messageIds) {
+    for (String messageId in messageIds) {
       futures.add(_repositoryEmail.message(
           client: _authService.client,
           accessToken: _authService.model.token,
@@ -227,8 +227,13 @@ revolution today.<br />
     if (HttppUtils.isUnauthorized(response.statusCode)) {
       _log.warning('Unauthorized. Trying refresh');
       _authService.client.denyUntil(response.request!, () async {
-        await _authService.refreshToken();
-        response.request?.headers?.auth(_authService.model.token);
+        try {
+          await _authService.refreshToken();
+          response.request?.headers?.auth(_authService.model.token);
+        } catch (err) {
+          _log.severe('Failed refresh. Cancelling', err);
+          response.request?.cancel();
+        }
       });
     }
   }
