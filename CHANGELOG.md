@@ -1,3 +1,7 @@
+## 0.1.2
+
+* bumped tiki_style version
+
 ## 0.1.1
 
 * fixed naming, copyrights, and hard types
