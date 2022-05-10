@@ -11,13 +11,15 @@ class TikiStrategyGoogleModelEmail {
   DateTime? receivedDate;
   DateTime? openedDate;
   String? toEmail;
+  String? subject;
 
   TikiStrategyGoogleModelEmail(
       {this.extMessageId,
       this.sender,
       this.receivedDate,
       this.openedDate,
-      this.toEmail});
+      this.toEmail,
+      this.subject});
 
   TikiStrategyGoogleModelEmail.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
@@ -32,6 +34,7 @@ class TikiStrategyGoogleModelEmail {
         openedDate =
             DateTime.fromMillisecondsSinceEpoch(json['opened_date_epoch']);
       }
+      subject = json['subject'];
     }
   }
 
@@ -41,7 +44,8 @@ class TikiStrategyGoogleModelEmail {
       'sender': sender?.toJson(),
       'received_date_epoch': receivedDate?.millisecondsSinceEpoch,
       'opened_date_epoch': openedDate?.millisecondsSinceEpoch,
-      'to_email': toEmail
+      'to_email': toEmail,
+      'subject': subject
     };
   }
 }
