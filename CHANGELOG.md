@@ -1,3 +1,8 @@
+## 0.1.3
+
+* updated info_repository data
+* update dependencies
+
 ## 0.1.2
 
 * bumped tiki_style version
