@@ -45,6 +45,7 @@ class EmailService {
                 extMessageId: message.id,
                 receivedDate: message.internalDate,
                 openedDate: null, //TODO implement open date detection
+                subject: _subject(message.payload?.headers),
                 toEmail: _toEmail(
                     message.payload?.headers, _authService.model.email!),
                 sender: TikiStrategyGoogleModelSender(
@@ -135,6 +136,17 @@ revolution today.<br />
             }
           }
           return rsp;
+        }
+      }
+    }
+    return null;
+  }
+
+  String? _subject(List<EmailModelMsgHeader>? headers) {
+    if (headers != null) {
+      for (EmailModelMsgHeader header in headers) {
+        if (header.name?.trim().toLowerCase() == 'subject') {
+          return header.value;
         }
       }
     }
