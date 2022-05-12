@@ -2,6 +2,7 @@
 
 * updated info_repository data
 * update dependencies
+* added subject to email model
 
 ## 0.1.2
 
