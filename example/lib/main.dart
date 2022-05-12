@@ -19,11 +19,9 @@ class MyApp extends StatelessWidget {
     TikiStrategyGoogle notLoggedIn = TikiStrategyGoogle(
         onLink: (model) => _log.finest(model),
         onUnlink: (email) => _log.finest(email),
-        redirectUri: 'com.mytiki.app:/oauth',
-        iosClientId:
-            '240428403253-v4qk9lt2l07cc8am12gggocpbbsjdvl7.apps.googleusercontent.com',
-        androidClientId:
-            '240428403253-8bof2prkdatnsm8d2msgq2r81r12p5np.apps.googleusercontent.com');
+        redirectUri: '',
+        iosClientId: '',
+        androidClientId: '');
     TikiStrategyGoogle loggedIn = TikiStrategyGoogle.loggedIn(
         displayName: "Test",
         email: "reallylongemailtooverflow@gmail.com",
