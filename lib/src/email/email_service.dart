@@ -23,7 +23,7 @@ class EmailService {
 
   Future<void> fetchInbox(
           {DateTime? since,
-          required Function(List<String> messagesIds) onResult,
+          required Function(List<String> messagesIds, {String? page}) onResult,
           required Function() onFinish}) =>
       _fetchInbox(onFinish: onFinish, onResult: onResult, since: since);
 
@@ -200,7 +200,7 @@ revolution today.<br />
       {Function? onFinish,
       String? pageToken,
       DateTime? since,
-      required Function(List<String> messagesIds) onResult}) {
+      required Function(List<String> messagesIds, {String? page}) onResult}) {
     return _repositoryEmail.messageId(
       client: _authService.client,
       accessToken: _authService.model.token,
@@ -211,7 +211,7 @@ revolution today.<br />
         List<String> messagesIds =
             messages.messages?.map((m) => m.id ?? "").toList() ?? List.empty();
         messagesIds.removeWhere((element) => element.isEmpty);
-        onResult(messagesIds);
+        onResult(messagesIds, page: messages.nextPageToken);
         if (messages.nextPageToken != null) {
           _fetchInbox(
               onResult: onResult,
