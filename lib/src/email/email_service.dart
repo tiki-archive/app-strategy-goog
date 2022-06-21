@@ -110,13 +110,13 @@ revolution today.<br />
           if (onResult != null) onResult(true);
         },
         onResult: (response) async {
-          _log.warning('email to $to failed.');
+          _log.warning('send email failed with code ${response.statusCode}');
           _handleUnauthorized(response);
           _handleTooManyRequests(response);
           if (onResult != null) onResult(false);
         },
         onError: (error) {
-          _log.warning('email to  $to failed.');
+          _log.severe('send email failed with error ${error.runtimeType}', error);
           if (onResult != null) onResult(false);
         });
   }
