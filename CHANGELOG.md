@@ -1,3 +1,8 @@
+## 0.1.4
+
+* remove email from logs
+* update dependencies
+
 ## 0.1.3
 
 * updated info_repository data
