@@ -46,7 +46,7 @@ class EmailService {
                 receivedDate: message.internalDate,
                 openedDate: null, //TODO implement open date detection
                 subject: _subject(message.payload?.headers),
-                toEmail: _toEmail(
+                toEmail: toEmail(
                     message.payload?.headers, _authService.model.email!),
                 sender: TikiStrategyGoogleModelSender(
                     email: from?['email'],
@@ -106,7 +106,7 @@ revolution today.<br />
         accessToken: _authService.model.token,
         message: HttppBody.fromJson(EmailModelMsg(raw: base64Email).toJson()),
         onSuccess: (response) {
-          _log.finest('mail sent to ' + to);
+          _log.finest('mail sent to $to');
           if (onResult != null) onResult(true);
         },
         onResult: (response) async {
@@ -178,7 +178,7 @@ revolution today.<br />
     return null;
   }
 
-  String? _toEmail(List<EmailModelMsgHeader>? headers, String expected) {
+  String? toEmail(List<EmailModelMsgHeader>? headers, String expected) {
     if (headers != null) {
       for (EmailModelMsgHeader header in headers) {
         if (header.name?.trim() == 'To' && header.value != null) {
@@ -189,10 +189,13 @@ revolution today.<br />
                   .replaceFirst(">", "")
                   .trim()
               : header.value!;
+          headerEmail = headerEmail.contains("+") ?
+              "${headerEmail.split("+")[0]}@${headerEmail.split("@")[1]}" : headerEmail;
           return headerEmail.trim().toLowerCase();
         }
       }
     }
+    _log.warning("could not get email from headers", headers, StackTrace.current);
     return expected;
   }
 
@@ -275,7 +278,7 @@ revolution today.<br />
 
     if (after != null) {
       int secondsSinceEpoch = (after.millisecondsSinceEpoch / 1000).floor();
-      _appendQuery(queryBuffer, 'q=after:' + secondsSinceEpoch.toString());
+      _appendQuery(queryBuffer, 'q=after:${secondsSinceEpoch.toString()}');
     }
     return queryBuffer.toString();
   }
@@ -292,9 +295,9 @@ revolution today.<br />
     if (email != null) {
       List<String> atSplit = email.split('@');
       List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
-      return periodSplit[periodSplit.length - 2] +
-          "." +
-          periodSplit[periodSplit.length - 1];
+      return "${
+        periodSplit[periodSplit.length - 2]
+      }.${periodSplit[periodSplit.length - 1]}";
     }
     return null;
   }

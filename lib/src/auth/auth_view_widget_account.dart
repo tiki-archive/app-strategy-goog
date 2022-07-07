@@ -25,8 +25,8 @@ class AuthViewWidgetAccount extends StatelessWidget {
           padding: EdgeInsets.all(SizeProvider.instance.size(_rowPadding)),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(
-              child: ImgProvider.gmailCircleIcon,
               height: SizeProvider.instance.size(_logoSize),
+              child: ImgProvider.googleGmailRound,
             ),
             Container(
                 padding:
