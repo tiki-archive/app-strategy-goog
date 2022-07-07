@@ -12,6 +12,7 @@
 * updated info_repository data
 * update dependencies
 * added subject to email model
+* remove user info await from sign-in
 
 ## 0.1.2
 
