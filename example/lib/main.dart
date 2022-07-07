@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Logger.root.level = Level.ALL;
     Logger.root.onRecord.listen((record) =>
+        // ignore: avoid_print
         print('${record.level.name} [${record.loggerName}] ${record.message}'));
 
     TikiStrategyGoogle notLoggedIn = TikiStrategyGoogle(

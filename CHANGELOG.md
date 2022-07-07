@@ -1,3 +1,7 @@
+## 0.1.6
+
+* detect gmail alias
+
 ## 0.1.5
 
 * update info carousel

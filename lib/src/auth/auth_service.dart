@@ -62,7 +62,7 @@ class AuthService extends ChangeNotifier {
       String? iosClientId,
       required String redirectUri})
       : model = model ?? AuthModel(),
-        _appAuth = FlutterAppAuth(),
+        _appAuth = const FlutterAppAuth(),
         _androidClientId = androidClientId,
         _iosClientId = iosClientId,
         _redirectUri = redirectUri,

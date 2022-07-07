@@ -41,7 +41,7 @@ class AuthViewLayoutLink extends StatelessWidget {
                   height: SizeProvider.instance.size(18),
                   width: SizeProvider.instance.size(18),
                   child: FittedBox(
-                      fit: BoxFit.fill, child: ImgProvider.googleIcon)),
+                      fit: BoxFit.fill, child: ImgProvider.googleGmailLogo)),
               Container(
                   margin: EdgeInsets.only(left: SizeProvider.instance.size(24)),
                   child: Text(_text,
