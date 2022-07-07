@@ -16,6 +16,7 @@ class ConfigLog {
   }
 
   void onRecord(LogRecord record) {
+      // ignore: avoid_print
       print(
           '${_formatTime(record.time)}: ${record.level.name} [${record.loggerName}] ${record.message}');
   }
