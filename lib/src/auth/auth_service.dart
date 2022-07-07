@@ -81,7 +81,7 @@ class AuthService extends ChangeNotifier {
       model.token = tokenResponse.accessToken;
       model.accessTokenExp = tokenResponse.accessTokenExpirationDateTime;
       model.refreshToken = tokenResponse.refreshToken;
-      await updateUserInfo(onSuccess: onLink);
+      updateUserInfo(onSuccess: onLink);
       notifyListeners();
     }
   }
@@ -97,6 +97,7 @@ class AuthService extends ChangeNotifier {
           if (onSuccess != null) {
             onSuccess(model);
           }
+          notifyListeners();
         },
         onError: (err) {
           if (err is HttppResponse) {
