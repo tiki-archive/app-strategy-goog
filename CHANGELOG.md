@@ -1,3 +1,7 @@
+## 0.1.8
+
+* Fix detecting domain from email
+
 ## 0.1.7
 
 * Fetch only relevant emails
