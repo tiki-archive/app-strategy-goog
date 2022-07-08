@@ -1,3 +1,7 @@
+## 0.1.7
+
+* Fetch only relevant emails
+
 ## 0.1.6
 
 * detect gmail alias
@@ -16,6 +20,7 @@
 * updated info_repository data
 * update dependencies
 * added subject to email model
+* remove user info await from sign-in
 
 ## 0.1.2
 
