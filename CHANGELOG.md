@@ -1,3 +1,7 @@
+## 0.1.7
+
+* Fetch only relevant emails
+
 ## 0.1.6
 
 * detect gmail alias
