@@ -276,10 +276,16 @@ revolution today.<br />
 
     if (pageToken != null) _appendQuery(queryBuffer, 'pageToken=$pageToken');
 
+    String query = "q=List-Unsubscribe:*";
+
     if (after != null) {
       int secondsSinceEpoch = (after.millisecondsSinceEpoch / 1000).floor();
-      _appendQuery(queryBuffer, 'q=after:${secondsSinceEpoch.toString()}');
+      query += ' after:$secondsSinceEpoch';
     }
+
+    _appendQuery(queryBuffer, query);
+
+
     return queryBuffer.toString();
   }
 
