@@ -276,7 +276,7 @@ revolution today.<br />
 
     if (pageToken != null) _appendQuery(queryBuffer, 'pageToken=$pageToken');
 
-    String query = "q=List-Unsubscribe:*";
+    String query = "";
 
     if (after != null) {
       int secondsSinceEpoch = (after.millisecondsSinceEpoch / 1000).floor();
