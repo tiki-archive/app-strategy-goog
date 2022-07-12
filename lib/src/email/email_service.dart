@@ -28,33 +28,30 @@ class EmailService {
       _fetchInbox(onFinish: onFinish, onResult: onResult, since: since);
 
 
-  Future<int> countInbox(
-      {required List<String> messageIds,
-        required Function(TikiStrategyGoogleModelEmail message) onResult,
+  Future<void> countInbox(
+      {DateTime? since,
+        required Function(int messages) onResult,
         required Function() onFinish}) async {
 
-    return _repositoryEmail.inboxProfile(
+    return _repositoryEmail.pathProfile(
       client: _authService.client,
       accessToken: _authService.model.token,
       filter: _buildFilter(after: since),
       onSuccess: (response) {
-        EmailModelMsgs messages =
-        EmailModelMsgs.fromJson(response.body?.jsonBody);
-        List<String> messagesIds =
-            messages.messages?.map((m) => m.id ?? "").toList() ?? List.empty();
-        messagesIds.removeWhere((element) => element.isEmpty);
 
-        onResult(messagesIds, page: messages.nextPageToken);
-        if (onFinish != null)   onFinish();
+        Map<String, dynamic>? json = response.body?.jsonBody;
+        int totalMessageCount = json!["messagesTotal"] + json["threadsTotal"];
+
+        onResult(totalMessageCount);
+
+        if (onFinish != null) onFinish();
       },
       onResult: (response) {
-        _log.warning(
-            'Fetch inbox ${_authService.model.email} failed with statusCode ${response.statusCode}');
+        _log.warning('Count inbox ${_authService.model.email} failed with statusCode ${response.statusCode}');
         _handleUnauthorized(response);
         _handleTooManyRequests(response);
       },
-      onError: (error) => _log.warning(
-          'Fetch inbox ${_authService.model.email} failed with error $error'),
+      onError: (error) => _log.warning('Count inbox ${_authService.model.email} failed with error $error'),
     );
   }
 
