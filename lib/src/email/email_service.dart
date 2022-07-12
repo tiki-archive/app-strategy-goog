@@ -276,7 +276,7 @@ revolution today.<br />
 
     if (pageToken != null) _appendQuery(queryBuffer, 'pageToken=$pageToken');
 
-    String query = "q=List-Unsubscribe:*";
+    String query = "";
 
     if (after != null) {
       int secondsSinceEpoch = (after.millisecondsSinceEpoch / 1000).floor();
@@ -300,10 +300,8 @@ revolution today.<br />
   String? _domainFromEmail(String? email) {
     if (email != null) {
       List<String> atSplit = email.split('@');
-      List<String> periodSplit = atSplit[atSplit.length - 1].split('.');
-      return "${
-        periodSplit[periodSplit.length - 2]
-      }.${periodSplit[periodSplit.length - 1]}";
+
+      return atSplit[atSplit.length - 1];
     }
     return null;
   }
