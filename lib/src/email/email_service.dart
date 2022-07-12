@@ -27,6 +27,37 @@ class EmailService {
           required Function() onFinish}) =>
       _fetchInbox(onFinish: onFinish, onResult: onResult, since: since);
 
+
+  Future<int> countInbox(
+      {required List<String> messageIds,
+        required Function(TikiStrategyGoogleModelEmail message) onResult,
+        required Function() onFinish}) async {
+
+    return _repositoryEmail.inboxProfile(
+      client: _authService.client,
+      accessToken: _authService.model.token,
+      filter: _buildFilter(after: since),
+      onSuccess: (response) {
+        EmailModelMsgs messages =
+        EmailModelMsgs.fromJson(response.body?.jsonBody);
+        List<String> messagesIds =
+            messages.messages?.map((m) => m.id ?? "").toList() ?? List.empty();
+        messagesIds.removeWhere((element) => element.isEmpty);
+
+        onResult(messagesIds, page: messages.nextPageToken);
+        if (onFinish != null)   onFinish();
+      },
+      onResult: (response) {
+        _log.warning(
+            'Fetch inbox ${_authService.model.email} failed with statusCode ${response.statusCode}');
+        _handleUnauthorized(response);
+        _handleTooManyRequests(response);
+      },
+      onError: (error) => _log.warning(
+          'Fetch inbox ${_authService.model.email} failed with error $error'),
+    );
+  }
+
   Future<void> fetchMessages(
       {required List<String> messageIds,
       required Function(TikiStrategyGoogleModelEmail message) onResult,
