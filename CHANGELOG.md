@@ -1,3 +1,7 @@
+## 0.1.9
+
+* Revert list unsubscribe filter
+
 ## 0.1.8
 
 * Fix detecting domain from email
