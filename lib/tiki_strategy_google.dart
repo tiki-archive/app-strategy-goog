@@ -91,6 +91,13 @@ class TikiStrategyGoogle {
       _emailService.send(
           body: body, to: to, subject: subject, onResult: onResult);
 
+  Future<void> countInbox(
+      {DateTime? since,
+        required Function(int totalMessageCount) onResult,
+        required Function() onFinish}) =>
+      _emailService.countInbox(
+          since: since, onResult: onResult, onFinish: onFinish);
+
   Future<void> fetchInbox(
           {DateTime? since,
           String? page,

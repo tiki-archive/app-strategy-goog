@@ -12,7 +12,8 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   final Logger _log = Logger('example app');
 
-  MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key) {
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +33,20 @@ class MyApp extends StatelessWidget {
     TikiStrategyGoogle loggedIn = TikiStrategyGoogle.loggedIn(
         displayName: "Test",
         email: "reallylongemailtooverflow@gmail.com",
-        token: "abc",
-        refreshToken: "def",
+        token: "your token",
+        refreshToken: "refresh token",
         redirectUri: 'test',
         iosClientId: 'test',
         androidClientId: 'test');
-    String page = '';
+
+    _log.info("Building strat");
+
+    loggedIn.countInbox(onResult: (val) => {
+      _log.info("Found ${val} emails")
+    }, onFinish: () => {
+      _log.info("Finished count")
+    });
+
     List<String> msgIds = [];
     return MaterialApp(
         home: Scaffold(
