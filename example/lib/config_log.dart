@@ -10,7 +10,7 @@ import 'config_environment.dart';
 class ConfigLog {
   ConfigLog() {
     Logger.root.level = ConfigEnvironment.isDevelop || ConfigEnvironment.isLocal
-        ? Level.ALL
+        ? Level.INFO
         : Level.INFO;
     Logger.root.onRecord.listen(onRecord);
   }
