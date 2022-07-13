@@ -100,10 +100,11 @@ class TikiStrategyGoogle {
 
   Future<void> fetchInbox(
           {DateTime? since,
+          String? page,
           required Function(List<String> messagesIds, {String? page}) onResult,
           required Function() onFinish}) =>
       _emailService.fetchInbox(
-          since: since, onResult: onResult, onFinish: onFinish);
+          page: page, since: since, onResult: onResult, onFinish: onFinish);
 
   Future<void> fetchMessages(
           {required List<String> messageIds,
