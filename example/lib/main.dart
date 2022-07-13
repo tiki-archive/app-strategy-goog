@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         redirectUri: 'test',
         iosClientId: 'test',
         androidClientId: 'test');
-
+    String page = '';
     List<String> msgIds = [];
     return MaterialApp(
         home: Scaffold(
@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
                         onPressed: () =>
                             notLoggedIn.fetchInbox(onResult: (messages, {page}) async {
                               msgIds.addAll(messages);
+                              page = page;
                               _log.fine('fetched ${messages.length} messages');
                               _log.fine('next page $page');
                             }, onFinish: () async {

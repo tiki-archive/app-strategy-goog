@@ -1,3 +1,7 @@
+## 0.1.10
+
+* add last page parameter to fetch inbox
+
 ## 0.1.9
 
 * Revert list unsubscribe filter

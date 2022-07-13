@@ -23,9 +23,10 @@ class EmailService {
 
   Future<void> fetchInbox(
           {DateTime? since,
+          String? page,
           required Function(List<String> messagesIds, {String? page}) onResult,
           required Function() onFinish}) =>
-      _fetchInbox(onFinish: onFinish, onResult: onResult, since: since);
+      _fetchInbox(pageToken: page, onFinish: onFinish, onResult: onResult, since: since);
 
   Future<void> fetchMessages(
       {required List<String> messageIds,
