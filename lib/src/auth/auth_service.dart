@@ -24,6 +24,7 @@ class AuthService extends ChangeNotifier {
       "https://accounts.google.com/o/oauth2/v2/auth";
   static const String _tokenEndpoint =
       "https://www.googleapis.com/oauth2/v4/token";
+
   static const List<String> _scopes = [
     "openid",
     "https://www.googleapis.com/auth/userinfo.profile",
@@ -67,20 +68,37 @@ class AuthService extends ChangeNotifier {
         _iosClientId = iosClientId,
         _redirectUri = redirectUri,
         _repository = AuthRepository(),
-        client = httpp == null ? Httpp().client() : httpp.client() {
+        client = httpp == null ? Httpp().client() : httpp.client()
+  {
     presenter = AuthPresenter(this);
     controller = AuthController(this);
+
   }
 
   Future<void> signIn() async {
     AuthorizationTokenResponse? tokenResponse =
         await _authorizeAndExchangeCode();
+
     if (tokenResponse != null) {
       _log.finest(
           "authorizeAndExchangeCode success - ${tokenResponse.tokenType}");
       model.token = tokenResponse.accessToken;
       model.accessTokenExp = tokenResponse.accessTokenExpirationDateTime;
       model.refreshToken = tokenResponse.refreshToken;
+
+
+      if (tokenResponse.scopes != null) {
+        for (String scope in _scopes) {
+          if (!tokenResponse.scopes!.contains(scope)) {
+            // not all scopes accepted, force sign in again
+            // todo: UI instead of re signing in
+            return signIn();
+          }
+        }
+
+        _log.fine("Successfully accepted all scopes");
+      }
+
       updateUserInfo(onSuccess: onLink);
       notifyListeners();
     }
@@ -162,6 +180,7 @@ class AuthService extends ChangeNotifier {
           serviceConfiguration: authConfig,
           scopes: providerScopes),
     );
+
   }
 
   String get _clientId => (Platform.isIOS ? _iosClientId : _androidClientId)!;
