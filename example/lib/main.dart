@@ -18,9 +18,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Logger.root.level = Level.ALL;
-    Logger.root.onRecord.listen((record) =>
+    //Logger.root.onRecord.listen((record) =>
         // ignore: avoid_print
-        print('${record.level.name} [${record.loggerName}] ${record.message}'));
+        //print('${record.level.name} [${record.loggerName}] ${record.message}'));
 
     TikiStrategyGoogle notLoggedIn = TikiStrategyGoogle(
         onLink: (model) => _log.finest(model),
@@ -72,27 +72,103 @@ class MyApp extends StatelessWidget {
                         child: const Text('Send test email')),
                     const Padding(padding: EdgeInsets.all(10)),
                     ElevatedButton(
-                        onPressed: () =>
-                            notLoggedIn.fetchInbox(onResult: (messages, {page}) async {
-                              msgIds.addAll(messages);
-                              page = page;
-                              _log.fine('fetched ${messages.length} messages');
-                              _log.fine('next page $page');
-                            }, onFinish: () async {
+                        onPressed: () {
+
+                          int startingTime = DateTime.now().millisecondsSinceEpoch;
+                          int lastReportTime = DateTime.now().millisecondsSinceEpoch;
+                          int totalIndexed = 0;
+
+                          notLoggedIn.fetchInbox(
+                              onResult: (messages, {page}) async {
+                                msgIds.addAll(messages);
+                                page = page;
+                                _log.fine('fetched ${messages.length} messages');
+                                _log.fine('next page $page');
+
+                                double batchRate = messages.length * 1000.0 / (DateTime.now().millisecondsSinceEpoch - lastReportTime);
+
+                                totalIndexed += messages.length;
+                                lastReportTime = DateTime.now().millisecondsSinceEpoch;
+
+                                double totalTime = (lastReportTime - startingTime) / 1000.0;
+                                double overallRate = totalIndexed / totalTime;
+
+                                _log.info("=====================================");
+                                _log.info("> BENCHMARK STATS (INDEXING)");
+                                _log.info("> Last Batch Rate: ${batchRate} msgs/sec (${messages.length} messages)");
+                                _log.info("> Overall Rate: ${overallRate} msgs/sec");
+                                _log.info("> Total Messages Indexed: ${totalIndexed}");
+                                _log.info("> Total Time Elapsed: ${totalTime}s");
+                                _log.info("=====================================");
+
+                              }, onFinish: () async {
                               _log.fine('finished fetching inbox.');
-                            }),
+
+                              double totalTime = (lastReportTime - startingTime) / 1000.0;
+                              double overallRate = totalIndexed / totalTime;
+
+                              _log.info("=====================================");
+                              _log.info("> BENCHMARK STATS (INDEXING)");
+                              _log.info("> indexing has been completed.");
+                              _log.info("> ");
+                              _log.info("> Overall Rate: ${overallRate} msgs/sec");
+                              _log.info("> Total Messages Indexed: ${totalIndexed}");
+                              _log.info("> Total Time Elapsed: ${totalTime}s");
+                              _log.info("=====================================");
+
+                          });
+                        },
                         child: const Text('Fetch Inbox')),
                     const Padding(padding: EdgeInsets.all(10)),
                     ElevatedButton(
-                        onPressed: () => notLoggedIn.fetchMessages(
-                            messageIds: msgIds,
-                            onResult: (message) async {
-                              _log.fine(
-                                  'fetched message id ${message.extMessageId} - $message');
-                            },
-                            onFinish: () async {
-                              _log.fine('finished fetching messages.');
-                            }),
+                        onPressed: () {
+
+                          int startingTime = DateTime.now().millisecondsSinceEpoch;
+                          int lastReportTime = DateTime.now().millisecondsSinceEpoch;
+                          int totalFetched = 0;
+
+                          notLoggedIn.fetchMessages(
+                              messageIds: msgIds,
+                              onResult: (message) async {
+                                _log.fine('fetched message id ${message.extMessageId} - $message');
+
+                                totalFetched += 1;
+
+                                if (totalFetched % 10 == 0) {
+                                  double batchRate = 10 * 1000.0 / (DateTime.now().millisecondsSinceEpoch - lastReportTime);
+
+                                  lastReportTime = DateTime.now().millisecondsSinceEpoch;
+                                  double totalTime = (lastReportTime - startingTime) / 1000.0;
+                                  double overallRate = totalFetched / totalTime;
+
+                                  _log.info("=====================================");
+                                  _log.info("> BENCHMARK STATS (FETCHING)");
+                                  _log.info("> Last Batch Rate: ${batchRate} msgs/sec (10 messages)");
+                                  _log.info("> Overall Rate: ${overallRate} msgs/sec");
+                                  _log.info("> Total Messages Fetched: ${totalFetched}");
+                                  _log.info("> Total Time Elapsed: ${totalTime}s");
+                                  _log.info("=====================================");
+                                }
+
+
+                              },
+                              onFinish: () async {
+                                _log.fine('finished fetching messages.');
+
+                                double totalTime = (lastReportTime - startingTime) / 1000.0;
+                                double overallRate = totalFetched / totalTime;
+
+                                _log.info("=====================================");
+                                _log.info("> BENCHMARK STATS (FETCHING)");
+                                _log.info("> fetching has been completed.");
+                                _log.info("> ");
+                                _log.info("> Overall Rate: ${overallRate} msgs/sec");
+                                _log.info("> Total Messages Fetched: ${totalFetched}");
+                                _log.info("> Total Time Elapsed: ${totalTime}s");
+                                _log.info("=====================================");
+                              });
+
+                        },
                         child: const Text('Fetch Messages'))
                   ]))),
         ));
