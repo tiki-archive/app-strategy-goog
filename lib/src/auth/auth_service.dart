@@ -14,6 +14,7 @@ import '../error/error_http.dart';
 import '../error/error_model_rsp.dart';
 import 'auth_controller.dart';
 import 'auth_model.dart';
+import 'auth_model_status.dart';
 import 'auth_presenter.dart';
 import 'auth_repository.dart';
 
@@ -24,7 +25,14 @@ class AuthService extends ChangeNotifier {
       "https://accounts.google.com/o/oauth2/v2/auth";
   static const String _tokenEndpoint =
       "https://www.googleapis.com/oauth2/v4/token";
-  static const List<String> _scopes = [
+
+  static const List<String> _loginScopes = [
+    "openid",
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ];
+
+  static const List<String> _fullScopes = [
     "openid",
     "https://www.googleapis.com/auth/userinfo.profile",
     "https://www.googleapis.com/auth/userinfo.email",
@@ -67,23 +75,65 @@ class AuthService extends ChangeNotifier {
         _iosClientId = iosClientId,
         _redirectUri = redirectUri,
         _repository = AuthRepository(),
-        client = httpp == null ? Httpp().client() : httpp.client() {
+        client = httpp == null ? Httpp().client() : httpp.client()
+  {
     presenter = AuthPresenter(this);
     controller = AuthController(this);
+
   }
 
   Future<void> signIn() async {
     AuthorizationTokenResponse? tokenResponse =
         await _authorizeAndExchangeCode();
+
     if (tokenResponse != null) {
-      _log.finest(
-          "authorizeAndExchangeCode success - ${tokenResponse.tokenType}");
+      _log.finest("authorizeAndExchangeCode success - ${tokenResponse.tokenType}");
+
+      // update the token so user info can be fetched
+      // (we need the email to prompt the user straight into the scopes screen)
       model.token = tokenResponse.accessToken;
-      model.accessTokenExp = tokenResponse.accessTokenExpirationDateTime;
-      model.refreshToken = tokenResponse.refreshToken;
-      updateUserInfo(onSuccess: onLink);
-      notifyListeners();
+
+      // we do this so that model.email is set, which is passed to oauth
+      // additional scopes request to skip past choosing account
+      await updateUserInfo();
+
+      bool linkedSuccessfully = await signInGrantAdditionalScopes();
+
+      if (linkedSuccessfully) {
+        model.linkStatus = AuthModelStatus.LINKED;
+
+        if (onLink != null) onLink!(model);
+        notifyListeners();
+      }
     }
+  }
+
+  Future<bool> signInGrantAdditionalScopes() async {
+
+    model.linkStatus = AuthModelStatus.PENDING_REQUESTING_SCOPES;
+
+    AuthorizationTokenResponse? tokenResponse = await _retrieveAdditionalScopes();
+
+    if (tokenResponse == null) return false;
+
+    model.token = tokenResponse.accessToken;
+    model.accessTokenExp = tokenResponse.accessTokenExpirationDateTime;
+    model.refreshToken = tokenResponse.refreshToken;
+
+    if (tokenResponse.scopes != null) {
+      for (String scope in _fullScopes) {
+        if (!tokenResponse.scopes!.contains(scope)) {
+
+          model.linkStatus = AuthModelStatus.PENDING_REQUESTING_SCOPES;
+
+          return false;
+        }
+      }
+      _log.fine("Successfully accepted all scopes");
+      return true;
+    }
+
+    return false;
   }
 
   Future<void> updateUserInfo({Function(AuthModel)? onSuccess}) async {
@@ -91,9 +141,14 @@ class AuthService extends ChangeNotifier {
         accessToken: model.token!,
         client: client,
         onSuccess: (response) {
+
+          _log.info("USER INFO ${response?.body?.jsonBody}");
+
           model.displayName = response?.body?.jsonBody['name'];
           model.email = response?.body?.jsonBody['email'];
-          model.isLinked = true;
+
+          // model.isLinked = true;
+
           if (onSuccess != null) {
             onSuccess(model);
           }
@@ -135,7 +190,7 @@ class AuthService extends ChangeNotifier {
               authorizationEndpoint: _authorizationEndpoint,
               tokenEndpoint: _tokenEndpoint),
           refreshToken: model.refreshToken,
-          scopes: _scopes)))!;
+          scopes: _fullScopes)))!;
       model.token = tokenResponse.accessToken;
       model.refreshToken = tokenResponse.refreshToken;
       if (onRefresh != null) {
@@ -155,7 +210,7 @@ class AuthService extends ChangeNotifier {
         const AuthorizationServiceConfiguration(
             authorizationEndpoint: _authorizationEndpoint,
             tokenEndpoint: _tokenEndpoint);
-    List<String> providerScopes = _scopes;
+    List<String> providerScopes = _loginScopes; // _scopes;
     return await _appAuth.authorizeAndExchangeCode(
       AuthorizationTokenRequest(_clientId, _redirectUri,
           promptValues: null,
@@ -164,5 +219,36 @@ class AuthService extends ChangeNotifier {
     );
   }
 
+  Future<AuthorizationTokenResponse?> _retrieveAdditionalScopes() async {
+    AuthorizationServiceConfiguration authConfig =
+    const AuthorizationServiceConfiguration(
+        authorizationEndpoint: _authorizationEndpoint,
+        tokenEndpoint: _tokenEndpoint);
+
+    List<String> providerScopes = _fullScopes;
+
+    model.linkStatus = AuthModelStatus.UNLINKED;
+
+    try {
+
+    _log.fine("LOGIN HINT EMAIL \"${model.email}\"");
+
+      AuthorizationTokenResponse? resp = await _appAuth.authorizeAndExchangeCode(
+          AuthorizationTokenRequest(_clientId, _redirectUri,
+              promptValues: ["consent"],
+              loginHint: model.email,
+              serviceConfiguration: authConfig,
+              scopes: providerScopes));
+
+      return resp;
+    } catch (err) {
+
+      model.linkStatus = AuthModelStatus.UNLINKED;
+      _log.warning(err.toString());
+      return null;
+    }
+  }
+
   String get _clientId => (Platform.isIOS ? _iosClientId : _androidClientId)!;
+
 }
