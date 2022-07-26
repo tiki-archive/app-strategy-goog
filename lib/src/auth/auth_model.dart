@@ -3,8 +3,17 @@
  * MIT license. See LICENSE file in root directory.
  */
 
+import 'auth_model_status.dart';
+
 class AuthModel {
-  bool isLinked = false;
+
+  // need two more: mid linking and rejected link
+
+
+  // bool isLinked = false;
+
+  AuthModelStatus linkStatus;
+
   String? displayName;
   String? email;
   String? token;
@@ -12,7 +21,8 @@ class AuthModel {
   String? refreshToken;
 
   AuthModel(
-      {this.isLinked = false,
+      {//this.isLinked = false,
+      this.linkStatus = AuthModelStatus.UNLINKED,
       this.displayName,
       this.email,
       this.token,
