@@ -141,6 +141,9 @@ class AuthService extends ChangeNotifier {
         accessToken: model.token!,
         client: client,
         onSuccess: (response) {
+
+          _log.info("USER INFO ${response?.body?.jsonBody}");
+
           model.displayName = response?.body?.jsonBody['name'];
           model.email = response?.body?.jsonBody['email'];
 
@@ -227,9 +230,12 @@ class AuthService extends ChangeNotifier {
     model.linkStatus = AuthModelStatus.UNLINKED;
 
     try {
+
+    _log.fine("LOGIN HINT EMAIL \"${model.email}\"");
+
       AuthorizationTokenResponse? resp = await _appAuth.authorizeAndExchangeCode(
           AuthorizationTokenRequest(_clientId, _redirectUri,
-              promptValues: null,
+              promptValues: ["consent"],
               loginHint: model.email,
               serviceConfiguration: authConfig,
               scopes: providerScopes));

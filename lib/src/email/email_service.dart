@@ -140,6 +140,7 @@ revolution today.<br />
         },
         onResult: (response) async {
           _log.warning('send email failed with code ${response.statusCode}');
+          _log.warning('send email failed with body ${response.body?.body}');
           _handleUnauthorized(response);
           _handleTooManyRequests(response);
           if (onResult != null) onResult(false);
