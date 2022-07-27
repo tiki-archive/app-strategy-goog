@@ -17,8 +17,6 @@ class AuthController {
 
   Future<void> signIn() => service.signIn();
 
-  Future<void> requestNeededScopes() => service.signInGrantAdditionalScopes();
-
   Future<void> signOut() => service.signOut();
 
   Future<void> seeInfo(BuildContext context) =>

@@ -22,10 +22,6 @@ class AuthViewLayout extends StatelessWidget {
     switch (service.model.linkStatus) {
       case AuthModelStatus.LINKED:
         return const AuthViewLayoutLinked();
-      case AuthModelStatus.PENDING_REQUESTING_SCOPES:
-        return const Text(
-            "Loading..."
-        );
       case AuthModelStatus.PENDING_DENIED_SCOPES:
         return AlertDialog(
           title: const Text("Scopes denied"),
@@ -33,7 +29,7 @@ class AuthViewLayout extends StatelessWidget {
           actions: [
             TextButton(
               child: const Text("Try Again"),
-              onPressed: () => service.controller.requestNeededScopes(),
+              onPressed: () => service.controller.signIn(),
             ),
             TextButton(
               child: const Text("Log Out"),

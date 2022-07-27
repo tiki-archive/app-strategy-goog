@@ -1,3 +1,7 @@
+## 0.1.12
+
+* revert oauth login back to 1 part
+
 ## 0.1.11
 
 * testing making oauth login 2 part
