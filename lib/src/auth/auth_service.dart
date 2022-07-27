@@ -73,17 +73,47 @@ class AuthService extends ChangeNotifier {
     controller = AuthController(this);
   }
 
+  void showSignInExplanation() {
+    model.linkStatus = AuthModelStatus.PRE_PRESENT_OAUTH;
+    notifyListeners();
+  }
+
   Future<void> signIn() async {
-    AuthorizationTokenResponse? tokenResponse =
-    await _authorizeAndExchangeCode();
+    AuthorizationTokenResponse? tokenResponse;
+
+    try {
+      tokenResponse = await _authorizeAndExchangeCode();
+    } catch(e) {
+      _log.warning("Could not authorize and exchange code");
+      model.linkStatus = AuthModelStatus.UNLINKED;
+      notifyListeners();
+      // throw e;
+    }
+
     if (tokenResponse != null) {
       _log.finest(
           "authorizeAndExchangeCode success - ${tokenResponse.tokenType}");
+
       model.token = tokenResponse.accessToken;
       model.accessTokenExp = tokenResponse.accessTokenExpirationDateTime;
       model.refreshToken = tokenResponse.refreshToken;
+
+      if (tokenResponse.scopes != null) {
+        for (String scope in _scopes) {
+          if (!tokenResponse.scopes!.contains(scope)) {
+            _log.fine("Did not accept all scopes!");
+
+            model.linkStatus = AuthModelStatus.PENDING_DENIED_SCOPES;
+            notifyListeners();
+            return;
+          }
+        }
+      }
+
+      _log.fine("Successfully accepted all scopes");
+      model.linkStatus = AuthModelStatus.LINKED;
+
       updateUserInfo(onSuccess: onLink);
-      notifyListeners();
     }
   }
 
@@ -120,7 +150,9 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    await _repository.revokeToken(accessToken: model.token!, client: client);
+    if (model.token != null) {
+      await _repository.revokeToken(accessToken: model.token!, client: client);
+    }
     if (onUnlink != null) {
       onUnlink!(model.email);
     }
@@ -166,4 +198,5 @@ class AuthService extends ChangeNotifier {
   }
 
   String get _clientId => (Platform.isIOS ? _iosClientId : _androidClientId)!;
+
 }

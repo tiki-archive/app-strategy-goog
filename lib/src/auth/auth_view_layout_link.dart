@@ -4,9 +4,11 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:tiki_style/tiki_style.dart';
 
+import 'auth_model_status.dart';
 import 'auth_service.dart';
 
 class AuthViewLayoutLink extends StatelessWidget {
@@ -18,7 +20,13 @@ class AuthViewLayoutLink extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthService service = Provider.of<AuthService>(context);
     return GestureDetector(
-        onTap: service.controller.signIn,
+     //   onTap: service.controller.signIn,
+        onTap: () {
+          // service.controller.signIn();
+          service.controller.showSignInExplanation();
+          Logger("ClickedSignIn").info("Terrible practices all around");
+
+        },
         behavior: HitTestBehavior.opaque,
         child: Container(
             padding:

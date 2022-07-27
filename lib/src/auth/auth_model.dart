@@ -28,4 +28,5 @@ class AuthModel {
       this.token,
       this.accessTokenExp,
       this.refreshToken});
+
 }

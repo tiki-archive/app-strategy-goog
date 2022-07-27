@@ -15,6 +15,8 @@ class AuthController {
 
   AuthController(this.service);
 
+  void showSignInExplanation() => service.showSignInExplanation();
+
   Future<void> signIn() => service.signIn();
 
   Future<void> signOut() => service.signOut();
@@ -23,4 +25,5 @@ class AuthController {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) =>
               InfoCarousel(cards: _infoService.getAll()).carouselWidget()));
+
 }

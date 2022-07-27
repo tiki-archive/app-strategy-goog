@@ -22,6 +22,21 @@ class AuthViewLayout extends StatelessWidget {
     switch (service.model.linkStatus) {
       case AuthModelStatus.LINKED:
         return const AuthViewLayoutLinked();
+      case AuthModelStatus.PRE_PRESENT_OAUTH:
+        return AlertDialog(
+          title: Text("You will need to click check boxes ${service.model.linkStatus}"),
+          content: const Text("Providing access from google allows you to scan your inbox."),
+          actions: [
+            TextButton(
+              child: const Text("Proceed to sign in"),
+              onPressed: () => service.controller.signIn(),
+            ),
+            TextButton(
+              child: const Text("No Thanks"),
+              onPressed: () => service.controller.signOut(),
+            ),
+          ],
+        );
       case AuthModelStatus.PENDING_DENIED_SCOPES:
         return AlertDialog(
           title: const Text("Scopes denied"),
@@ -32,8 +47,8 @@ class AuthViewLayout extends StatelessWidget {
               onPressed: () => service.controller.signIn(),
             ),
             TextButton(
-              child: const Text("Log Out"),
-              onPressed: () => service.model.linkStatus = AuthModelStatus.UNLINKED,
+              child: const Text("No Thanks"),
+              onPressed: () => service.controller.signOut(),
             ),
           ],
         );
