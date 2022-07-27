@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:httpp/httpp.dart';
+import 'package:tiki_strategy_google/src/auth/auth_model_status.dart';
 
 import 'src/auth/auth_model.dart';
 import 'src/auth/auth_service.dart';
@@ -60,7 +61,7 @@ class TikiStrategyGoogle {
       Httpp? httpp})
       : _authService = AuthService(
             model: AuthModel(
-              isLinked: true,
+              linkStatus: AuthModelStatus.LINKED,
               email: email,
               token: token,
               displayName: displayName,
