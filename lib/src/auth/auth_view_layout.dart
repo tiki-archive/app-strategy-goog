@@ -24,31 +24,31 @@ class AuthViewLayout extends StatelessWidget {
         return const AuthViewLayoutLinked();
       case AuthModelStatus.PRE_PRESENT_OAUTH:
         return AlertDialog(
-          title: Text("You will need to click check boxes ${service.model.linkStatus}"),
-          content: const Text("Providing access from google allows you to scan your inbox."),
+          title: Text("Attention"),
+          content: const Text("You will be prompted to connect your email inbox to the TIKI app. You must click the check boxes so data NFTs can be minted for you."),
           actions: [
             TextButton(
-              child: const Text("Proceed to sign in"),
-              onPressed: () => service.controller.signIn(),
+              child: const Text("Cancel"),
+              onPressed: () => service.controller.signOut(),
             ),
             TextButton(
-              child: const Text("No Thanks"),
-              onPressed: () => service.controller.signOut(),
+              child: const Text("Ok (Sign In)"),
+              onPressed: () => service.controller.signIn(),
             ),
           ],
         );
       case AuthModelStatus.PENDING_DENIED_SCOPES:
         return AlertDialog(
-          title: const Text("Scopes denied"),
-          content: const Text("You need to click the check boxes to scan your inbox ."),
+          title: const Text("Attention"),
+          content: const Text("You did not provide access to your inbox! You must click the check boxes to connect your email to the TIKI app."),
           actions: [
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () => service.controller.signOut(),
+            ),
             TextButton(
               child: const Text("Try Again"),
               onPressed: () => service.controller.signIn(),
-            ),
-            TextButton(
-              child: const Text("No Thanks"),
-              onPressed: () => service.controller.signOut(),
             ),
           ],
         );

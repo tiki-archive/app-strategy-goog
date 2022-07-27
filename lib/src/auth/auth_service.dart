@@ -85,7 +85,7 @@ class AuthService extends ChangeNotifier {
       tokenResponse = await _authorizeAndExchangeCode();
     } catch(e) {
       _log.warning("Could not authorize and exchange code");
-      model.linkStatus = AuthModelStatus.UNLINKED;
+      model.linkStatus = AuthModelStatus.PENDING_DENIED_SCOPES;
       notifyListeners();
       // throw e;
     }
