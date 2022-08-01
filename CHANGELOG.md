@@ -1,3 +1,7 @@
+## 0.1.13
+
+* add onRefresh error
+
 ## 0.1.12
 
 * revert oauth login back to 1 part
