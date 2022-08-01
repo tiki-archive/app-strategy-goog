@@ -47,7 +47,8 @@ class AuthService extends ChangeNotifier {
       {String? accessToken,
       DateTime? accessExp,
       String? refreshToken,
-      DateTime? refreshExp})? onRefresh;
+      DateTime? refreshExp,
+      Object? error})? onRefresh;
   final HttppClient client;
 
   final AuthRepository _repository;
@@ -141,12 +142,13 @@ class AuthService extends ChangeNotifier {
       model.refreshToken = tokenResponse.refreshToken;
       if (onRefresh != null) {
         onRefresh!(
-            accessToken: tokenResponse.accessToken,
+            accessToken: tokenResponse.accessToken!,
             accessExp: tokenResponse.accessTokenExpirationDateTime,
             refreshToken: tokenResponse.refreshToken);
       }
     } catch (err) {
       _log.severe(err.toString());
+      onRefresh!(error: err);
       rethrow;
     }
   }
