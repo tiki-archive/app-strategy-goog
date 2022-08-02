@@ -1,4 +1,4 @@
-## 0.1.13
+## 0.1.14
 
 * add onError to fetch messages and inbox index
 
