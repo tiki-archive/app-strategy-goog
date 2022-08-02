@@ -25,8 +25,9 @@ class EmailService {
           {DateTime? since,
           String? page,
           required Function(List<String> messagesIds, {String? page}) onResult,
-          required Function() onFinish}) =>
-      _fetchInbox(pageToken: page, onFinish: onFinish, onResult: onResult, since: since);
+          required Function() onFinish,
+          Function(Object)? onError}) =>
+      _fetchInbox(pageToken: page, onFinish: onFinish, onResult: onResult, since: since, onError: onError);
 
 
   Future<void> countInbox(
@@ -45,7 +46,7 @@ class EmailService {
 
         onResult(totalMessageCount);
 
-        if (onFinish != null) onFinish();
+        onFinish();
       },
       onResult: (response) {
         _log.warning('Count inbox ${_authService.model.email} failed with statusCode ${response.statusCode}');
@@ -59,7 +60,8 @@ class EmailService {
   Future<void> fetchMessages(
       {required List<String> messageIds,
       required Function(TikiStrategyGoogleModelEmail message) onResult,
-      required Function() onFinish}) async {
+      required Function() onFinish,
+      Function(Object)? onError}) async {
     List<Future> futures = [];
     for (String messageId in messageIds) {
       futures.add(_repositoryEmail.message(
@@ -91,9 +93,13 @@ class EmailService {
                 'Fetch message $messageId failed with statusCode ${response.statusCode}');
             _handleUnauthorized(response);
             _handleTooManyRequests(response);
+            if(response.statusCode != 401 && response.statusCode != 429){
+              onError != null ? onError(response) : throw response;
+            }
           },
           onError: (error) {
             _log.warning('Fetch message $messageId failed with error $error');
+            onError != null ? onError(error) : throw error;
           }));
     }
     await Future.wait(futures);
@@ -233,6 +239,7 @@ revolution today.<br />
       {Function? onFinish,
       String? pageToken,
       DateTime? since,
+      Function(Object)? onError,
       required Function(List<String> messagesIds, {String? page}) onResult}) {
     return _repositoryEmail.messageId(
       client: _authService.client,
@@ -250,7 +257,8 @@ revolution today.<br />
               onResult: onResult,
               pageToken: messages.nextPageToken,
               since: since,
-              onFinish: onFinish);
+              onFinish: onFinish,
+              onError: onError);
         } else {
           if (onFinish != null) {
             onFinish();
@@ -262,9 +270,15 @@ revolution today.<br />
             'Fetch inbox ${_authService.model.email} failed with statusCode ${response.statusCode}');
         _handleUnauthorized(response);
         _handleTooManyRequests(response);
+        if(response.statusCode != 401 && response.statusCode != 429){
+          onError != null ? onError(response) : throw response;
+        }
       },
-      onError: (error) => _log.warning(
-          'Fetch inbox ${_authService.model.email} failed with error $error'),
+      onError: (error) {
+        _log.warning(
+            'Fetch inbox ${_authService.model.email} failed with error $error');
+        onError != null ? onError(error) : throw error;
+      },
     );
   }
 
