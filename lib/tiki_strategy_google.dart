@@ -105,14 +105,17 @@ class TikiStrategyGoogle {
           {DateTime? since,
           String? page,
           required Function(List<String> messagesIds, {String? page}) onResult,
-          required Function() onFinish}) =>
+          required Function() onFinish,
+          Function(Object)? onError}) =>
       _emailService.fetchInbox(
-          page: page, since: since, onResult: onResult, onFinish: onFinish);
+          page: page, since: since, onResult: onResult, onFinish: onFinish,
+          onError: onError);
 
   Future<void> fetchMessages(
           {required List<String> messageIds,
           required Function(TikiStrategyGoogleModelEmail message) onResult,
-          required Function() onFinish}) =>
+          required Function() onFinish,
+            Function(Object)? onError}) =>
       _emailService.fetchMessages(
-          messageIds: messageIds, onResult: onResult, onFinish: onFinish);
+          messageIds: messageIds, onResult: onResult, onFinish: onFinish, onError: onError);
 }

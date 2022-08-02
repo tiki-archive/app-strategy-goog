@@ -1,3 +1,7 @@
+## 0.1.15
+
+* expose onError in API
+
 ## 0.1.14
 
 * add onError to fetch messages and inbox index
