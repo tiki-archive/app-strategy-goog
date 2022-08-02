@@ -1,5 +1,9 @@
 ## 0.1.13
 
+* add onError to fetch messages and inbox index
+
+## 0.1.13
+
 * add onRefresh error
 
 ## 0.1.12
